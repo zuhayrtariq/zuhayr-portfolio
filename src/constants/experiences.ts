@@ -50,7 +50,7 @@ export const experiences = [
         company_name: 'Prime International Oil And Gas',
         icon: '/companies/prime.png',
         iconBg: 'white',
-        date: 'Aug 2023 - Present',
+        date: 'Aug 2023 - Jul 2024',
         points: [
             'Worked in the IT Compliance and Governance and Business Application Development department. ',
             'Worked on doing research and writing policies for the company including Cyber Security Policy, Recourse Management Policy.',
