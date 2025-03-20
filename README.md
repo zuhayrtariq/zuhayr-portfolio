@@ -7,6 +7,4 @@
 - **Tailwind CSS**
 - **Shadcn UI**
 - **Framer Motion**
-- **GraphQL**
-- **Hygraph CMS**
 - **React Markdown**

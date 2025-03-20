@@ -2,13 +2,24 @@ export const projects = [
     {
         title: 'Zee Docs',
         description:
-            "Built with Next.js to handle the user interface, LiveBlocks for real-time features and styled with TailwindCSS, LiveDocs is a clone of Google Docs. The primary goal is to demonstrate the developer's skills in realtime environment that creates a lasting impact.",
+            "Built with NextJS to handle the user interface, LiveBlocks for real-time features and styled with TailwindCSS, LiveDocs is a clone of Google Docs. The primary goal is to demonstrate the developer's skills in realtime environment that creates a lasting impact.",
         stack: [
 
             "NextJS", 'ShadCN', 'Clerk', "LiveBlocks", 'Typescript'
         ],
         link: 'https://zeedocs.vercel.app',
         github: 'https://github.com/zuhayrtariq/zee-docs',
+    },
+    {
+        title: 'Zee Store',
+        description:
+            "An e-commerce website built using NextJS, Wix Headless CMS and Wix Auth. The data collected for this website was scrapper from outfitters.com. ShadCN and AceternityUI were used for styling",
+        stack: [
+
+            "NextJS", 'ShadCN', 'Wix', 'Typescript'
+        ],
+        link: 'https://z-store.vercel.app/',
+        github: 'https://github.com/zuhayrtariq/zee-store',
     },
     {
         title: 'Startup Hub',
@@ -24,7 +35,7 @@ export const projects = [
     {
         title: 'Zee Blogs',
         description:
-            "This is my personal blog app, built using Next.js, a robust React framework, to build server-side rendered and statically generated web applications.Integrated Clerk for seamless user authentication, providing a secure and user-friendly login experience.The backend is powered by MongoDB, a NoSQL database, and used Mongoose for elegant MongoDB object modeling in Node.js.This project is designed as a full-featured blog application with dashboard.",
+            "This is my personal blog app, built using NextJS, a robust React framework, to build server-side rendered and statically generated web applications.Integrated Clerk for seamless user authentication, providing a secure and user-friendly login experience.The backend is powered by MongoDB, a NoSQL database, and used Mongoose for elegant MongoDB object modeling in NodeJS.This project is designed as a full-featured blog application with dashboard.",
         stack: [
 
             "NextJS", 'ShadCN', 'Clerk', "MongoDB", 'Typescript'

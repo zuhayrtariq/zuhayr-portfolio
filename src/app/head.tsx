@@ -39,7 +39,7 @@ const Head = () => {
       <meta property="og:description" content={meta.description} />
       <meta property="og:title" content={meta.title} />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@_Zuhayr_ms_" />
+      <meta name="twitter:site" content="@zuhayrtariq" />
       <meta name="twitter:title" content={meta.title} />
       <meta name="twitter:description" content={meta.description} />
       <link rel="preconnect" href="https://fonts.googleapis.com" />

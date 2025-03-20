@@ -105,7 +105,7 @@ const Hero = () => {
       >
         <p className="text-base text-muted-foreground !leading-relaxed">
           Your one-stop solution for professional web development and design.{" "}
-          <span className="inline-blocklg:inline-block">
+          <span className="inline-block lg:inline-block">
             Whether you need a stunning website, an e-commerce platform, or a
             custom web application, I provide end-to-end solutions that help
             your business stand out in the digital landscape.
@@ -138,7 +138,7 @@ const Hero = () => {
           className="flex flex-col items-center justify-center my-32"
         >
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 py-10 w-full lg:max-w-screen-md">
-            {[25, 2, 8].map((value, index) => (
+            {[25, 3, 8].map((value, index) => (
               <AnimationContainer
                 key={index}
                 animation="scale"

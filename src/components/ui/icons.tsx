@@ -2105,8 +2105,8 @@ const Icons = {
         y2="24"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#0d61a9"></stop>
-        <stop offset="1" stop-color="#16528c"></stop>
+        <stop offset="0" stopColor="#0d61a9"></stop>
+        <stop offset="1" stopColor="#16528c"></stop>
       </linearGradient>
       <path
         fill="url(#atmafua87GAY-Q3DVUuwga_nCj4PvnCO0tZ_gr1)"
@@ -2186,9 +2186,9 @@ const Icons = {
         y2="36.899"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#058f92"></stop>
-        <stop offset=".5" stop-color="#038489"></stop>
-        <stop offset="1" stop-color="#026d71"></stop>
+        <stop offset="0" stopColor="#058f92"></stop>
+        <stop offset=".5" stopColor="#038489"></stop>
+        <stop offset="1" stopColor="#026d71"></stop>
       </linearGradient>
       <path
         fill="url(#eDMgMixeD6M6EYSYBuJ8ya_9nLaR5KFGjN0_gr1)"
@@ -2202,8 +2202,8 @@ const Icons = {
         y2="35.217"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#ff9c0f"></stop>
-        <stop offset=".813" stop-color="#d67e00"></stop>
+        <stop offset="0" stopColor="#ff9c0f"></stop>
+        <stop offset=".813" stopColor="#d67e00"></stop>
       </linearGradient>
       <path
         fill="url(#eDMgMixeD6M6EYSYBuJ8yb_9nLaR5KFGjN0_gr2)"
@@ -2217,9 +2217,9 @@ const Icons = {
         y2="26.75"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#058f92"></stop>
-        <stop offset=".5" stop-color="#038489"></stop>
-        <stop offset="1" stop-color="#026d71"></stop>
+        <stop offset="0" stopColor="#058f92"></stop>
+        <stop offset=".5" stopColor="#038489"></stop>
+        <stop offset="1" stopColor="#026d71"></stop>
       </linearGradient>
       <path
         fill="url(#eDMgMixeD6M6EYSYBuJ8yc_9nLaR5KFGjN0_gr3)"
