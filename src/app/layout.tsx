@@ -7,11 +7,11 @@ import { ColorSchemeScript } from "@mantine/core";
 import "@mantine/core/styles.css";
 import Head from "./head";
 import { Metadata } from "next";
-
+import { Analytics } from "@vercel/analytics/react";
 export const metadata: Metadata = {
   title: "Zuhayr Tariq",
   description:
-    "This is my portfolio website. My name is Zuhayr Tariq, I have graduated from Iobm",
+    "This is my portfolio website. My name is Zuhayr Tariq and I am a Fullstack Web Developer.",
 };
 
 export default function RootLayout({
@@ -37,6 +37,7 @@ export default function RootLayout({
           <Navbar />
           {children}
         </Providers>
+        <Analytics />
       </body>
     </html>
   );

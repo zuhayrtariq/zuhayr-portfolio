@@ -38,15 +38,13 @@ const Hero = () => {
         animation="slide-up"
         className="flex items-center justify-center gap-2 pl-2 pr-5 py-2 rounded-full bg-background border border-border/80 w-max mx-auto group mt-6"
       >
+        <div className="flex flex-col gap-2 flex-shrink-0">
+          <p className="text-sm font-medium text-foreground/70">Hi There</p>
+        </div>
         <div className="rounded-full bg-[#131316] flex items-center justify-center size-10 overflow-visible">
           <span className="text-xl wave">
             <Icons.wave className="size-6 -rotate-[30deg] group-hover:scale-110 transition-all duration-300" />
           </span>
-        </div>
-        <div className="flex flex-col gap-2 flex-shrink-0">
-          <p className="text-sm font-medium text-foreground/70">
-            Welcome to Zuhayr's Portfolio
-          </p>
         </div>
       </AnimationContainer>
 
