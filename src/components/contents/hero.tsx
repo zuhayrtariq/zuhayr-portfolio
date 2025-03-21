@@ -8,6 +8,7 @@ import { useRef } from "react";
 import Icons from "../ui/icons";
 import { NumberTicker } from "../ui/number-ticker";
 import { AnimationContainer } from "../utils/animation-container";
+import { SparklesCore } from "../ui/sparkles";
 
 const Hero = () => {
   const ref = useRef(null);
@@ -36,16 +37,14 @@ const Hero = () => {
       <AnimationContainer
         delay={0.3}
         animation="slide-up"
-        className="flex items-center justify-center gap-2 pl-2 pr-5 py-2 rounded-full bg-background border border-border/80 w-max mx-auto group mt-6"
+        className="flex items-center justify-center gap-1 px-5 py-2 rounded-full bg-background border border-border/80 w-max mx-auto group mt-6"
       >
-        <div className="flex flex-col gap-2 flex-shrink-0">
-          <p className="text-sm font-medium text-foreground/70">Hi There</p>
+        <div className="flex flex-col  flex-shrink-0">
+          <p className="text-sm font-medium text-foreground/70">Greetings</p>
         </div>
-        <div className="rounded-full bg-[#131316] flex items-center justify-center size-10 overflow-visible">
-          <span className="text-xl wave">
-            <Icons.wave className="size-6 -rotate-[30deg] group-hover:scale-110 transition-all duration-300" />
-          </span>
-        </div>
+        <span className="text-xl wave ">
+          <Icons.wave className="size-6 -rotate-[30deg] group-hover:scale-110 transition-all duration-300" />
+        </span>
       </AnimationContainer>
 
       {isInView && (
@@ -57,7 +56,7 @@ const Hero = () => {
           >
             <div className="hidden xl:block absolute top-0 -left-1/3 overflow-visible flex-none z-[1] w-20">
               <Image
-                src="/images/hand.svg"
+                src="/images/code.svg"
                 alt="hand"
                 width={80}
                 height={80}
@@ -88,7 +87,7 @@ const Hero = () => {
                   className="inline-block whitespace-nowrap"
                   key={index}
                 >
-                  {word}
+                  {word}&nbsp;
                 </motion.span>
               ))}
             </motion.h2>
@@ -104,9 +103,8 @@ const Hero = () => {
         <p className="text-base text-muted-foreground !leading-relaxed">
           Your one-stop solution for professional web development and design.{" "}
           <span className="inline-block lg:inline-block">
-            Whether you need a stunning website, an e-commerce platform, or a
-            custom web application, I provide end-to-end solutions that help
-            your business stand out in the digital landscape.
+            A Full Stack Web Developer who can help bring your projects to life,
+            from concept to completion.
           </span>
         </p>
       </AnimationContainer>
@@ -117,14 +115,15 @@ const Hero = () => {
         className="relative mt-10 flex flex-col items-center justify-center"
       >
         <Link href="#contact">
-          <button className="relative py-3 text-[15px] tracking-wider font-medium overflow-hidden rounded-lg bg-[#3b82f6] text-white transition-all duration-300 group btn-primary flex items-center justify-center w-52 h-auto">
-            <span className="relative z-10 font-medium font-heading">
-              Let&apos;s Work Together
+          <button className="relative h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 group focus:ring-offset-2 focus:ring-offset-slate-50 transition-all duration-300 group btn-primary flex items-center justify-center w-52 ">
+            {" "}
+            <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)] " />{" "}
+            <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+              Let&apos;s Work Together{" "}
+              <span className="flex items-center justify-center scale-x-0 group-hover:scale-x-100 transition-all duration-300 size-0 group-hover:size-5 ml-1">
+                <ChevronRightIcon className="size-5" />
+              </span>
             </span>
-            <span className="flex items-center justify-center scale-x-0 group-hover:scale-x-100 transition-all duration-300 size-0 group-hover:size-5 ml-1">
-              <ChevronRightIcon className="size-5" />
-            </span>
-            <div className="absolute inset-y-0 -left-full w-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-500 ease-in-out group-hover:translate-x-[200%] group-hover:duration-1000"></div>
           </button>
         </Link>
       </AnimationContainer>

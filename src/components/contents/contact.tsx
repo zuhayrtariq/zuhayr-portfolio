@@ -61,10 +61,11 @@ const Contact = () => {
     },
     onSuccess: () => {
       form.reset();
-      setTimeout(() => {
-        setIsSent(true);
-      }, 1000);
+      setIsSent(true);
       toast.success("Your message has been received!");
+      setTimeout(() => {
+        setIsSent(false);
+      }, 3000);
     },
   });
 
