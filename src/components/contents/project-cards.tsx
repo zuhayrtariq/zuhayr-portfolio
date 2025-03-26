@@ -12,7 +12,12 @@ import { MagicCard } from "../ui/magic-card";
 import { projects } from "@/constants/projects";
 import { LinkPreview } from "../ui/link-preview";
 const techStackIcons: { [key: string]: keyof typeof Icons } = {
+  wix: "wix",
+  daisyui: "daisyui",
+  typeorm: "typeorm",
   mysql: "mysql",
+  nestjs: "nestjs",
+  mssql: "mssql",
   expressjs: "expressjs",
   nodejs: "nodejs",
   typescript: "typescript",
