@@ -1,5 +1,21 @@
 export const projects = [
     {
+        "title": "Contract Monitoring Dashboard",
+        "description": "Built with NestJS, TypeScript, MSSQL, TypeORM, TailwindCSS, ReactJS, DaisyUI, and Nodemailer,\nthis dashboard streamlines contract management by integrating SAP data and automating alerts.\nIt ensures timely updates for representatives, provides one-click access to PDFs, and offers\na comprehensive view of all contract-related data. The tool successfully reduced missed call-offs\nand contract expirations from ~20% to nearly 0%.",
+        "stack": [
+            "NestJS",
+            "TypeScript",
+            "MSSQL",
+            "TypeORM",
+            "TailwindCSS",
+            "ReactJS",
+            "DaisyUI",
+            "Nodemailer"
+        ],
+        "link": "https://zee-contracts-dashboard.vercel.app/",
+        "github": "https://github.com/zuhayrtariq/contract-tool-client"
+    },
+    {
         title: 'Zee Docs',
         description:
             "Built with NextJS to handle the user interface, LiveBlocks for real-time features and styled with TailwindCSS, LiveDocs is a clone of Google Docs. The primary goal is to demonstrate the developer's skills in realtime environment that creates a lasting impact.",
