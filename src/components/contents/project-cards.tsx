@@ -44,6 +44,7 @@ const techStackIcons: { [key: string]: keyof typeof Icons } = {
   "aws(ses)": "aws",
   zustand: "zustand",
   gemini: "gemini",
+  redis: "redis",
 };
 
 const getIconForTech = (tech: string) => {
