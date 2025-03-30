@@ -2,9 +2,9 @@ export const projects = [
   {
     title: "ZeeTube",
     description:
-      "A youtube clone built using NestJS, TypeScript, Upstash, TailwindCSS, drizzleORM, TRPC, Gemini AI",
+      "A youtube clone built using NextJS, TypeScript, Upstash, TailwindCSS, drizzleORM, TRPC, Gemini AI",
     stack: [
-      "NestJS",
+      "NextJS",
       "ReactJS",
       "TypeScript",
       "Gemini",
