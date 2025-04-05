@@ -1,5 +1,21 @@
 export const projects = [
   {
+    title: "The Ticket Zone 🎫",
+    description:
+      "Modern event ticketing platform with real-time queuing and instant payments. Built with NextJS, Convex, Clerk, and Stripe Connect. Features include smart waiting lists, automatic refunds, rate limiting, and beautiful UI with shadcn.",
+    stack: [
+      "NextJS",
+      "Convex",
+      "Stripe",
+      "TypeScript",
+      "Clerk",
+      "TailwindCSS",
+      "Upstash",
+    ],
+    link: "https://the-ticket-zone.vercel.app",
+    github: "https://github.com/zuhayrtariq/the-ticket-zone",
+  },
+  {
     title: "ZeeTube",
     description:
       "A youtube clone built using NextJS, TypeScript, Upstash, TailwindCSS, drizzleORM, TRPC, Gemini AI",
