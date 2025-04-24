@@ -1,5 +1,21 @@
 export const projects = [
   {
+    title: "ZFit-AI",
+    description:
+      "ZFit-AI is a modern AI-powered fitness assistant built with Next.js, React, Tailwind, and Shadcn UI. It features a voice-based AI (Vapi + Gemini AI) that creates personalized workout and diet plans based on user goals, injuries, and preferences.",
+    stack: [
+      "NextJS",
+      "Convex",
+      "Vapi AI",
+      "TypeScript",
+      "Clerk",
+      "TailwindCSS",
+      "Gemini",
+    ],
+    link: "https://zfit-ai.vercel.app",
+    github: "https://github.com/zuhayrtariq/zfit-ai",
+  },
+  {
     title: "The Ticket Zone 🎫",
     description:
       "Modern event ticketing platform with real-time queuing and instant payments. Built with NextJS, Convex, Clerk, and Stripe Connect. Features include smart waiting lists, automatic refunds, rate limiting, and beautiful UI with shadcn.",
