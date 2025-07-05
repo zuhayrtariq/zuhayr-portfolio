@@ -3,10 +3,8 @@ import { Project as ProjectProps } from "@/types";
 import { Badge } from "@mantine/core";
 import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import Icons from "../ui/icons";
-import { Skeleton } from "../ui/skeleton";
 import AnimationContainer from "../utils/animation-container";
 import { MagicCard } from "../ui/magic-card";
 import { projects } from "@/constants/projects";
@@ -100,12 +98,14 @@ const Card = ({ project }: { project: ProjectProps }) => {
                 ))}
               </div>
               <div className="flex items-end gap-4">
-                <Link href={project.github} target="_blank">
-                  <Button variant="outline" size="sm">
-                    <Icons.github className="w-5 h-5" />
-                    <span className="ml-2">Github</span>
-                  </Button>
-                </Link>
+                {project.github && (
+                  <Link href={project.github} target="_blank">
+                    <Button variant="outline" size="sm">
+                      <Icons.github className="w-5 h-5" />
+                      <span className="ml-2">Github</span>
+                    </Button>
+                  </Link>
+                )}
                 <LinkPreview url={project.link} className="text-white" newTab>
                   <Button variant="outline" size="sm">
                     <ExternalLinkIcon className="w-5 h-5" />

@@ -4,7 +4,6 @@ import { Project as ProjectProps } from "@/types";
 import { motion } from "framer-motion";
 import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import AnimationContainer from "../utils/animation-container";
 import Project from "../utils/project";

@@ -1,5 +1,19 @@
 export const projects = [
   {
+    title: "Analytra",
+    description:
+      "Analytra is an AI-powered analytics platform that connects data from websites, ad platforms, CRMs, Stripe, and social media. It offers natural language insights, automated dashboard summaries with trends and recommendations, and dynamic, collaborative reporting with chart-rich PDF exports.",
+    stack: [
+      "NextJS",
+      "Open AI",
+      "Supabase",
+      "TypeScript",
+      "Vercel AI",
+      "Snowflake",
+    ],
+    link: "https://analytra.io",
+  },
+  {
     title: "ZFit-AI",
     description:
       "ZFit-AI is a modern AI-powered fitness assistant built with Next.js, React, Tailwind, and Shadcn UI. It features a voice-based AI (Vapi + Gemini AI) that creates personalized workout and diet plans based on user goals, injuries, and preferences.",
