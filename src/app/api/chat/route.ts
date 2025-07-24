@@ -110,7 +110,8 @@ export async function POST(request: Request) {
 
     const streamId = generateUUID();
     await createStreamId({ streamId, chatId: id });
-    const contextChunks = await getRelevantChunks(message.parts[0].text);
+    // @ts-expect-error ignore next line
+    const contextChunks = await getRelevantChunks(message.parts[0]?.text);
 
     // Build a system-level context message from relevant chunks
     const contextMessage: ChatMessage = {
