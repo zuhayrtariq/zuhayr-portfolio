@@ -16,42 +16,41 @@ import {
 } from "@/lib/db/queries";
 import { convertToUIMessages, generateUUID } from "@/lib/utils";
 import { isProductionEnvironment } from "@/lib/constants";
-import { myProvider } from "@/lib/ai/providers";
 import { postRequestBodySchema, type PostRequestBody } from "./schema";
 import { geolocation, ipAddress } from "@vercel/functions";
-import {
-  createResumableStreamContext,
-  type ResumableStreamContext,
-} from "resumable-stream";
-import { after } from "next/server";
+// import {
+//   // createResumableStreamContext,
+//   // type ResumableStreamContext,
+// } from "resumable-stream";
+// import { after } from "next/server";
 import { ChatSDKError } from "@/lib/errors";
 import type { ChatMessage } from "@/lib/types";
 import { openai } from "@ai-sdk/openai";
 
 export const maxDuration = 60;
 
-let globalStreamContext: ResumableStreamContext | null = null;
+// let globalStreamContext: ResumableStreamContext | null = null;
 
-export function getStreamContext() {
-  if (!globalStreamContext) {
-    try {
-      globalStreamContext = createResumableStreamContext({
-        waitUntil: after,
-      });
-    } catch (error) {
-      //@ts-expect-error ignore next line
-      if (error.message.includes("REDIS_URL")) {
-        console.log(
-          " > Resumable streams are disabled due to missing REDIS_URL"
-        );
-      } else {
-        console.error(error);
-      }
-    }
-  }
+// export function getStreamContext() {
+//   if (!globalStreamContext) {
+//     try {
+//       globalStreamContext = createResumableStreamContext({
+//         waitUntil: after,
+//       });
+//     } catch (error) {
+//       //@ts-expect-error ignore next line
+//       if (error.message.includes("REDIS_URL")) {
+//         console.log(
+//           " > Resumable streams are disabled due to missing REDIS_URL"
+//         );
+//       } else {
+//         console.error(error);
+//       }
+//     }
+//   }
 
-  return globalStreamContext;
-}
+//   return globalStreamContext;
+// }
 
 export async function POST(request: Request) {
   let requestBody: PostRequestBody;
@@ -158,15 +157,15 @@ export async function POST(request: Request) {
       },
     });
 
-    const streamContext = getStreamContext();
+    // const streamContext = getStreamContext();
 
-    if (streamContext) {
-      return new Response(
-        await streamContext.resumableStream(streamId, () =>
-          stream.pipeThrough(new JsonToSseTransformStream())
-        )
-      );
-    }
+    // if (streamContext) {
+    //   return new Response(
+    //     await streamContext.resumableStream(streamId, () =>
+    //       stream.pipeThrough(new JsonToSseTransformStream())
+    //     )
+    //   );
+    // }
     return new Response(stream.pipeThrough(new JsonToSseTransformStream()));
   } catch (error) {
     if (error instanceof ChatSDKError) {
