@@ -3,6 +3,7 @@ import "@mantine/core/styles.css";
 import { Metadata } from "next";
 import { TracingBeam } from "@/components/ui/tracing-beam";
 import { SparklesCore } from "@/components/ui/sparkles";
+import { Navbar } from "@/components";
 export const metadata: Metadata = {
   title: "Zuhayr Tariq",
   description:
@@ -28,6 +29,7 @@ export default function RootLayout({
           particleColor="#FFFFFF"
         />
       </div>
+      <Navbar />
       {children}
     </TracingBeam>
   );

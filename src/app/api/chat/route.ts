@@ -26,6 +26,7 @@ import { geolocation, ipAddress } from "@vercel/functions";
 import { ChatSDKError } from "@/lib/errors";
 import type { ChatMessage } from "@/lib/types";
 import { openai } from "@ai-sdk/openai";
+import { getRelevantChunks } from "./get-context";
 
 export const maxDuration = 60;
 
@@ -109,8 +110,23 @@ export async function POST(request: Request) {
 
     const streamId = generateUUID();
     await createStreamId({ streamId, chatId: id });
+    const contextChunks = await getRelevantChunks(message.parts[0].text);
 
-    console.log("CALLED");
+    // Build a system-level context message from relevant chunks
+    const contextMessage: ChatMessage = {
+      id: generateUUID(),
+      role: "system",
+      parts: [
+        {
+          type: "text",
+          text: contextChunks.join("\n\n"),
+        },
+      ],
+    };
+
+    // Prepend context to messages
+    const contextInjectedMessages = [contextMessage, ...uiMessages];
+
     const stream = createUIMessageStream({
       execute: ({ writer: dataStream }) => {
         const result = streamText({
@@ -119,7 +135,7 @@ export async function POST(request: Request) {
             selectedChatModel: "chat-model",
             requestHints,
           }),
-          messages: convertToModelMessages(uiMessages),
+          messages: convertToModelMessages(contextInjectedMessages),
           stopWhen: stepCountIs(5),
           experimental_transform: smoothStream({ chunking: "word" }),
 

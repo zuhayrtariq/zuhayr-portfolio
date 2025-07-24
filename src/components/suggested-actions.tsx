@@ -1,37 +1,37 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { Button } from './ui/button';
-import { memo } from 'react';
-import type { UseChatHelpers } from '@ai-sdk/react';
-import type { ChatMessage } from '@/lib/types';
+import { motion } from "framer-motion";
+import { Button } from "./ui/button";
+import { memo } from "react";
+import type { UseChatHelpers } from "@ai-sdk/react";
+import type { ChatMessage } from "@/lib/types";
 
 interface SuggestedActionsProps {
   chatId: string;
-  sendMessage: UseChatHelpers<ChatMessage>['sendMessage'];
+  sendMessage: UseChatHelpers<ChatMessage>["sendMessage"];
 }
 
 function PureSuggestedActions({ chatId, sendMessage }: SuggestedActionsProps) {
   const suggestedActions = [
     {
-      title: 'What are the advantages',
-      label: 'of using Next.js?',
-      action: 'What are the advantages of using Next.js?',
+      title: "Get to know about",
+      label: "Zuhayr",
+      action: "Who is Zuhayr and what does he do?",
     },
     {
-      title: 'Write code to',
-      label: `demonstrate djikstra's algorithm`,
-      action: `Write code to demonstrate djikstra's algorithm`,
+      title: "Explore Zuhayr's",
+      label: "experience in software development",
+      action: "What experience does Zuhayr have in software development?",
     },
     {
-      title: 'Help me write an essay',
-      label: `about silicon valley`,
-      action: `Help me write an essay about silicon valley`,
+      title: "Learn about",
+      label: "Zuhayr's achievements",
+      action: "What are some notable achievements of Zuhayr?",
     },
     {
-      title: 'What is the weather',
-      label: 'in San Francisco?',
-      action: 'What is the weather in San Francisco?',
+      title: "What is Zuhayr's",
+      label: "educational background",
+      action: "What is Zuhayr's educational background?",
     },
   ];
 
@@ -47,7 +47,7 @@ function PureSuggestedActions({ chatId, sendMessage }: SuggestedActionsProps) {
           exit={{ opacity: 0, y: 20 }}
           transition={{ delay: 0.05 * index }}
           key={`suggested-action-${suggestedAction.title}-${index}`}
-          className={index > 1 ? 'hidden sm:block' : 'block'}
+          className={index > 1 ? "hidden sm:block" : "block"}
         >
           <Button
             variant="ghost"
@@ -55,8 +55,8 @@ function PureSuggestedActions({ chatId, sendMessage }: SuggestedActionsProps) {
               // window.history.replaceState({}, '', `/chat/${chatId}`);
 
               sendMessage({
-                role: 'user',
-                parts: [{ type: 'text', text: suggestedAction.action }],
+                role: "user",
+                parts: [{ type: "text", text: suggestedAction.action }],
               });
             }}
             className="text-left border rounded-xl px-4 py-3.5 text-sm flex-1 gap-1 sm:flex-col w-full h-auto justify-start items-start"
@@ -78,5 +78,5 @@ export const SuggestedActions = memo(
     if (prevProps.chatId !== nextProps.chatId) return false;
 
     return true;
-  },
+  }
 );
