@@ -56,7 +56,7 @@ const Contact = () => {
       const data = await res.json();
       return data;
     },
-    onError: (error) => {
+    onError: () => {
       toast.error("Unable to send message, please try again.");
     },
     onSuccess: () => {

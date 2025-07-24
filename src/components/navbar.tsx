@@ -42,12 +42,12 @@ const DATA = {
 
 const Header = () => {
   return (
-    <header className="z-[999] flex justify-center items-center w-full fixed bottom-6 inset-x-0 cursor-none">
-      <div className="w-full h-16 bg-gradient-to-t from-background absolute -bottom-8 inset-x-0 -z-10"></div>
+    <header className="z-[999] mx-auto w-fit fixed bottom-6 inset-x-0 cursor-default rounded-xl outline">
+      {/* <div className="w-full h-16  bg-gradient-to-t from-background absolute -bottom-8 inset-x-0 -z-10"></div> */}
 
       <AnimationContainer animation="slide-up" delay={0.5}>
         <TooltipProvider delayDuration={0}>
-          <Dock direction="middle" className="relative">
+          <Dock direction="middle" className="relative m-0">
             {DATA.navbar.map((item) => (
               <DockIcon key={item.name}>
                 <Tooltip>

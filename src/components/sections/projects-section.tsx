@@ -11,10 +11,10 @@ const ProjectSection = () => {
 
         <AnimationContainer className="w-full flex flex-col gap-5 mb-8">
           <p className="text-base text-justify lg:leading-8 text-foreground/80">
-            Here are some of the projects I've built, highlighting my skills in
-            problem-solving and innovative solutions. These showcase my passion
-            for technology and continuous learning. Client projects cannot be
-            shared due to confidentiality.
+            Here are some of the projects I&apos;ve built, highlighting my
+            skills in problem-solving and innovative solutions. These showcase
+            my passion for technology and continuous learning. Client projects
+            cannot be shared due to confidentiality.
           </p>
         </AnimationContainer>
 
