@@ -7,6 +7,7 @@ import "@mantine/core/styles.css";
 import { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import Head from "./head";
+import { Navbar } from "@/components";
 export const metadata: Metadata = {
   title: "Zuhayr Tariq",
   description:
@@ -32,7 +33,10 @@ export default function RootLayout({
           base.variable
         )}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <Navbar />
+          {children}
+        </Providers>
         <Analytics />
       </body>
     </html>
