@@ -131,7 +131,7 @@ export async function POST(request: Request) {
     const stream = createUIMessageStream({
       execute: ({ writer: dataStream }) => {
         const result = streamText({
-          model: openai("gpt-4.1-nano"),
+          model: openai("gpt-4.1-mini"),
           system: systemPrompt({
             selectedChatModel: "chat-model",
             requestHints,
