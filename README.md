@@ -1,4 +1,4 @@
-# Modern Portfolio - Personal Website
+# Personal Website
 
 ## 💻 Tech Stack
 
