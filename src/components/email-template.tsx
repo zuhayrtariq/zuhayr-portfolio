@@ -5,8 +5,6 @@ import {
   Head,
   Hr,
   Html,
-  Img,
-  Link,
   Preview,
   Row,
   Section,
@@ -38,13 +36,13 @@ export const NewMessageEmail = ({
         <Container style={container}>
           <Section style={{ paddingBottom: "20px" }}>
             <Row>
-              <Text style={heading}>Here's what {name} wrote</Text>
+              <Text style={heading}>Here&apos;s what {name} wrote</Text>
               <Text style={review}>{message}</Text>
               <Text style={paragraph}>
                 This email was sent to you by your portfolio.
               </Text>
 
-              <Button style={button} href="https://zuhayr.vercel.app">
+              <Button style={button} href="https://zuhayrr.com">
                 Open Portfolio
               </Button>
             </Row>
@@ -82,12 +80,6 @@ const container = {
   maxWidth: "100%",
 };
 
-const userImage = {
-  margin: "0 auto",
-  marginBottom: "16px",
-  borderRadius: "50%",
-};
-
 const heading = {
   fontSize: "32px",
   lineHeight: "1.3",
@@ -119,25 +111,7 @@ const button = {
   display: "block",
 };
 
-const link = {
-  ...paragraph,
-  color: "#ff5a5f",
-  display: "block",
-};
-
-const reportLink = {
-  fontSize: "14px",
-  color: "#9ca299",
-  textDecoration: "underline",
-};
-
 const hr = {
   borderColor: "#cccccc",
   margin: "20px 0",
-};
-
-const footer = {
-  color: "#9ca299",
-  fontSize: "14px",
-  marginBottom: "10px",
 };
