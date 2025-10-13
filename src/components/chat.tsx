@@ -40,7 +40,7 @@ export function Chat({
   } = useChat<ChatMessage>({
     id,
     messages: initialMessages,
-    experimental_throttle: 100,
+    experimental_throttle: 50, // Reduced for faster updates
     generateId: generateUUID,
     transport: new DefaultChatTransport({
       api: "/api/chat",
@@ -50,7 +50,7 @@ export function Chat({
           body: {
             id,
             message: messages.at(-1),
-
+            messages: messages.slice(0, -1), // Send all previous messages
             ...body,
           },
         };

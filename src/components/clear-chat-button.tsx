@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "./ui/button";
 import { deleteChatId } from "@/app/(chat)/actions";
 import { toast } from "sonner";
+
 const ClearChatButton = () => {
   return (
     <Button

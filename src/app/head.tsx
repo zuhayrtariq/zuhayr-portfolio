@@ -59,7 +59,7 @@ const Head = () => {
       "https://www.upwork.com/freelancers/zuhayr",
       "https://linkedin.com/in/zuhayr-tariq",
     ],
-    email: "TariqZuhayr@gmail.com",
+    email: "zuhayrtariq4@gmail.com",
     address: {
       "@type": "PostalAddress",
       addressCountry: "Pakistan",
@@ -90,7 +90,7 @@ const Head = () => {
 
       {/* Canonical URL */}
       <link rel="canonical" href={currentUrl} />
-      <link rel="me" href="mailto:TariqZuhayr@gmail.com" />
+      <link rel="me" href="mailto:zuhayrtariq4@gmail.com" />
 
       {/* Open Graph Meta Tags */}
       <meta property="og:type" content={meta.type} />

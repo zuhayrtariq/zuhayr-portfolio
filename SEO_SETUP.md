@@ -37,7 +37,7 @@ Replace these placeholders in `src/app/layout.tsx`:
 
 ```typescript
 verification: {
-  google: "your-google-verification-code", // Replace with actual code
+  google: "SDIF20D5qYtRWbuFWvVITF0BYmcj1xvOynhNHPMcWJU", // Replace with actual code
   other: {
     "msvalidate.01": "your-bing-verification-code", // Optional Bing verification
   },

@@ -7,22 +7,10 @@ import {
   stepCountIs,
 } from "ai";
 import { type RequestHints, systemPrompt } from "@/lib/ai/prompts";
-import {
-  createStreamId,
-  getChatById,
-  getMessagesByChatId,
-  saveChat,
-  saveMessages,
-} from "@/lib/db/queries";
-import { convertToUIMessages, generateUUID } from "@/lib/utils";
+import { generateUUID } from "@/lib/utils";
 import { isProductionEnvironment } from "@/lib/constants";
 import { postRequestBodySchema, type PostRequestBody } from "./schema";
-import { geolocation, ipAddress } from "@vercel/functions";
-// import {
-//   // createResumableStreamContext,
-//   // type ResumableStreamContext,
-// } from "resumable-stream";
-// import { after } from "next/server";
+import { geolocation } from "@vercel/functions";
 import { ChatSDKError } from "@/lib/errors";
 import type { ChatMessage } from "@/lib/types";
 import { openai } from "@ai-sdk/openai";
@@ -56,35 +44,27 @@ export const maxDuration = 60;
 export async function POST(request: Request) {
   let requestBody: PostRequestBody;
 
+  let json;
   try {
-    const json = await request.json();
+    json = await request.json();
     requestBody = postRequestBodySchema.parse(json);
   } catch (error) {
-    console.log("Error:", error);
+    console.error("Request parsing error:", error);
+    console.error("Request body:", JSON.stringify(json, null, 2));
     return new ChatSDKError("bad_request:api").toResponse();
   }
 
   try {
+    //@ts-expect-error ignore next line
     const {
       id,
       message,
+      messages = [], // Accept messages from client instead of database
     }: {
       id: string;
       message: ChatMessage;
+      messages?: ChatMessage[];
     } = requestBody;
-
-    const ip = ipAddress(request) || "unknown";
-
-    const chat = await getChatById({ id });
-
-    if (!chat) {
-      await saveChat({
-        id,
-      });
-    }
-
-    const messagesFromDb = await getMessagesByChatId({ id });
-    const uiMessages = [...convertToUIMessages(messagesFromDb), message];
 
     const { longitude, latitude, city, country } = geolocation(request);
 
@@ -95,51 +75,49 @@ export async function POST(request: Request) {
       country,
     };
 
-    await saveMessages({
-      messages: [
-        {
-          chatId: id,
-          id: message.id,
-          role: "user",
-          parts: message.parts,
-          ip,
-          createdAt: new Date(),
-        },
-      ],
-    });
+    // Use messages from client instead of database
+    const uiMessages = [...messages, message];
 
-    const streamId = generateUUID();
-    await createStreamId({ streamId, chatId: id });
-    // @ts-expect-error ignore next line
-    const contextChunks = await getRelevantChunks(message.parts[0]?.text);
+    // Get context chunks asynchronously to avoid blocking
 
-    // Build a system-level context message from relevant chunks
-    const contextMessage: ChatMessage = {
-      id: generateUUID(),
-      role: "system",
-      parts: [
-        {
-          type: "text",
-          text: contextChunks.join("\n\n"),
-        },
-      ],
-    };
-
-    // Prepend context to messages
-    const contextInjectedMessages = [contextMessage, ...uiMessages];
+    //@ts-expect-error ignore next line
+    const contextPromise = getRelevantChunks(message.parts[0]?.text).catch(
+      () => []
+    );
 
     const stream = createUIMessageStream({
-      execute: ({ writer: dataStream }) => {
+      execute: async ({ writer: dataStream }) => {
+        // Wait for context chunks
+        const contextChunks = await contextPromise;
+
+        // Build a system-level context message from relevant chunks
+        const contextMessage: ChatMessage = {
+          id: generateUUID(),
+          role: "system",
+          parts: [
+            {
+              type: "text",
+              text:
+                contextChunks.length > 0
+                  ? contextChunks.join("\n\n")
+                  : "You are Zuhayr Tariq, a Top Rated Full Stack Web Developer specializing in Next.js, React, Node.js, and AI-powered applications. Help users with web development questions and showcase your expertise.",
+            },
+          ],
+        };
+
+        // Prepend context to messages
+        const contextInjectedMessages = [contextMessage, ...uiMessages];
+
         const result = streamText({
-          model: openai("gpt-4.1-mini"),
+          model: openai("gpt-4o-mini"), // Using faster model
           system: systemPrompt({
             selectedChatModel: "chat-model",
             requestHints,
           }),
           messages: convertToModelMessages(contextInjectedMessages),
-          stopWhen: stepCountIs(5),
+          stopWhen: stepCountIs(3), // Reduced from 5 for faster responses
           experimental_transform: smoothStream({ chunking: "word" }),
-
+          // maxTokens: 1000, // Limit response length for faster generation
           experimental_telemetry: {
             isEnabled: isProductionEnvironment,
             functionId: "stream-text",
@@ -156,16 +134,10 @@ export async function POST(request: Request) {
       },
       generateId: generateUUID,
       onFinish: async ({ messages }) => {
-        await saveMessages({
-          messages: messages.map((message) => ({
-            id: message.id,
-            ip,
-            role: message.role,
-            parts: message.parts,
-            createdAt: new Date(),
-            attachments: [],
-            chatId: id,
-          })),
+        // No database operations - just log for debugging
+        console.log("Chat completed:", {
+          chatId: id,
+          messageCount: messages.length,
         });
       },
       onError: (e) => {
@@ -174,15 +146,6 @@ export async function POST(request: Request) {
       },
     });
 
-    // const streamContext = getStreamContext();
-
-    // if (streamContext) {
-    //   return new Response(
-    //     await streamContext.resumableStream(streamId, () =>
-    //       stream.pipeThrough(new JsonToSseTransformStream())
-    //     )
-    //   );
-    // }
     return new Response(stream.pipeThrough(new JsonToSseTransformStream()));
   } catch (error) {
     if (error instanceof ChatSDKError) {

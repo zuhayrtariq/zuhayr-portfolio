@@ -45,7 +45,7 @@ export const seoConfig = {
     github: "https://github.com/zuhayrtariq",
     linkedin: "https://linkedin.com/in/zuhayr-tariq",
     upwork: "https://www.upwork.com/freelancers/zuhayr",
-    email: "TariqZuhayr@gmail.com",
+    email: "zuhayrtariq4@gmail.com",
   },
 
   images: {
@@ -92,7 +92,7 @@ export const seoConfig = {
         "https://www.upwork.com/freelancers/zuhayr",
         "https://linkedin.com/in/zuhayr-tariq",
       ],
-      email: "TariqZuhayr@gmail.com",
+      email: "zuhayrtariq4@gmail.com",
       address: {
         "@type": "PostalAddress",
         addressCountry: "Pakistan",

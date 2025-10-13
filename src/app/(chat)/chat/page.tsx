@@ -1,26 +1,11 @@
 import { Chat } from "@/components/chat";
-import { getChatById, getMessagesByChatId } from "@/lib/db/queries";
-import { convertToUIMessages, generateUUID } from "@/lib/utils";
+import { generateUUID } from "@/lib/utils";
 import { cookies } from "next/headers";
 
 export default async function Page() {
   const cookieStore = await cookies();
-  const id = cookieStore.get("chat-id")?.value;
+  const id = cookieStore.get("chat-id")?.value || generateUUID();
 
-  if (!id) {
-    const newId = generateUUID();
-    return <Chat id={newId} initialMessages={[]} autoResume={true} />;
-  }
-  const chat = await getChatById({ id });
-  if (!chat) {
-    return <Chat id={id} initialMessages={[]} autoResume={true} />;
-  }
-
-  const messagesFromDb = await getMessagesByChatId({
-    id,
-  });
-
-  const uiMessages = convertToUIMessages(messagesFromDb);
-
-  return <Chat id={chat.id} initialMessages={uiMessages} autoResume={true} />;
+  // No database operations - just use session-based chat
+  return <Chat id={id} initialMessages={[]} autoResume={false} />;
 }

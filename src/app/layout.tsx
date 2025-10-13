@@ -81,10 +81,10 @@ export const metadata: Metadata = {
     images: ["https://zuhayrr.com/images/me.png"],
   },
   verification: {
-    google: "your-google-verification-code", // You'll need to add this from Google Search Console
-    other: {
-      "msvalidate.01": "your-bing-verification-code", // Add Bing verification if needed
-    },
+    google: "SDIF20D5qYtRWbuFWvVITF0BYmcj1xvOynhNHPMcWJU", // You'll need to add this from Google Search Console
+    // other: {
+    //   "msvalidate.01": "your-bing-verification-code", // Add Bing verification if needed
+    // },
   },
   alternates: {
     canonical: "https://zuhayrr.com",

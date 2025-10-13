@@ -1,5 +1,33 @@
 export const projects = [
   {
+    title: "Hypecaster",
+    description:
+      "The HypeCaster AI Agent creates a viral script, generates a natural voiceover, matches it with amazing B-roll, and adds scroll-stopping captions to create a realistic AI video.",
+    stack: [
+      "NextJS",
+      "Open AI",
+      "Supabase",
+      "TypeScript",
+      "Clerk",
+      "TailwindCSS",
+    ],
+    link: "https://hypecaster.ai",
+  },
+  {
+    title: "TrakLienwc",
+    description:
+      "Developed a modern, SEO-optimized website for TrakLien LLC, a US-based company specializing in medical billing., coding, and lien management for Personal Injury and Workers' Compensation providers.",
+    stack: [
+      "NextJS",
+      "Open AI",
+      "Supabase",
+      "TypeScript",
+      "Vercel AI",
+      "Snowflake",
+    ],
+    link: "https://traklienwc.com",
+  },
+  {
     title: "Analytra",
     description:
       "Analytra is an AI-powered analytics platform that connects data from websites, ad platforms, CRMs, Stripe, and social media. It offers natural language insights, automated dashboard summaries with trends and recommendations, and dynamic, collaborative reporting with chart-rich PDF exports.",

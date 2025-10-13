@@ -82,7 +82,7 @@ const Contact = () => {
       <div className="flex flex-col items-center justify-center gap-5 pt-10 w-full">
         <div className="flex flex-col items-center justify-center w-full gap-5 lg:flex-row">
           <Link
-            href="mailto:TariqZuhayr@gmail.com"
+            href="mailto:zuhayrtariq4@gmail.com"
             className="flex-[0.5] w-full lg:w-auto"
           >
             <Button
