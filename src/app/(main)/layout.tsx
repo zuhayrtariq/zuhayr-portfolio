@@ -5,9 +5,20 @@ import { TracingBeam } from "@/components/ui/tracing-beam";
 import { SparklesCore } from "@/components/ui/sparkles";
 import { Navbar } from "@/components";
 export const metadata: Metadata = {
-  title: "Zuhayr Tariq",
+  title: "Zuhayr Tariq - Portfolio & Projects",
   description:
-    "This is my portfolio website. My name is Zuhayr Tariq and I am a Fullstack Web Developer.",
+    "Explore Zuhayr Tariq's portfolio showcasing full-stack web development projects including AI-powered applications, e-commerce platforms, and modern web technologies. Top rated freelance developer available for hire.",
+  keywords: [
+    "Zuhayr Tariq Portfolio",
+    "Zuhayr Projects",
+    "Full Stack Developer Portfolio",
+    "Web Development Projects",
+    "Next.js Projects",
+    "React Projects",
+    "AI Applications",
+    "E-commerce Development",
+    "Freelance Developer Portfolio",
+  ],
 };
 
 export default function RootLayout({

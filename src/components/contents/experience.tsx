@@ -9,8 +9,8 @@ const Experience = () => {
       <TimeLine>
         {jobs.map((exp, i) => (
           <TimeLineItem key={i} active={exp.active} last={jobs.length - 1 == i}>
-            <div className="flex items-center gap-1">
-              <div className="relative w-8 h-8">
+            <div className="flex items-center gap-2">
+              <div className="relative w-8 h-8 ">
                 <Image src={exp.icon} alt={exp.company_name} fill />
               </div>
               <LinkPreview url={exp.link}>
