@@ -42,18 +42,24 @@ const Projects = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5 w-full">
           {projects.length &&
-            projects.slice(0, 4).map((project: ProjectProps, index) => (
-              <AnimationContainer key={project.title} delay={0.2 * index + 0.1}>
-                <MagicCard
-                  className="p-2"
-                  gradientSize={100}
-                  gradientFrom="rgba(14,165,233,1)"
-                  gradientTo="rgba(59,130,246,1)"
+            projects
+              .filter((p: ProjectProps) => p.featured)
+              .slice(0, 4)
+              .map((project: ProjectProps, index) => (
+                <AnimationContainer
+                  key={project.title}
+                  delay={0.2 * index + 0.1}
                 >
-                  <Project project={project} />
-                </MagicCard>
-              </AnimationContainer>
-            ))}
+                  <MagicCard
+                    className="p-2"
+                    gradientSize={100}
+                    gradientFrom="rgba(14,165,233,1)"
+                    gradientTo="rgba(59,130,246,1)"
+                  >
+                    <Project project={project} />
+                  </MagicCard>
+                </AnimationContainer>
+              ))}
         </div>
       </AnimationContainer>
 

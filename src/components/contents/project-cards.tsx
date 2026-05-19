@@ -75,9 +75,23 @@ const Card = ({ project }: { project: ProjectProps }) => {
       <MagicCard gradientSize={150} className="w-full">
         <div className="flex-col items-start p-4 lg:p-5">
           <div className="flex flex-col items-start space-y-4">
-            <h4 className="text-lg font-medium text-neutral-100">
-              {project?.title}
-            </h4>
+            <div className="flex items-center justify-between gap-3 w-full flex-wrap">
+              <h4 className="text-lg font-medium text-neutral-100">
+                {project?.title}
+              </h4>
+              <div className="flex items-center gap-2">
+                {project?.featured && (
+                  <span className="text-[10px] uppercase tracking-wider font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
+                    Featured
+                  </span>
+                )}
+                {project?.role && (
+                  <span className="text-[10px] uppercase tracking-wider font-medium px-2 py-0.5 rounded-full bg-blue-500/10 text-sky-300 border border-blue-500/30">
+                    {project.role}
+                  </span>
+                )}
+              </div>
+            </div>
             <p className="text-sm text-neutral-300">{project?.description}</p>
             <div className="flex flex-col lg:flex-row items-start justify-start space-y-4 lg:space-y-0 lg:justify-between w-full">
               <div className="flex items-center justify-start flex-wrap gap-2 mt-auto">

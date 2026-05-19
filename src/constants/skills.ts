@@ -1,31 +1,77 @@
 export const SKILLS = [
     {
-        title: 'Languages',
-        stack: ["JavaScript", "TypeScript", "Python", "C++"],
+        title: "Languages",
+        stack: ["TypeScript", "JavaScript", "Python", "SQL", "C++"],
     },
     {
-        title: "Frontend Frameworks",
-        stack: ["ReactJS", "NextJS", "Vite"],
+        title: "Frontend",
+        stack: ["Next.js (App Router)", "React", "React Native", "Expo", "Vite"],
     },
     {
-        title: "Javascript Libraries",
-        stack: ["React Query", "Zustand", "Axios",]
+        title: "Backend",
+        stack: ["Node.js", "Express", "NestJS", "Hono", "tRPC", "FastAPI", "Flask", "GraphQL"],
     },
     {
-        title: "CSS Styling & Motion Libraries",
-        stack: ["Tailwind CSS", "Framer Motion", "Styled Components", "Chakra UI", "Magic UI", "Aceternity UI", "Material UI", "Shadcn UI", "Next UI", "Bootstrap"],
+        title: "AI, Agents & Voice",
+        stack: [
+            "OpenAI",
+            "OpenAI Realtime API",
+            "Vapi",
+            "Anthropic Claude",
+            "Gemini",
+            "Vercel AI SDK",
+            "LangChain",
+            "LangGraph",
+            "RAG Pipelines",
+            "Pinecone",
+            "Tool / Function Calling",
+            "ElevenLabs",
+            "Deepgram",
+            "Twilio",
+        ],
     },
     {
-        title: "Backend Technologies",
-        stack: ["NodeJS", "ExpressJS", "Mongoose", "Prisma", "GraphQL", "Flask"],
+        title: "Databases & ORMs",
+        stack: [
+            "PostgreSQL",
+            "MongoDB",
+            "Supabase",
+            "Neon",
+            "Convex",
+            "Firebase",
+            "Redis / Upstash",
+            "Drizzle ORM",
+            "Prisma",
+            "Mongoose",
+        ],
     },
     {
-        title: "Databases",
-        stack: ["MongoDB", "Firebase", "Supabase", "NeonDB"],
+        title: "Auth & Payments",
+        stack: ["Clerk", "Auth.js (NextAuth)", "Stripe", "Stripe Connect"],
     },
     {
-        title: "Software & Tools",
-        stack: ["VS Code", "Cursor", "Git", "GitHub", "Eslint", "Figma", "VN", "Postman", "Notion"]
+        title: "State, Data & Realtime",
+        stack: ["TanStack Query", "Zustand", "Axios", "WebSockets", "LiveBlocks"],
     },
-
+    {
+        title: "Styling & Motion",
+        stack: [
+            "Tailwind CSS",
+            "Shadcn UI",
+            "Aceternity UI",
+            "Magic UI",
+            "Radix UI",
+            "Framer Motion",
+            "Material UI",
+            "Chakra UI",
+        ],
+    },
+    {
+        title: "Cloud, DevOps & Infra",
+        stack: ["Vercel", "AWS", "Cloudflare", "Docker", "GitHub Actions", "Resend"],
+    },
+    {
+        title: "Tools",
+        stack: ["Cursor", "VS Code", "Git", "GitHub", "Figma", "Postman", "Notion", "ESLint"],
+    },
 ];

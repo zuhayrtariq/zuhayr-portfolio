@@ -16,6 +16,8 @@ export interface Project {
   github?: string;
   link: string;
   stack?: string[];
+  featured?: boolean;
+  role?: string;
 }
 
 export interface AboutProps {

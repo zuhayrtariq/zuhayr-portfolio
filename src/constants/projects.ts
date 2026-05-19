@@ -1,31 +1,20 @@
 export const projects = [
   {
-    title: "Hypecaster",
+    title: "Starling AIX",
     description:
-      "The HypeCaster AI Agent creates a viral script, generates a natural voiceover, matches it with amazing B-roll, and adds scroll-stopping captions to create a realistic AI video.",
+      "JARVIS for your business. Starling AIX is an enterprise AI platform built on the Universal Cognitive Architecture — a sovereign Org Brain that loads your organization's knowledge into every LLM conversation. I lead engineering across the Next.js web platform, the live Domain Language Model (DLM) playgrounds, and the agent orchestration layer that turns stateless models into context-aware assistants.",
     stack: [
       "NextJS",
-      "Open AI",
-      "Supabase",
       "TypeScript",
-      "Clerk",
-      "TailwindCSS",
-    ],
-    link: "https://hypecaster.ai",
-  },
-  {
-    title: "TrakLienwc",
-    description:
-      "Developed a modern, SEO-optimized website for TrakLien LLC, a US-based company specializing in medical billing., coding, and lien management for Personal Injury and Workers' Compensation providers.",
-    stack: [
-      "NextJS",
-      "Open AI",
-      "Supabase",
-      "TypeScript",
+      "OpenAI",
       "Vercel AI",
-      "Snowflake",
+      "TailwindCSS",
+      "Supabase",
+      "Pinecone",
     ],
-    link: "https://traklienwc.com",
+    link: "https://starlingaix.com",
+    featured: true,
+    role: "Lead Developer",
   },
   {
     title: "Analytra",
@@ -40,6 +29,37 @@ export const projects = [
       "Snowflake",
     ],
     link: "https://analytra.io",
+    featured: true,
+  },
+  {
+    title: "Hypecaster",
+    description:
+      "The HypeCaster AI Agent creates a viral script, generates a natural voiceover, matches it with amazing B-roll, and adds scroll-stopping captions to create a realistic AI video.",
+    stack: [
+      "NextJS",
+      "Open AI",
+      "Supabase",
+      "TypeScript",
+      "Clerk",
+      "TailwindCSS",
+    ],
+    link: "https://hypecaster.ai",
+    featured: true,
+  },
+  {
+    title: "TrakLienwc",
+    description:
+      "Developed a modern, SEO-optimized website for TrakLien LLC, a US-based company specializing in medical billing., coding, and lien management for Personal Injury and Workers' Compensation providers.",
+    stack: [
+      "NextJS",
+      "Open AI",
+      "Supabase",
+      "TypeScript",
+      "Vercel AI",
+      "Snowflake",
+    ],
+    link: "https://traklienwc.com",
+    featured: true,
   },
   {
     title: "ZFit-AI",

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { ChevronRightIcon, PlusIcon } from "lucide-react";
+import { ChevronRightIcon, PlusIcon, SparklesIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
@@ -36,14 +36,20 @@ const Hero = () => {
       <AnimationContainer
         delay={0.3}
         animation="slide-up"
-        className="flex items-center justify-center gap-1 px-5 py-2 rounded-full bg-background border border-border/80 w-max mx-auto group mt-6"
+        className="flex flex-wrap items-center justify-center gap-2 w-max mx-auto mt-6"
       >
-        <div className="flex flex-col  flex-shrink-0">
+        <div className="flex items-center gap-1 px-5 py-2 rounded-full bg-background border border-border/80 group">
           <p className="text-sm font-medium text-foreground/70">Greetings</p>
+          <span className="text-xl wave">
+            <Icons.wave className="size-6 -rotate-[30deg] group-hover:scale-110 transition-all duration-300" />
+          </span>
         </div>
-        <span className="text-xl wave ">
-          <Icons.wave className="size-6 -rotate-[30deg] group-hover:scale-110 transition-all duration-300" />
-        </span>
+        <div className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/10 via-sky-500/10 to-emerald-500/10 border border-blue-500/30">
+          <SparklesIcon className="size-3.5 text-sky-300" />
+          <p className="text-xs font-medium text-foreground/90 tracking-wide">
+            Top Rated Plus on Upwork
+          </p>
+        </div>
       </AnimationContainer>
 
       {isInView && (
@@ -100,10 +106,19 @@ const Hero = () => {
         className="relative mt-6 flex flex-col items-center justify-center gap-y-6 max-w-3xl mx-auto text-center"
       >
         <p className="text-base text-muted-foreground !leading-relaxed">
-          Your one-stop solution for professional web development and design.{" "}
+          Full-Stack & AI Developer · Lead Developer at{" "}
+          <Link
+            href="https://starlingaix.com"
+            target="_blank"
+            className="text-foreground underline underline-offset-4 decoration-blue-500/60 hover:decoration-blue-400"
+          >
+            Starling AIX
+          </Link>
+          .{" "}
           <span className="inline-block lg:inline-block">
-            A Full Stack Web Developer who can help bring your projects to life,
-            from concept to completion.
+            I ship production web apps in Next.js, TypeScript and Node, and
+            specialize in AI agents, RAG and real-time voice with Vapi and the
+            OpenAI Realtime API.
           </span>
         </p>
       </AnimationContainer>
@@ -161,7 +176,7 @@ const Hero = () => {
           className="flex flex-col items-center justify-center my-32"
         >
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 py-10 w-full lg:max-w-screen-md">
-            {[25, 3, 8].map((value, index) => (
+            {[30, 4, 10].map((value, index) => (
               <AnimationContainer
                 key={index}
                 animation="scale"
@@ -181,7 +196,7 @@ const Hero = () => {
                 </div>
                 <p className="text-base text-muted-foreground text-center mt-4">
                   {index === 0 && "Projects Completed"}
-                  {index === 1 && "Year of Experience"}
+                  {index === 1 && "Years of Experience"}
                   {index === 2 && "Clients Served"}
                 </p>
               </AnimationContainer>

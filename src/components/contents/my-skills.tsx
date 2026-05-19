@@ -17,15 +17,17 @@ const MySkills = () => {
           </h2>
 
           <p className="text-justify lg:leading-7 text-foreground/80 lg:text-start mt-10">
-            A creative problem solver with over 3 years of programming
-            experience, I&apos;ve explored diverse programming languages,
-            libraries, and technology stacks, honing my skills in both Frontend,
-            Backend, and App development.
+            A creative problem solver with 4+ years of programming experience
+            across full-stack web, AI, and real-time voice. I move fast across
+            the modern TypeScript stack — from Next.js and React on the
+            frontend to Node, serverless and Postgres on the backend — and
+            I&apos;ve built production agents, RAG pipelines and voice
+            assistants on OpenAI, Anthropic, Vapi and the OpenAI Realtime API.
           </p>
 
           <p className="text-justify lg:leading-7 text-foreground/80 lg:text-start mt-4">
             Eager to learn and adept at adopting new technologies, I thrive on
-            expanding my skill set in the ever-evolving tech landscape.
+            expanding my skill set in the ever-evolving AI and web landscape.
           </p>
         </div>
       </AnimationContainer>

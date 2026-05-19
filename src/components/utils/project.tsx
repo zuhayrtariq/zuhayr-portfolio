@@ -33,7 +33,14 @@ const Project = ({ project }: Props) => {
   return (
     <div className="w-full rounded-xl">
       <div className="flex flex-col p-2 lg:p-4">
-        <h4 className="text-lg font-medium">{project.title}</h4>
+        <div className="flex items-center justify-between gap-2">
+          <h4 className="text-lg font-medium">{project.title}</h4>
+          {project.role && (
+            <span className="text-[10px] uppercase tracking-wider font-medium px-2 py-0.5 rounded-full bg-blue-500/10 text-sky-300 border border-blue-500/30">
+              {project.role}
+            </span>
+          )}
+        </div>
         <p className="text-sm text-foreground/80 mt-2">
           {truncateDescription(project.description)}
         </p>
