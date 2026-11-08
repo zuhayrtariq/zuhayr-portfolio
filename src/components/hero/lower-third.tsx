@@ -9,12 +9,12 @@ const LowerThird = ({ className }: LowerThirdProps) => {
       <p className="text-ui leading-tight text-fog">
         Lead Developer,{" "}
         <a
-          href="https://starlingaix.com"
+          href="https://www.starlingmx.com"
           target="_blank"
           rel="noopener noreferrer"
           className="link-underline"
         >
-          Starling AIX
+          Starling MX
         </a>
       </p>
     </div>

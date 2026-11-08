@@ -1,7 +1,7 @@
 # Design: "The Interview"
 
 ## Brief
-- **Subject:** Zuhayr Tariq builds AI products people can talk to: voice agents, RAG and agent systems, and the web platforms around them. He is Lead Developer at Starling AIX and Top Rated Plus on Upwork.
+- **Subject:** Zuhayr Tariq builds AI products people can talk to: voice agents, RAG and agent systems, and the web platforms around them. He is Lead Developer at Starling MX and Top Rated Plus on Upwork.
 - **Audience:** founders and product teams who opened a shared link from a proposal, a DM or WhatsApp. They are deciding in under a minute whether he is worth a call.
 - **Primary job:** prove he builds conversational AI better than the next profile by letting visitors talk to his AI self, then back it up with shipped work, then make starting a project easy.
 - **Pinned by the client:** dark, editorial, WebGL, big type, a custom shader hero, smooth scroll, a 3D scene that responds to the cursor.
@@ -62,7 +62,7 @@ HERO, after the title card (desktop, 100svh)
 |  ( Ask me anything.......................... [mic] [ask] )               |
 |                                                                          |
 |  Zuhayr Tariq                 "Hi, I'm Zuhayr. Ask me what I've          |
-|  Lead Developer, Starling AIX   built, or how I'd build yours."          |
+|  Lead Developer, Starling MX   built, or how I'd build yours."          |
 |  ^ lower third                  ^ subtitles, centered, max 42ch/line     |
 +--------------------------------------------------------------------------+
 
@@ -83,7 +83,7 @@ SECTION (Q&A)
 |  +------------------------------------------------------------------+   |
 |  |  footage frame 16:9, pulls into focus on arrival                 |   |
 |  +------------------------------------------------------------------+   |
-|  Starling AIX        Lead Developer, 2026        Visit  Case study       |
+|  Starling MX        Lead Developer, 2026        Visit  Case study       |
 |  One plain sentence about what it is and what I did.                     |
 +--------------------------------------------------------------------------+
 ```

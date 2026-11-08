@@ -2,15 +2,15 @@ import { Project } from "@/types";
 
 export const projects: Project[] = [
   {
-    title: "Starling AIX",
-    slug: "starling-aix",
-    image: "/work/starling-aix.jpg",
+    title: "Starling MX",
+    slug: "starling-mx",
+    image: "/work/starling-mx.jpg",
     summary:
       "An enterprise AI platform that loads an organization's knowledge into every model call. I lead engineering, from the web platform to the agent layer.",
     description:
-      "JARVIS for your business. Starling AIX is an enterprise AI platform built on the Universal Cognitive Architecture — a sovereign Org Brain that loads your organization's knowledge into every LLM conversation. I lead engineering across the Next.js web platform, the live Domain Language Model (DLM) playgrounds, and the agent orchestration layer that turns stateless models into context-aware assistants.",
+      "JARVIS for your business. Starling MX is an enterprise AI platform built on the Universal Cognitive Architecture — a sovereign Org Brain that loads your organization's knowledge into every LLM conversation. I lead engineering across the Next.js web platform, the live Domain Language Model (DLM) playgrounds, and the agent orchestration layer that turns stateless models into context-aware assistants.",
     stack: ["NextJS", "TypeScript", "OpenAI", "Vercel AI", "TailwindCSS", "Supabase", "Pinecone"],
-    link: "https://starlingaix.com",
+    link: "https://www.starlingmx.com",
     featured: true,
     role: "Lead Developer",
     year: "2026",

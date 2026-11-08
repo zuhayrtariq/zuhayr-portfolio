@@ -4,7 +4,7 @@ import { chromium } from "playwright-core";
 import { mkdir } from "node:fs/promises";
 
 const SITES = {
-  "starling-aix": "https://starlingaix.com",
+  "starling-mx": "https://www.starlingmx.com",
   "zfit-ai": "https://zfit-ai.vercel.app",
   hypecaster: "https://hypecaster.ai",
   analytra: "https://analytra.io",

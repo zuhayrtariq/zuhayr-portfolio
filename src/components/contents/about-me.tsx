@@ -14,12 +14,12 @@ const AboutMe = () => {
           I&apos;m based in Pakistan and work with clients worldwide. Day to day I lead engineering
           at{" "}
           <a
-            href="https://starlingaix.com"
+            href="https://www.starlingmx.com"
             target="_blank"
             rel="noopener noreferrer"
             className="link-underline text-caption"
           >
-            Starling AIX
+            Starling MX
           </a>
           , where we&apos;re building &ldquo;JARVIS for your business&rdquo; on a Universal Cognitive
           Architecture. Most of my work is in TypeScript, with agents, RAG pipelines and real-time

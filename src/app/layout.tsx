@@ -8,7 +8,7 @@ import { Analytics } from "@vercel/analytics/react";
 import type { Metadata, Viewport } from "next";
 
 const description =
-  "Zuhayr Tariq is a full-stack and AI engineer and Lead Developer at Starling AIX. He builds voice agents, RAG and agent systems, and the Next.js platforms around them.";
+  "Zuhayr Tariq is a full-stack and AI engineer and Lead Developer at Starling MX. He builds voice agents, RAG and agent systems, and the Next.js platforms around them.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -80,7 +80,7 @@ const personJsonLd = {
   url: SITE.url,
   image: `${SITE.url}/images/me.png`,
   jobTitle: "Lead Developer",
-  worksFor: { "@type": "Organization", name: "Starling AIX", url: "https://starlingaix.com" },
+  worksFor: { "@type": "Organization", name: "Starling MX", url: "https://www.starlingmx.com" },
   description,
   knowsAbout: [
     "Voice AI",

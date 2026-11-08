@@ -7,7 +7,7 @@ export const contentType = "image/png";
 
 const TITLE = "I build AI products people can talk to.";
 const NAME = "Zuhayr Tariq";
-const ROLE = "Full-stack and AI engineer, Lead Developer at Starling AIX";
+const ROLE = "Full-stack and AI engineer, Lead Developer at Starling MX";
 
 export default async function Image() {
   const [display, regular, bold] = await Promise.all([
