@@ -14,6 +14,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.8,
     })),
-    { url: `${SITE.url}/chat`, lastModified, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${SITE.url}/talk`, lastModified, changeFrequency: "monthly", priority: 0.7 },
   ];
 }

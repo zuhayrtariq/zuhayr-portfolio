@@ -22,6 +22,9 @@ const nextConfig: NextConfig = {
     removeConsole: process.env.NODE_ENV === "production",
   },
   poweredByHeader: false,
+  async redirects() {
+    return [{ source: "/chat", destination: "/talk", permanent: true }];
+  },
 };
 
 export default nextConfig;

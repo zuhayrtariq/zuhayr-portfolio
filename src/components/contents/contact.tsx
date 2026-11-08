@@ -1,9 +1,11 @@
 "use client";
 
 import { SITE } from "@/constants/site";
+import { CONTACT_TOPIC_EVENT, CONTACT_TOPIC_KEY } from "@/lib/contact-topic";
 import { FormValidator, FormValues } from "@/lib/validators/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
@@ -18,6 +20,18 @@ const Contact = () => {
     mode: "onBlur",
     defaultValues: { name: "", email: "", phone: "", message: "" },
   });
+
+  useEffect(() => {
+    const prefill = (topic: string | null) => {
+      if (topic && !form.getValues("message")) {
+        form.setValue("message", `I'd like to talk about ${topic.replace(/[.\s]+$/, "")}.`);
+      }
+    };
+    prefill(sessionStorage.getItem(CONTACT_TOPIC_KEY));
+    const onTopic = (e: Event) => prefill((e as CustomEvent<string>).detail);
+    window.addEventListener(CONTACT_TOPIC_EVENT, onTopic);
+    return () => window.removeEventListener(CONTACT_TOPIC_EVENT, onTopic);
+  }, [form]);
 
   const { mutate: send, isPending, isSuccess, isError, reset } = useMutation({
     mutationFn: async (values: FormValues) => {

@@ -14,8 +14,7 @@ export const NAV_LINKS = [
   { name: "Work", href: "/#work" },
   { name: "Experience", href: "/#experience" },
   { name: "About", href: "/#about" },
-  { name: "Talk to me", href: "/chat" },
+  { name: "Talk to me", href: "/talk" },
 ];
 
-export const askAiHref = (question: string) =>
-  `/chat?query=${encodeURIComponent(question)}`;
+export const askAiHref = (question: string) => `/talk?q=${encodeURIComponent(question)}`;
