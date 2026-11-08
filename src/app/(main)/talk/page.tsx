@@ -1,6 +1,5 @@
 import TalkView from "@/components/talk/talk-view";
 import type { Metadata } from "next";
-import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Talk to me",
@@ -11,9 +10,7 @@ export const metadata: Metadata = {
 export default function TalkPage() {
   return (
     <main id="main">
-      <Suspense>
-        <TalkView />
-      </Suspense>
+      <TalkView />
     </main>
   );
 }

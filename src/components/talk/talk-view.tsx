@@ -8,7 +8,6 @@ import { useConversation } from "@/hooks/use-conversation";
 import { cn } from "@/lib/utils";
 import { Volume2Icon, VolumeXIcon, XIcon } from "lucide-react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const TALK_SUGGESTIONS = [
@@ -17,19 +16,19 @@ const TALK_SUGGESTIONS = [
 ];
 
 const TalkView = () => {
-  const params = useSearchParams();
-  const initial = params.get("q") ?? params.get("query");
-  const asked = useRef(false);
   const [showTranscript, setShowTranscript] = useState(false);
+  const asked = useRef(false);
   const { caption, spokenWords, speaking, busy, ask, phase, soundOn, setSoundOn, mic, action, transcript, question } =
-    useConversation({ greetingDelayMs: initial ? 60_000 : 600 });
+    useConversation({ greetingDelayMs: 600 });
 
+  // Read ?q= after mount (not with useSearchParams) so the page still renders on the server.
   useEffect(() => {
-    if (initial && !asked.current) {
-      asked.current = true;
-      ask(initial);
-    }
-  }, [initial, ask]);
+    if (asked.current) return;
+    asked.current = true;
+    const params = new URLSearchParams(window.location.search);
+    const initial = params.get("q") ?? params.get("query");
+    if (initial) void ask(initial);
+  }, [ask]);
 
   return (
     <section aria-labelledby="talk-title" className="relative isolate flex min-h-[100svh] flex-col overflow-hidden">
