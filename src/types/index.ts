@@ -12,12 +12,19 @@ export interface TimelineItemProps {
 
 export interface Project {
   title: string;
+  /** One plain sentence, used in lists. */
+  summary: string;
   description: string;
   github?: string;
   link: string;
   stack?: string[];
   featured?: boolean;
   role?: string;
+  year?: string;
+  /** Present when the project has a case-study page at /work/[slug]. */
+  slug?: string;
+  /** Screenshot of the live product, under /public. */
+  image?: string;
 }
 
 export interface AboutProps {

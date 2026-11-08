@@ -1,24 +1,27 @@
 import { projects } from "@/constants/projects";
-import ProjectCards from "../contents/project-cards";
+import ProjectRow from "../contents/project-row";
 
-const ProjectSection = () => {
+const ProjectsSection = () => {
   return (
-    <div className="mx-auto max-w-6xl px-5 pb-24 pt-16 md:px-8 md:pt-24">
+    <div className="mx-auto max-w-[1440px] px-[clamp(20px,4vw,64px)] pb-32 pt-36 md:pt-48">
       <header className="max-w-3xl">
-        <h1 className="text-[44px] font-semibold leading-[1.05] tracking-[-0.03em] md:text-[64px]">
-          Projects
+        <h1 className="font-display text-[clamp(56px,8vw,128px)] leading-[0.92] font-semibold">
+          Everything I&apos;ve built
         </h1>
-        <p className="mt-5 text-[19px] leading-relaxed text-muted-foreground">
-          {projects.length} things I&apos;ve built, from the AI platform I lead
-          today to early React experiments. Most client work is under NDA, so
-          what&apos;s here is public products and personal projects.
+        <p className="mt-6 max-w-[56ch] text-lead leading-snug text-fog">
+          {projects.length} projects, from the AI platform I lead today to my first React apps. Most
+          client work is under NDA, so these are public products and personal projects.
         </p>
       </header>
-      <div className="mt-16">
-        <ProjectCards />
-      </div>
+      <ul className="mt-20 space-y-16 md:mt-28 md:space-y-20">
+        {projects.map((project) => (
+          <li key={project.title}>
+            <ProjectRow project={project} />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default ProjectSection;
+export default ProjectsSection;

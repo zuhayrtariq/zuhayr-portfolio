@@ -1,22 +1,16 @@
 import { SKILLS } from "@/constants/skills";
 import Section from "../site/section";
 
+const listFormat = new Intl.ListFormat("en", { style: "long", type: "conjunction" });
+
 const MySkills = () => {
   return (
-    <Section
-      id="capabilities"
-      title="Capabilities"
-      intro="The tools I reach for, grouped by where they sit in the stack."
-    >
-      <dl className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+    <Section id="stack" question="What do you build with?">
+      <dl className="grid gap-x-12 gap-y-10 sm:grid-cols-2">
         {SKILLS.map((group) => (
           <div key={group.title}>
-            <dt className="font-bold">
-              {group.title}
-            </dt>
-            <dd className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
-              {group.stack.join(", ")}
-            </dd>
+            <dt className="text-body font-bold">{group.title}</dt>
+            <dd className="mt-1.5 text-body text-fog">{listFormat.format(group.stack)}.</dd>
           </div>
         ))}
       </dl>
