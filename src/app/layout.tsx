@@ -8,12 +8,12 @@ import { Analytics } from "@vercel/analytics/react";
 import type { Metadata, Viewport } from "next";
 
 const description =
-  "Zuhayr Tariq is a full-stack and AI engineer and Lead Developer at Starling MX. He builds web and mobile apps, APIs, payments and AI features end to end, and ships them on the dates he commits to.";
+  "Zuhayr Tariq is a full-stack engineer who takes products from idea to launch, on time: web and mobile apps, APIs, payments and AI features. Lead Developer at Starling MX and Top Rated Plus on Upwork.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: "Zuhayr Tariq | I ship what I promise, when I promise it",
+    default: "Zuhayr Tariq | Full-stack engineer",
     template: "%s | Zuhayr Tariq",
   },
   description,
@@ -49,13 +49,13 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE.url,
     siteName: SITE.name,
-    title: "Zuhayr Tariq | I ship what I promise, when I promise it",
+    title: "Zuhayr Tariq | Full-stack engineer",
     description,
   },
   twitter: {
     card: "summary_large_image",
     creator: "@zuhayrtariq",
-    title: "Zuhayr Tariq | I ship what I promise, when I promise it",
+    title: "Zuhayr Tariq | Full-stack engineer",
     description,
   },
   verification: {

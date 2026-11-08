@@ -2,7 +2,7 @@
 
 ## Brief
 - **Subject:** Zuhayr Tariq is a full-stack and AI engineer who builds whatever a product needs, end to end, and ships it on the dates he commits to. He is Lead Developer at Starling MX and Top Rated Plus on Upwork.
-- **Positioning line:** "I ship what I promise, when I promise it." Reliability is the claim; breadth is shown by the work, not listed.
+- **Hero copy:** his name is the title card, the way a documentary's title card names its subject. Under it: "Full-stack engineer. I take products from idea to launch, on time." and one line of proof (Lead Developer at Starling MX, Top Rated Plus, 5.0 across 13 reviews). Reliability is the claim; the work shows the breadth.
 - **Audience:** founders and product teams who opened a shared link from a proposal, a DM or WhatsApp. They are deciding in under a minute whether he is worth a call.
 - **Primary job:** make the reliability claim, let visitors interview his AI self (proof he can build hard things), back it up with shipped work, then make starting a project easy.
 - **Pinned by the client:** dark, editorial, WebGL, big type, a custom shader hero, smooth scroll, a 3D scene that responds to the cursor.
@@ -49,16 +49,16 @@ The rest of the page uses magazine Q&A grammar. Each section heading is a questi
 - Sections are separated by space (160px on desktop, 96px on mobile), not by rules.
 - Media frames have square corners, like film frames. Inputs and buttons are pills. Nothing else is rounded, and there are no cards.
 
-The hero opens on a title card: the statement alone, set enormous over the painted set. On desktop the section is two screens tall, and scrolling scrubs the title down into the interview frame below while the key light comes up on Zuhayr. On mobile the interview sits under the title card and lights up as it scrolls in. Of three directions built (interview frame, close-up, title card), the title card was chosen because it spends the boldness in one place and doesn't depend on the stand-in portrait.
+The hero opens on a title card: his name, set enormous over the painted set, with the tagline and proof line beneath. On desktop the section is two screens tall, and scrolling scrubs the name down into the interview frame while the tagline steps aside below while the key light comes up on Zuhayr. On mobile the interview sits under the title card and lights up as it scrolls in. Of three directions built (interview frame, close-up, title card), the title card was chosen because it spends the boldness in one place and doesn't depend on the stand-in portrait.
 
 ```
 HERO, after the title card (desktop, 100svh)
 +--------------------------------------------------------------------------+
 | Zuhayr Tariq                                Work  Experience  About  [Talk] |
 |                                                                          |
-|  I ship what I promise,                             ( avatar, lit from   |
-|  when I promise it.                                   the left, eyes     |
-|                                                       follow cursor )    |
+|  Zuhayr Tariq                                       ( avatar, lit from   |
+|  Full-stack engineer. I take products                 the left, eyes     |
+|  from idea to launch, on time.                        follow cursor )    |
 |                                                                          |
 |  ( Ask me anything.......................... [mic] [ask] )               |
 |                                                                          |
@@ -72,9 +72,9 @@ HERO (mobile)
 | Zuhayr Tariq    Menu |
 |  ( avatar, 55svh )   |
 |  "subtitle line..."  |
-|  I ship what I       |
-|  promise, when I     |
-|  promise it.         |
+|  Zuhayr              |
+|  Tariq               |
+|  Full-stack engineer.|
 |  ( Ask me... [mic] ) |
 +----------------------+
 

@@ -8,12 +8,12 @@ import { SKILLS } from "@/constants/skills";
  * Zuhayr, as plain text for the model. Retrieved CV notes are added on top.
  */
 export const PROFILE = [
-  `Name: ${SITE.name}. Based in Pakistan, works with clients worldwide.`,
-  "Positioning: I ship what I promise, when I promise it. I'm a full-stack engineer who builds whatever the product needs, end to end: web and mobile apps, APIs and databases, payments and auth, and AI features such as agents, RAG and voice.",
+  `Name: ${SITE.name}. Based in Islamabad, Pakistan, works with clients worldwide.`,
+  "Positioning: full-stack engineer. I take products from idea to launch, on time. I build whatever the product needs, end to end: web and mobile apps, APIs and databases, payments and auth, and AI features such as agents, RAG and voice.",
   "On delivery: I agree on scope and dates up front, ship in small working pieces, keep clients updated as I go, and hit the timelines I commit to.",
   "Availability: taking on new projects. The way to start is the contact form at the bottom of the home page, or email.",
   `Contact: email ${SITE.email}, WhatsApp ${SITE.phone}, GitHub ${SITE.github}, LinkedIn ${SITE.linkedin}, Upwork ${SITE.upwork}.`,
-  "Upwork: Top Rated Plus (top 3% of freelancers) with a 100% job success score. More than 30 projects shipped for over 10 clients since 2022.",
+  "Upwork: Top Rated Plus (top 3% of freelancers) with a 100% job success score, rated 5.0 across 13 client reviews, 18 jobs and about 2,500 hours. More than 30 projects shipped for over 10 clients since 2022.",
   "How I work with clients: we agree on the smallest useful version, I ship it quickly, and we improve it from real usage without letting performance or code quality slide. I work best with founders and small product teams.",
   "",
   "Experience (most recent first):",

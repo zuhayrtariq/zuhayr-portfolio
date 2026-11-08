@@ -22,6 +22,9 @@ const PINNED = "(width >= 64rem) and (prefers-reduced-motion: no-preference)";
 const STACKED = "(width < 64rem) and (prefers-reduced-motion: no-preference)";
 const REDUCED = "(prefers-reduced-motion: reduce)";
 
+const TAGLINE = "Full-stack engineer. I take products from idea to launch, on time.";
+const PROOF = "Lead Developer at Starling MX. Top Rated Plus on Upwork, rated 5.0 across 13 client reviews.";
+
 const GREETING_CUE_DELAY = 400;
 /** Transition progress at which the lower third and ask bar are cued in. */
 const ARRIVAL_AT = 0.66;
@@ -45,6 +48,8 @@ const Hero = () => {
   const root = useRef<HTMLElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const taglineRef = useRef<HTMLDivElement>(null);
+  const interviewTaglineRef = useRef<HTMLParagraphElement>(null);
   const interviewRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const slotRef = useRef<HTMLDivElement>(null);
@@ -65,13 +70,18 @@ const Hero = () => {
       const section = root.current;
       const frame = frameRef.current;
       const title = titleRef.current;
+      const tagline = taglineRef.current;
+      const interviewTagline = interviewTaglineRef.current;
       const interview = interviewRef.current;
       const stage = stageRef.current;
       const slot = slotRef.current;
       const askBar = askRef.current;
       const captions = captionsRef.current;
       const lowerThird = lowerThirdRef.current;
-      if (!section || !frame || !title || !interview || !stage || !slot || !askBar || !captions || !lowerThird) {
+      if (
+        !section || !frame || !title || !tagline || !interviewTagline || !interview ||
+        !stage || !slot || !askBar || !captions || !lowerThird
+      ) {
         return;
       }
 
@@ -102,8 +112,15 @@ const Hero = () => {
             });
           },
         });
+        // The intro animates the lines inside; the scroll fade owns the wrapper, so they never fight.
+        gsap.set(tagline, { autoAlpha: 1 });
+        gsap.fromTo(
+          tagline.children,
+          { autoAlpha: 0, y: 16 },
+          { autoAlpha: 1, y: 0, duration: 0.9, delay: 0.85, stagger: 0.08, ease: "expo.out" }
+        );
       } else {
-        gsap.set(title, { autoAlpha: 1 });
+        gsap.set([title, tagline], { autoAlpha: 1 });
       }
 
       document.fonts.ready.then(() => ScrollTrigger.refresh());
@@ -129,7 +146,7 @@ const Hero = () => {
         // The interview UI arrives on cue rather than with the scrub, so it is never left half visible.
         const arrival = gsap
           .timeline({ paused: true })
-          .fromTo([askBar, captions], { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power1.out" }, 0)
+          .fromTo([interviewTagline, askBar, captions], { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power1.out" }, 0)
           .fromTo(lowerThird, { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.8, ease: "expo.out" }, 0.2);
         let arrived = false;
 
@@ -161,6 +178,13 @@ const Hero = () => {
           { x: () => fit().x, y: () => fit().y, scale: () => fit().scale, ease: "power2.inOut", duration: 0.65 },
           0
         )
+          // The title card's tagline steps aside; the interview has its own, readable copy.
+          .fromTo(
+            tagline,
+            { autoAlpha: 1, y: 0 },
+            { autoAlpha: 0, y: -24, duration: 0.22, ease: "power1.in", immediateRender: false },
+            0
+          )
           .fromTo(
             stage,
             { autoAlpha: 0, filter: "brightness(0.3)" },
@@ -227,15 +251,21 @@ const Hero = () => {
         <Backdrop lit={lit} />
 
         <div className="relative z-10 mx-auto flex min-h-[84svh] max-w-[1440px] items-end px-[clamp(20px,4vw,64px)] pb-14 pt-16 md:min-h-[100svh] md:items-center md:pb-0 md:pt-20 group-data-pinned:pointer-events-none group-data-pinned:absolute group-data-pinned:inset-0">
-          <h1
-            ref={titleRef}
-            id="hero-title"
-            data-reveal="title"
-            className="pointer-events-auto font-display text-[length:29.5vw] font-normal leading-[0.97] tracking-[-0.015em] [text-wrap:wrap] md:text-[length:min(16vw,230px)] md:leading-[0.86] [&_.title-line-mask]:-mb-[0.14em] [&_.title-line-mask]:pb-[0.14em]"
-          >
-            I ship what I promise,
-            <br className="hidden lg:block" /> when I promise it.
-          </h1>
+          <div className="pointer-events-auto">
+            <h1
+              ref={titleRef}
+              id="hero-title"
+              data-reveal="title"
+              className="font-display text-[length:31vw] font-normal leading-[0.86] tracking-[-0.015em] [text-wrap:wrap] md:text-[length:min(25vw,356px)] [&_.title-line-mask]:-mb-[0.14em] [&_.title-line-mask]:pb-[0.14em]"
+            >
+              Zuhayr Tariq
+            </h1>
+            {/* The margin clears the long descenders of the y and q at display size. */}
+            <div ref={taglineRef} data-reveal="tagline" className="mt-10 max-w-[38rem] md:mt-[clamp(56px,7vw,104px)]">
+              <p className="text-[clamp(22px,2.3vw,34px)] leading-snug text-caption">{TAGLINE}</p>
+              <p className="mt-3 text-ui text-fog md:mt-4">{PROOF}</p>
+            </div>
+          </div>
         </div>
 
         <div
@@ -252,13 +282,20 @@ const Hero = () => {
 
           <div className="relative mx-auto flex max-w-[1440px] flex-col px-[clamp(20px,4vw,64px)] pb-10 lg:h-full lg:pt-20">
             <div className="order-2 mt-8 flex flex-col lg:order-none lg:mt-0 lg:max-w-[46rem] lg:flex-1 lg:justify-center">
-              {/* The title scales into this box: two lines at its desktop leading of 0.86. */}
+              {/* The name scales into this box: one line at the title's leading of 0.86. */}
               <div
                 ref={slotRef}
                 aria-hidden
-                className="hidden h-[1.72em] text-[length:clamp(72px,8.4vw,121px)] group-data-pinned:block"
+                className="hidden h-[0.86em] text-[length:clamp(72px,9vw,136px)] group-data-pinned:block"
               />
-              <div ref={askRef} className="group-data-pinned:mt-10">
+              <p
+                ref={interviewTaglineRef}
+                aria-hidden
+                className="mt-5 hidden max-w-[34rem] text-[clamp(20px,1.7vw,26px)] leading-snug text-caption group-data-pinned:block"
+              >
+                {TAGLINE}
+              </p>
+              <div ref={askRef} className="group-data-pinned:mt-9">
                 {action && phase === "ready" && (
                   <a
                     href="#contact"
