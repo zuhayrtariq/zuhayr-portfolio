@@ -1,15 +1,14 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Zuhayr Tariq - Portfolio",
+    name: "Zuhayr Tariq",
     short_name: "Zuhayr Tariq",
-    description:
-      "Top Rated Full Stack Web Developer specializing in Next.js, React, Node.js, and AI-powered applications.",
+    description: "Zuhayr Tariq builds AI products people can talk to.",
     start_url: "/",
     display: "standalone",
-    background_color: "#000000",
-    theme_color: "#000000",
+    background_color: "#1d2a2c",
+    theme_color: "#1d2a2c",
     icons: [
       {
         src: "/icons/favicon.png",
@@ -19,6 +18,5 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
     categories: ["portfolio", "technology", "developer"],
     lang: "en",
-    orientation: "portrait-primary",
   };
 }
