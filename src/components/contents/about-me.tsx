@@ -1,64 +1,51 @@
-import AnimationContainer from "../utils/animation-container";
+import Image from "next/image";
+import Section from "../site/section";
 
 const AboutMe = () => {
   return (
-    <div className="w-full relative pt-10 pb-20 z-40">
-      <AnimationContainer
-        animation="slide-up"
-        className="flex items-center justify-center overflow-hidden w-full mx-auto"
-      >
-        <div className="w-full">
-          <h2 className="text-2xl lg:text-3xl font-medium text-left w-full">
-            About Me
-          </h2>
-        </div>
-      </AnimationContainer>
-      <AnimationContainer
-        animation="slide-up"
-        className="flex flex-col items-start justify-center w-full mx-auto pt-10 gap-5"
-      >
-        <p className="text-base md:text-lg text-justify w-full text-foreground/90">
-          I&apos;m a Top Rated Plus full-stack developer on Upwork and the{" "}
-          <span className="text-white font-medium">
-            Lead Developer at{" "}
+    <Section id="about" title="About">
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_16rem] lg:gap-14">
+        <div className="max-w-[62ch] space-y-5 text-[19px] leading-relaxed">
+          <p>
+            I&apos;m a full-stack developer from Pakistan and the Lead
+            Developer at{" "}
             <a
               href="https://starlingaix.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline underline-offset-4 decoration-blue-500/60 hover:decoration-blue-400"
+              className="link-underline"
             >
               Starling AIX
             </a>
-          </span>
-          , the company building &ldquo;JARVIS for your business&rdquo; on top
-          of a Universal Cognitive Architecture. I build production web apps in
-          TypeScript with Next.js, React, Node.js and the modern serverless
-          stack (Vercel, Supabase, Convex, Neon, Drizzle, tRPC, Stripe and
-          Clerk).
-        </p>
+            , where we&apos;re building &ldquo;JARVIS for your business&rdquo;
+            on a Universal Cognitive Architecture. Most of my work is in
+            TypeScript: Next.js, React and Node on Vercel, Supabase, Convex,
+            Neon, Drizzle, tRPC, Stripe and Clerk.
+          </p>
+          <p className="text-muted-foreground">
+            My focus is AI and real-time voice. I build agents and RAG pipelines
+            on OpenAI, Anthropic and Gemini with the Vercel AI SDK and
+            LangChain, and voice assistants and phone agents on Vapi and the
+            OpenAI Realtime API, wired up with Twilio, Deepgram and ElevenLabs.
+          </p>
+          <p className="text-muted-foreground">
+            I work best with founders and small product teams: we agree on the
+            smallest useful version, I ship it quickly, and we improve it from
+            real usage without letting performance or code quality slide.
+          </p>
+        </div>
 
-        <p className="text-base md:text-lg text-justify w-full text-foreground/90">
-          These days I specialize in{" "}
-          <span className="text-white font-medium">
-            AI and real-time voice
-          </span>
-          : agents and RAG pipelines on OpenAI, Anthropic and Gemini with the
-          Vercel AI SDK and LangChain, and voice assistants / phone agents
-          built on{" "}
-          <span className="text-white font-medium">Vapi</span> and the{" "}
-          <span className="text-white font-medium">
-            OpenAI Realtime API
-          </span>
-          , wired up with Twilio, Deepgram and ElevenLabs.
-        </p>
-
-        <p className="text-base md:text-lg text-justify w-full text-foreground/90">
-          I work closely with founders and product teams to take ideas from
-          zero to production — fast — without sacrificing performance, UX or
-          maintainability. Let&apos;s turn your idea into a shipped product.
-        </p>
-      </AnimationContainer>
-    </div>
+        <figure className="relative aspect-[4/5] w-full max-w-[16rem] overflow-hidden rounded-[18px] bg-secondary">
+          <Image
+            src="/images/me.png"
+            alt="Portrait of Zuhayr Tariq"
+            fill
+            sizes="256px"
+            className="object-cover object-top"
+          />
+        </figure>
+      </div>
+    </Section>
   );
 };
 

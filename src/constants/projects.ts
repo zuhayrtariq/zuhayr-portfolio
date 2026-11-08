@@ -49,7 +49,7 @@ export const projects = [
   {
     title: "TrakLienwc",
     description:
-      "Developed a modern, SEO-optimized website for TrakLien LLC, a US-based company specializing in medical billing., coding, and lien management for Personal Injury and Workers' Compensation providers.",
+      "Developed a modern, SEO-optimized website for TrakLien LLC, a US-based company specializing in medical billing, coding, and lien management for Personal Injury and Workers' Compensation providers.",
     stack: [
       "NextJS",
       "Open AI",
@@ -78,7 +78,7 @@ export const projects = [
     github: "https://github.com/zuhayrtariq/zfit-ai",
   },
   {
-    title: "The Ticket Zone 🎫",
+    title: "The Ticket Zone",
     description:
       "Modern event ticketing platform with real-time queuing and instant payments. Built with NextJS, Convex, Clerk, and Stripe Connect. Features include smart waiting lists, automatic refunds, rate limiting, and beautiful UI with shadcn.",
     stack: [

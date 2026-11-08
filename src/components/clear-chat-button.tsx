@@ -1,24 +1,26 @@
 "use client";
-import React from "react";
-import { Button } from "./ui/button";
+import { RotateCcwIcon } from "lucide-react";
+import { useState } from "react";
 import { deleteChatId } from "@/app/(chat)/actions";
-import { toast } from "sonner";
 
 const ClearChatButton = () => {
+  const [pending, setPending] = useState(false);
+
   return (
-    <Button
-      variant={"destructive"}
-      className="cursor-pointer"
+    <button
+      type="button"
+      disabled={pending}
+      className="inline-flex h-10 items-center gap-2 rounded-full border border-foreground/20 px-4 text-[15px] font-medium transition-colors hover:border-foreground disabled:opacity-60"
       onClick={async () => {
+        setPending(true);
         await deleteChatId();
-        toast.success("Chat Cleared");
-        setTimeout(() => {
-          window.location.reload();
-        }, 500);
+        window.localStorage.removeItem("input");
+        window.location.assign("/chat");
       }}
     >
-      Clear Chat
-    </Button>
+      <RotateCcwIcon className="size-4" aria-hidden />
+      {pending ? "Starting…" : "New chat"}
+    </button>
   );
 };
 

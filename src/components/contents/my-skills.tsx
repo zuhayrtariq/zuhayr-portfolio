@@ -1,56 +1,26 @@
-import React from "react";
-import AnimationContainer from "../utils/animation-container";
 import { SKILLS } from "@/constants/skills";
-import ShowSkills from "../utils/show-skills";
+import Section from "../site/section";
 
 const MySkills = () => {
   return (
-    <div className="w-full relative pb-20 py-10 z-40">
-      <AnimationContainer
-        animation="slide-up"
-        delay={0.1}
-        className="flex items-center justify-center overflow-hidden w-full mx-auto"
-      >
-        <div className="w-full">
-          <h2 className="text-2xl lg:text-3xl font-medium text-left w-full">
-            Skills & Tools
-          </h2>
-
-          <p className="text-justify lg:leading-7 text-foreground/80 lg:text-start mt-10">
-            A creative problem solver with 4+ years of programming experience
-            across full-stack web, AI, and real-time voice. I move fast across
-            the modern TypeScript stack — from Next.js and React on the
-            frontend to Node, serverless and Postgres on the backend — and
-            I&apos;ve built production agents, RAG pipelines and voice
-            assistants on OpenAI, Anthropic, Vapi and the OpenAI Realtime API.
-          </p>
-
-          <p className="text-justify lg:leading-7 text-foreground/80 lg:text-start mt-4">
-            Eager to learn and adept at adopting new technologies, I thrive on
-            expanding my skill set in the ever-evolving AI and web landscape.
-          </p>
-        </div>
-      </AnimationContainer>
-
-      <div className="flex flex-col pt-10 w-full">
-        <div className="flex flex-col flex-wrap items-start gap-5">
-          {SKILLS.map((skill, index) => (
-            <AnimationContainer
-              key={skill.title}
-              delay={0.1 * index + 0.1}
-              className="flex flex-col mb-4"
-            >
-              <div className="space-y-3">
-                <h3 className="text-lg font-bold">{skill.title}</h3>
-                <div className="flex flex-wrap items-center gap-4">
-                  <ShowSkills stacks={skill.stack} />
-                </div>
-              </div>
-            </AnimationContainer>
-          ))}
-        </div>
-      </div>
-    </div>
+    <Section
+      id="capabilities"
+      title="Capabilities"
+      intro="The tools I reach for, grouped by where they sit in the stack."
+    >
+      <dl className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+        {SKILLS.map((group) => (
+          <div key={group.title}>
+            <dt className="font-heading text-[17px] font-semibold">
+              {group.title}
+            </dt>
+            <dd className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
+              {group.stack.join(", ")}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </Section>
   );
 };
 

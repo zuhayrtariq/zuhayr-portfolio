@@ -121,13 +121,10 @@ const Head = () => {
       />
 
       {/* Additional SEO Meta Tags */}
-      <meta name="theme-color" content="#000000" />
-      <meta name="msapplication-TileColor" content="#000000" />
+      <meta name="theme-color" content="#EDEFF2" />
+      <meta name="msapplication-TileColor" content="#EDEFF2" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
-      <meta
-        name="apple-mobile-web-app-status-bar-style"
-        content="black-translucent"
-      />
+      <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       <meta name="apple-mobile-web-app-title" content="Zuhayr Tariq" />
 
       {/* Preconnect to external domains */}

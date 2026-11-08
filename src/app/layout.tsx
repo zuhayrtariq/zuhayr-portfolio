@@ -2,8 +2,6 @@ import Providers from "@/components/utils/providers";
 import { base, heading } from "@/constants/fonts";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
-import { ColorSchemeScript } from "@mantine/core";
-import "@mantine/core/styles.css";
 import { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import Head from "./head";
@@ -100,19 +98,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <ColorSchemeScript />
         <Head />
-        <link rel="preload" href="/images/me.png" as="image" />
-        <link rel="preload" href="/images/art.svg" as="image" />
-        <link rel="preload" href="/images/code.svg" as="image" />
-        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-        <link rel="dns-prefetch" href="//www.google-analytics.com" />
         <link rel="dns-prefetch" href="//vercel.live" />
       </head>
       <body
         className={cn(
-          "min-h-screen bg-background text-foreground antialiased font-heading relative select-none ",
+          "min-h-screen bg-background text-foreground antialiased font-base text-[17px] leading-relaxed relative",
           heading.variable,
           base.variable
         )}

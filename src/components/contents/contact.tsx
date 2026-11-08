@@ -1,287 +1,227 @@
 "use client";
-import { cn } from "@/lib/utils";
+
+import { SITE } from "@/constants/site";
 import { FormValidator, FormValues } from "@/lib/validators/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { Button } from "../ui/button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import SendButton from "../ui/send-button";
 import { Textarea } from "../ui/textarea";
-import AnimationContainer from "../utils/animation-container";
+
+const fieldClass =
+  "h-12 rounded-xl border-input bg-card px-4 text-[16px] focus-visible:ring-offset-0";
 
 const Contact = () => {
   const form = useForm<FormValues>({
     resolver: zodResolver(FormValidator),
     mode: "onBlur",
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      message: "",
-    },
+    defaultValues: { name: "", email: "", phone: "", message: "" },
   });
 
-  const [isSent, setIsSent] = useState(false);
-
-  const { mutate: handleSubmit, isPending: isLoading } = useMutation({
-    mutationFn: async ({ name, email, phone, message }: FormValues) => {
-      // const payload: FormValues = {
-      //   name,
-      //   email,
-      //   phone,
-      //   message,
-      // };
+  const {
+    mutate: send,
+    isPending,
+    isSuccess,
+    isError,
+    reset,
+  } = useMutation({
+    mutationFn: async (values: FormValues) => {
       const formData = new FormData();
-      formData.set("name", name);
-      formData.set("email", email);
-      formData.set("phone", phone);
-      formData.set("message", message);
-      const res = await fetch("/api/send", {
-        method: "POST",
-
-        body: formData,
-      });
-      const data = await res.json();
-      return data;
+      Object.entries(values).forEach(([k, v]) => formData.set(k, v));
+      const res = await fetch("/api/send", { method: "POST", body: formData });
+      if (!res.ok) throw new Error("Request failed");
+      return res.json();
     },
-    onError: () => {
-      toast.error("Unable to send message, please try again.");
-    },
-    onSuccess: () => {
-      form.reset();
-      setIsSent(true);
-      toast.success("Your message has been received!");
-      setTimeout(() => {
-        setIsSent(false);
-      }, 3000);
-    },
+    onSuccess: () => form.reset(),
   });
 
   return (
-    <div id="contact" className="w-full relative pt-10 pb-40 z-40">
-      <AnimationContainer animation="slide-up" delay={0.1}>
-        <div className="w-full">
-          <h2 className="text-2xl lg:text-3xl font-medium text-left w-full">
-            Get In Touch
+    <section
+      id="contact"
+      aria-labelledby="contact-title"
+      className="mx-auto max-w-6xl px-5 py-20 md:px-8 md:py-28"
+    >
+      <div className="grid gap-12 rounded-[28px] bg-foreground px-6 py-12 text-background md:grid-cols-12 md:gap-8 md:px-12 md:py-16">
+        <div className="md:col-span-5">
+          <h2
+            id="contact-title"
+            className="text-[40px] font-semibold leading-[1.05] tracking-[-0.02em] md:text-[56px]"
+          >
+            Tell me what you&apos;re building.
           </h2>
+          <p className="mt-5 max-w-sm text-[17px] leading-relaxed text-background/70">
+            New product, an AI feature for an existing app, or a voice agent.
+            Send a few lines and I&apos;ll reply by email.
+          </p>
+          <dl className="mt-10 space-y-5 text-[17px]">
+            <div>
+              <dt className="text-[15px] text-background/60">Email</dt>
+              <dd>
+                <a
+                  href={`mailto:${SITE.email}`}
+                  className="underline decoration-background/30 underline-offset-[5px] transition-colors hover:decoration-background"
+                >
+                  {SITE.email}
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt className="text-[15px] text-background/60">WhatsApp</dt>
+              <dd>
+                <a
+                  href={SITE.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline decoration-background/30 underline-offset-[5px] transition-colors hover:decoration-background"
+                >
+                  {SITE.phone}
+                </a>
+              </dd>
+            </div>
+          </dl>
         </div>
-      </AnimationContainer>
 
-      <div className="flex flex-col items-center justify-center gap-5 pt-10 w-full">
-        <div className="flex flex-col items-center justify-center w-full gap-5 lg:flex-row">
-          <Link
-            href="mailto:zuhayrtariq4@gmail.com"
-            className="flex-[0.5] w-full lg:w-auto"
-          >
-            <Button
-              type="button"
-              variant="outline"
-              className="flex-col items-start w-full h-auto p-5 hover:scale-100"
-            >
-              <h6 className="text-base font-medium">Email</h6>
-              <p className="mt-2 text-base text-foreground/70">
-                zuhayrtariq4@gmail.com
+        <div className="rounded-[20px] bg-background p-6 text-foreground md:col-span-7 md:p-8">
+          {isSuccess ? (
+            <div role="status" className="flex h-full flex-col justify-center py-10">
+              <h3 className="text-[28px] font-semibold tracking-tight">
+                Message sent
+              </h3>
+              <p className="mt-3 max-w-md text-muted-foreground">
+                Thanks for reaching out. I&apos;ll reply to the email address
+                you gave.
               </p>
-            </Button>
-          </Link>
-          <Link
-            href="https://wa.link/vk5n28"
-            className="flex-[0.5] w-full lg:w-auto"
-          >
-            <Button
-              type="button"
-              variant="outline"
-              className="flex-col items-start w-full h-auto p-5 hover:scale-100"
-            >
-              <h6 className="text-base font-medium">Phone</h6>
-              <p className="mt-2 text-base text-foreground/70">+923041420123</p>
-            </Button>
-          </Link>
-        </div>
-
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit((e) => handleSubmit(e))}
-            className="flex flex-col items-center justify-center w-full space-y-5"
-          >
-            <AnimationContainer
-              animation="slide-up"
-              delay={0.2}
-              className="w-full"
-            >
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormControl>
-                      <Input
-                        {...field}
-                        disabled={isLoading}
-                        type="text"
-                        placeholder="Name"
-                        autoComplete="off"
-                        className="h-12 px-5 capitalize outline-none rounded-lg hover:border-blue-500"
-                      />
-                    </FormControl>
-                    <FormMessage>
-                      <motion.span
-                        initial={{ opacity: 0, y: 0 }}
-                        animate={{ opacity: 1, y: 1 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        {form.formState.errors.name &&
-                          form.formState.errors.name.message}
-                      </motion.span>
-                    </FormMessage>
-                  </FormItem>
-                )}
-              />
-            </AnimationContainer>
-            <AnimationContainer
-              animation="slide-up"
-              delay={0.3}
-              className="w-full"
-            >
-              <div className="flex flex-col items-center justify-center w-full gap-4 md:flex-row">
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem
-                      className={cn(
-                        "w-full mb-0",
-                        form.formState.errors.phone && "mb-5"
-                      )}
-                    >
-                      <FormControl>
-                        <Input
-                          {...field}
-                          disabled={isLoading}
-                          required
-                          type="email"
-                          name="email"
-                          placeholder="Email"
-                          autoComplete="off"
-                          className="h-12 px-5 outline-none rounded-lg hover:border-blue-500"
-                        />
-                      </FormControl>
-                      <FormMessage>
-                        <motion.span
-                          initial={{ opacity: 0, y: 0 }}
-                          animate={{ opacity: 1, y: 1 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          {form.formState.errors.email &&
-                            form.formState.errors.email.message}
-                        </motion.span>
-                      </FormMessage>
-                    </FormItem>
-                  )}
-                />
+              <button
+                type="button"
+                onClick={() => reset()}
+                className="link-underline mt-6 w-fit font-medium"
+              >
+                Send another message
+              </button>
+            </div>
+          ) : (
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit((values) => send(values))}
+                className="space-y-5"
+                noValidate
+              >
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-[15px]">Name</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            disabled={isPending}
+                            autoComplete="name"
+                            className={fieldClass}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-[13px] text-destructive" />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-[15px]">Email</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type="email"
+                            inputMode="email"
+                            disabled={isPending}
+                            autoComplete="email"
+                            spellCheck={false}
+                            className={fieldClass}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-[13px] text-destructive" />
+                      </FormItem>
+                    )}
+                  />
+                </div>
                 <FormField
                   control={form.control}
                   name="phone"
                   render={({ field }) => (
-                    <FormItem
-                      className={cn(
-                        "w-full mb-0",
-                        form.formState.errors.email && "mb-5"
-                      )}
-                    >
+                    <FormItem>
+                      <FormLabel className="text-[15px]">
+                        Phone or WhatsApp{" "}
+                        <span className="font-normal text-muted-foreground">
+                          (optional)
+                        </span>
+                      </FormLabel>
                       <FormControl>
                         <Input
                           {...field}
-                          disabled={isLoading}
-                          required
                           type="tel"
-                          name="phone"
-                          placeholder="Phone"
-                          autoComplete="off"
-                          className="h-12 px-5 outline-none rounded-lg hover:border-blue-500"
+                          inputMode="tel"
+                          disabled={isPending}
+                          autoComplete="tel"
+                          className={fieldClass}
                         />
                       </FormControl>
-                      <FormMessage>
-                        <motion.span
-                          initial={{ opacity: 0, y: 0 }}
-                          animate={{ opacity: 1, y: 1 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          {form.formState.errors.phone &&
-                            form.formState.errors.phone.message}
-                        </motion.span>
-                      </FormMessage>
+                      <FormMessage className="text-[13px] text-destructive" />
                     </FormItem>
                   )}
                 />
-              </div>
-            </AnimationContainer>
-            <AnimationContainer
-              animation="slide-up"
-              delay={0.4}
-              className="w-full"
-            >
-              <FormField
-                control={form.control}
-                name="message"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormControl>
-                      <Textarea
-                        {...field}
-                        disabled={isLoading}
-                        required
-                        rows={5}
-                        name="message"
-                        placeholder="Message..."
-                        autoComplete="off"
-                        className="w-full p-5 outline-none resize-none rounded-lg hover:border-blue-500"
-                      />
-                    </FormControl>
-                    <FormMessage>
-                      <motion.span
-                        initial={{ opacity: 0, y: 0 }}
-                        animate={{ opacity: 1, y: 1 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        {form.formState.errors.message &&
-                          form.formState.errors.message.message}
-                      </motion.span>
-                    </FormMessage>
-                  </FormItem>
-                )}
-              />
-            </AnimationContainer>
-            <AnimationContainer
-              animation="slide-up"
-              delay={0.5}
-              className="w-full"
-            >
-              <div className="flex items-center justify-center w-full mx-auto">
-                <SendButton
-                  isSent={isSent}
-                  isLoading={isLoading}
-                  setIsSent={setIsSent}
-                  disabled={form.formState.disabled}
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-[15px]">
+                        About your project
+                      </FormLabel>
+                      <FormControl>
+                        <Textarea
+                          {...field}
+                          rows={5}
+                          disabled={isPending}
+                          placeholder="What are you building, and where could I help?"
+                          className="resize-none rounded-xl border-input bg-card px-4 py-3 text-[16px] focus-visible:ring-offset-0"
+                        />
+                      </FormControl>
+                      <FormMessage className="text-[13px] text-destructive" />
+                    </FormItem>
+                  )}
                 />
-              </div>
-            </AnimationContainer>
-          </form>
-        </Form>
+
+                {isError && (
+                  <p role="alert" className="text-[15px] text-destructive">
+                    Your message couldn&apos;t be sent. Try again, or email me
+                    at {SITE.email}.
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={isPending}
+                  className="inline-flex h-12 w-full items-center justify-center rounded-full bg-primary px-7 text-[16px] font-medium text-primary-foreground transition-colors hover:bg-foreground disabled:opacity-60 sm:w-auto"
+                >
+                  {isPending ? "Sending…" : "Send message"}
+                </button>
+              </form>
+            </Form>
+          )}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

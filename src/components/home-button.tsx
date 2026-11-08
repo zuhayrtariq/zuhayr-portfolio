@@ -1,13 +1,18 @@
-"use client";
-import React from "react";
-import { Button } from "./ui/button";
+import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
+
 const HomeButton = () => {
   return (
-    <Link href={"/"}>
-      <Button className="cursor-pointer" variant={"secondary"}>
-        Back To Home
-      </Button>
+    <Link
+      href="/"
+      className="group -ml-2 inline-flex h-11 items-center gap-2 rounded-full px-2 font-heading text-lg font-semibold tracking-tight"
+    >
+      <ArrowLeftIcon
+        className="size-4 text-muted-foreground transition-transform group-hover:-translate-x-0.5"
+        aria-hidden
+      />
+      Zuhayr Tariq
+      <span className="sr-only">, back to homepage</span>
     </Link>
   );
 };

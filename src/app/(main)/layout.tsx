@@ -1,9 +1,7 @@
-import "@/styles/globals.css";
-import "@mantine/core/styles.css";
 import { Metadata } from "next";
-import { TracingBeam } from "@/components/ui/tracing-beam";
-import { SparklesCore } from "@/components/ui/sparkles";
-import { Navbar } from "@/components";
+import SiteHeader from "@/components/site/site-header";
+import SiteFooter from "@/components/site/site-footer";
+
 export const metadata: Metadata = {
   title: "Zuhayr Tariq - Portfolio & Projects",
   description:
@@ -21,27 +19,16 @@ export const metadata: Metadata = {
   ],
 };
 
-export default function RootLayout({
+export default function MainLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <TracingBeam className="px-6">
-      <div className="w-full absolute inset-0 min-h-screen">
-        <SparklesCore
-          id="tsparticlesfullpage"
-          background="transparent"
-          minSize={0.6}
-          maxSize={0.8}
-          particleDensity={15}
-          speed={1}
-          className="w-full h-full"
-          particleColor="#FFFFFF"
-        />
-      </div>
-      <Navbar />
+    <>
+      <SiteHeader />
       {children}
-    </TracingBeam>
+      <SiteFooter />
+    </>
   );
 }

@@ -53,6 +53,7 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        live: "hsl(var(--live))",
         chart: {
           "1": "hsl(var(--chart-1))",
           "2": "hsl(var(--chart-2))",
@@ -90,8 +91,9 @@ const config = {
       },
     },
     fontFamily: {
-      heading: ["var(--font-heading)"],
-      base: ["var(--font-base)"],
+      heading: ["var(--font-heading)", "ui-sans-serif", "system-ui"],
+      base: ["var(--font-base)", "ui-sans-serif", "system-ui"],
+      mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
     },
   },
   plugins: [

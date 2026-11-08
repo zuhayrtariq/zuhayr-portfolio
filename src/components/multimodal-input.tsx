@@ -51,6 +51,9 @@ function PureMultimodalInput({
   useEffect(() => {
     if (textareaRef.current) {
       adjustHeight();
+      if (window.matchMedia('(pointer: fine)').matches) {
+        textareaRef.current.focus();
+      }
     }
   }, []);
 
@@ -137,6 +140,7 @@ function PureMultimodalInput({
           >
             <Button
               data-testid="scroll-to-bottom-button"
+              aria-label="Scroll to latest message"
               className="rounded-full"
               size="icon"
               variant="outline"
@@ -155,18 +159,21 @@ function PureMultimodalInput({
         <SuggestedActions sendMessage={sendMessage} chatId={chatId} />
       )}
 
+      <label htmlFor="chat-input" className="sr-only">
+        Message
+      </label>
       <Textarea
+        id="chat-input"
         data-testid="multimodal-input"
         ref={textareaRef}
-        placeholder="Send a message..."
+        placeholder="Ask about my projects, stack or availability…"
         value={input}
         onChange={handleInput}
         className={cx(
-          'min-h-[24px] max-h-[calc(75dvh)] overflow-hidden resize-none rounded-2xl !text-base bg-muted pb-10 dark:border-zinc-700',
+          'min-h-[24px] max-h-[calc(75dvh)] overflow-hidden resize-none rounded-[20px] !text-base bg-card border-input px-4 pt-3.5 pb-12 shadow-[0_12px_32px_-20px_hsl(220_13%_8%/0.25)] focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-primary',
           className,
         )}
         rows={2}
-        autoFocus
         onKeyDown={(event) => {
           if (
             event.key === 'Enter' &&
@@ -215,7 +222,8 @@ function PureStopButton({
   return (
     <Button
       data-testid="stop-button"
-      className="rounded-full p-1.5 h-fit border dark:border-zinc-600"
+      aria-label="Stop generating"
+      className="rounded-full size-9 p-0 bg-foreground text-background hover:bg-foreground/85"
       onClick={(event) => {
         event.preventDefault();
         stop();
@@ -239,7 +247,8 @@ function PureSendButton({
   return (
     <Button
       data-testid="send-button"
-      className="rounded-full p-1.5 h-fit border dark:border-zinc-600"
+      aria-label="Send message"
+      className="rounded-full size-9 p-0"
       onClick={(event) => {
         event.preventDefault();
         submitForm();

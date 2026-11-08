@@ -1,7 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Button } from "./ui/button";
 import { memo } from "react";
 import type { UseChatHelpers } from "@ai-sdk/react";
 import type { ChatMessage } from "@/lib/types";
@@ -11,64 +9,37 @@ interface SuggestedActionsProps {
   sendMessage: UseChatHelpers<ChatMessage>["sendMessage"];
 }
 
-function PureSuggestedActions({ chatId, sendMessage }: SuggestedActionsProps) {
-  const suggestedActions = [
-    {
-      title: "Get to know about",
-      label: "Zuhayr",
-      action: "Who is Zuhayr and what does he do?",
-    },
-    {
-      title: "Explore Zuhayr's",
-      label: "experience in software development",
-      action: "What experience does Zuhayr have in software development?",
-    },
-    {
-      title: "Learn about",
-      label: "Zuhayr's achievements",
-      action: "What are some notable achievements of Zuhayr?",
-    },
-    {
-      title: "What is Zuhayr's",
-      label: "educational background",
-      action: "What is Zuhayr's educational background?",
-    },
-  ];
+const suggestedActions = [
+  "Is Zuhayr available for a new project?",
+  "What has he built with AI agents and RAG?",
+  "What does he do at Starling AIX?",
+  "Which stack would he use for a SaaS MVP?",
+];
 
+function PureSuggestedActions({ sendMessage }: SuggestedActionsProps) {
   return (
-    <div
+    <ul
       data-testid="suggested-actions"
-      className="grid sm:grid-cols-2 gap-2 w-full"
+      aria-label="Suggested questions"
+      className="flex flex-wrap gap-2 w-full"
     >
-      {suggestedActions.map((suggestedAction, index) => (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
-          transition={{ delay: 0.05 * index }}
-          key={`suggested-action-${suggestedAction.title}-${index}`}
-          className={index > 1 ? "hidden sm:block" : "block"}
-        >
-          <Button
-            variant="ghost"
-            onClick={async () => {
-              // window.history.replaceState({}, '', `/chat/${chatId}`);
-
+      {suggestedActions.map((action, index) => (
+        <li key={action} className={index > 1 ? "hidden sm:block" : "block"}>
+          <button
+            type="button"
+            onClick={() => {
               sendMessage({
                 role: "user",
-                parts: [{ type: "text", text: suggestedAction.action }],
+                parts: [{ type: "text", text: action }],
               });
             }}
-            className="text-left border rounded-xl px-4 py-3.5 text-sm flex-1 gap-1 sm:flex-col w-full h-auto justify-start items-start"
+            className="rounded-full border border-border bg-card px-4 py-2 text-[14px] text-muted-foreground transition-colors hover:border-foreground/40 hover:text-foreground text-left"
           >
-            <span className="font-medium">{suggestedAction.title}</span>
-            <span className="text-muted-foreground">
-              {suggestedAction.label}
-            </span>
-          </Button>
-        </motion.div>
+            {action}
+          </button>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
 

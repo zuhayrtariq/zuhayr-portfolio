@@ -1,5 +1,3 @@
-import Navbar from "./navbar";
-
 import { Button } from "./ui/button";
 import { Tooltip } from "./ui/tooltip";
 import FlareCursor from "./ui/flare-cursor";
@@ -53,7 +51,6 @@ import AnimationContainer from "./utils/animation-container";
 // import AllLearningTechs from "./icons/all-learning-techs";
 
 export {
-    Navbar,
     Button,
     Tooltip,
     FlareCursor,

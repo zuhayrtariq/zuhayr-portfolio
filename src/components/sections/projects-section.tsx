@@ -1,26 +1,23 @@
+import { projects } from "@/constants/projects";
 import ProjectCards from "../contents/project-cards";
-import AnimationContainer from "../utils/animation-container";
-import Heading from "../utils/heading";
-import Wrapper from "../utils/wrapper";
 
 const ProjectSection = () => {
   return (
-    <Wrapper>
-      <div className="flex flex-col items-start w-full mt-0 lg:mt-8">
-        <Heading title="Projects" />
-
-        <AnimationContainer className="w-full flex flex-col gap-5 mb-8">
-          <p className="text-base text-justify lg:leading-8 text-foreground/80">
-            Here are some of the projects I&apos;ve built, highlighting my
-            skills in problem-solving and innovative solutions. These showcase
-            my passion for technology and continuous learning. Client projects
-            cannot be shared due to confidentiality.
-          </p>
-        </AnimationContainer>
-
+    <div className="mx-auto max-w-6xl px-5 pb-24 pt-16 md:px-8 md:pt-24">
+      <header className="max-w-3xl">
+        <h1 className="text-[44px] font-semibold leading-[1.05] tracking-[-0.03em] md:text-[64px]">
+          Projects
+        </h1>
+        <p className="mt-5 text-[19px] leading-relaxed text-muted-foreground">
+          {projects.length} things I&apos;ve built, from the AI platform I lead
+          today to early React experiments. Most client work is under NDA, so
+          what&apos;s here is public products and personal projects.
+        </p>
+      </header>
+      <div className="mt-16">
         <ProjectCards />
       </div>
-    </Wrapper>
+    </div>
   );
 };
 
