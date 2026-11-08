@@ -11,12 +11,14 @@ const TalkBubble = () => {
   const [pastHero, setPastHero] = useState(false);
   const onHome = pathname === "/";
 
+  // The hero is the conversation, so the bubble waits until it has scrolled away.
   useEffect(() => {
     if (!onHome) return;
-    const onScroll = () => setPastHero(window.scrollY > window.innerHeight * 0.85);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const hero = document.querySelector('section[aria-labelledby="hero-title"]');
+    if (!hero) return;
+    const io = new IntersectionObserver(([entry]) => setPastHero(!entry.isIntersecting));
+    io.observe(hero);
+    return () => io.disconnect();
   }, [onHome]);
 
   if (pathname.startsWith("/talk")) return null;
