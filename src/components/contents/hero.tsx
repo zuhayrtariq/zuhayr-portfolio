@@ -6,6 +6,7 @@ import Backdrop from "@/components/hero/backdrop";
 import Captions from "@/components/hero/captions";
 import LowerThird from "@/components/hero/lower-third";
 import { useConversation } from "@/hooks/use-conversation";
+import { getLenis } from "@/lib/lenis";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -21,8 +22,6 @@ const PINNED = "(width >= 64rem) and (prefers-reduced-motion: no-preference)";
 const STACKED = "(width < 64rem) and (prefers-reduced-motion: no-preference)";
 const REDUCED = "(prefers-reduced-motion: reduce)";
 
-// setTimeout fires immediately for delays above 2^31 - 1 ms, so this is the longest hold.
-const GREETING_ON_HOLD = 2 ** 31 - 1;
 const GREETING_CUE_DELAY = 400;
 /** Transition progress at which the lower third and ask bar are cued in. */
 const ARRIVAL_AT = 0.66;
@@ -55,15 +54,11 @@ const Hero = () => {
   const firstVisit = useRef<boolean | null>(null);
 
   const [lit, setLit] = useState(false);
-  const [greetingDelay, setGreetingDelay] = useState(GREETING_ON_HOLD);
-  const { caption, spokenWords, speaking, busy, ask, phase, mic, action } = useConversation({
-    greetingDelayMs: greetingDelay,
+  const { caption, spokenWords, speaking, busy, ask, phase, mic, action, startGreeting } = useConversation({
+    autoGreet: false,
   });
-  /** Releases the held greeting once the interview frame is on screen. Later calls do nothing. */
-  const cueGreeting = useCallback(
-    () => setGreetingDelay((d) => (d === GREETING_ON_HOLD ? GREETING_CUE_DELAY : d)),
-    []
-  );
+  /** Starts the greeting once the interview frame is on screen. Later calls do nothing. */
+  const cueGreeting = useCallback(() => startGreeting(GREETING_CUE_DELAY), [startGreeting]);
 
   useGSAP(
     () => {
@@ -81,6 +76,8 @@ const Hero = () => {
       }
 
       setLit(true);
+      // GSAP owns visibility from here, so the CSS no-JS fallback must stop applying.
+      section.dataset.choreographed = "";
       if (firstVisit.current === null) {
         firstVisit.current = sessionStorage.getItem(SESSION_KEY) !== "1";
         sessionStorage.setItem(SESSION_KEY, "1");
@@ -209,6 +206,14 @@ const Hero = () => {
         gsap.set([stage, lowerThird], { autoAlpha: 1 });
         ScrollTrigger.create({ trigger: stage, start: "top 75%", end: "max", onEnter: cueGreeting });
       });
+
+      // Keep the scrub in step with Lenis' smoothed scroll rather than raw scroll events.
+      const lenis = getLenis();
+      lenis?.on("scroll", ScrollTrigger.update);
+      return () => {
+        lenis?.off("scroll", ScrollTrigger.update);
+        delete section.dataset.choreographed;
+      };
     },
     { scope: root }
   );

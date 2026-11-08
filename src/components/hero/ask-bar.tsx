@@ -44,7 +44,7 @@ const AskBar = ({
           e.preventDefault();
           submit(question);
         }}
-        className="flex h-14 items-center gap-1.5 rounded-full border border-input bg-umbra/75 pl-5 pr-1.5 transition-colors focus-within:border-caption/60"
+        className="flex h-14 items-center gap-1.5 rounded-full border border-input bg-umbra/75 pl-5 pr-1.5 outline-offset-3 transition-colors focus-within:border-caption/60 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-signal"
       >
         <label htmlFor={inputId} className="sr-only">
           Ask Zuhayr a question

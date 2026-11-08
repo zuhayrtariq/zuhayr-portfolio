@@ -31,7 +31,7 @@ const PortraitStill = ({ speaking, className }: PortraitStillProps) => {
         </filter>
       </svg>
       <div
-        className="absolute inset-0 origin-[54%_30%] animate-[ken-burns_28s_linear_forwards]"
+        className="absolute inset-0 origin-[54%_30%] animate-[ken-burns_28s_linear_forwards] motion-reduce:animate-none"
         style={{ animationPlayState: speaking ? "running" : "paused" }}
       >
         <Image

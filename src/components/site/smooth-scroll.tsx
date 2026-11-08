@@ -1,10 +1,12 @@
 "use client";
 
+import { setLenis } from "@/lib/lenis";
 import Lenis from "lenis";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 const SmoothScroll = () => {
-  useEffect(() => {
+  // A layout effect, so Lenis exists before the hero's GSAP setup (also a layout effect) runs.
+  useLayoutEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const lenis = new Lenis({
@@ -12,7 +14,11 @@ const SmoothScroll = () => {
       anchors: { offset: -80 },
       lerp: 0.12,
     });
-    return () => lenis.destroy();
+    setLenis(lenis);
+    return () => {
+      setLenis(null);
+      lenis.destroy();
+    };
   }, []);
 
   return null;

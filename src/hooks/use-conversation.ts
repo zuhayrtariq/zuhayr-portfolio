@@ -58,9 +58,11 @@ const speakSilently = (words: number, onWord: (spoken: number) => void, signal: 
 interface UseConversationOptions {
   /** Delay before the greeting starts, so it lands after the lights come up. */
   greetingDelayMs?: number;
+  /** Set false to start the greeting yourself with `startGreeting`. */
+  autoGreet?: boolean;
 }
 
-export const useConversation = ({ greetingDelayMs = 1600 }: UseConversationOptions = {}) => {
+export const useConversation = ({ greetingDelayMs = 1600, autoGreet = true }: UseConversationOptions = {}) => {
   const [messages, setMessages] = useState<TalkMessage[]>([]);
   const [phase, setPhase] = useState<ConversationPhase>("waiting");
   const [caption, setCaption] = useState("");
@@ -76,6 +78,8 @@ export const useConversation = ({ greetingDelayMs = 1600 }: UseConversationOptio
   const voiceRef = useRef(voiceAvailable);
   const interacted = useRef(false);
   const request = useRef<AbortController | null>(null);
+  const greetTimer = useRef(0);
+  const greetRequested = useRef(false);
   const pipe = useRef({
     id: 0,
     segments: [] as Segment[],
@@ -204,13 +208,28 @@ export const useConversation = ({ greetingDelayMs = 1600 }: UseConversationOptio
     getPlayer().unlock();
   }, []);
 
-  // The greeting plays once, captions only, since browsers block sound before a gesture.
+  /**
+   * Plays the greeting once, captions only, since browsers block sound before a
+   * gesture. Calls after the first are ignored, so it's safe to cue repeatedly.
+   */
+  const startGreeting = useCallback(
+    (delayMs = 0) => {
+      if (greetRequested.current) return;
+      greetRequested.current = true;
+      greetTimer.current = window.setTimeout(() => {
+        if (phaseRef.current === "waiting") say(GREETING, "greeting");
+      }, delayMs);
+    },
+    [say]
+  );
+
   useEffect(() => {
-    const t = window.setTimeout(() => {
-      if (phaseRef.current === "waiting") say(GREETING, "greeting");
-    }, greetingDelayMs);
-    return () => window.clearTimeout(t);
-  }, [greetingDelayMs, say]);
+    if (autoGreet) startGreeting(greetingDelayMs);
+    return () => {
+      window.clearTimeout(greetTimer.current);
+      greetRequested.current = false;
+    };
+  }, [autoGreet, greetingDelayMs, startGreeting]);
 
   useEffect(() => () => request.current?.abort(), []);
 
@@ -296,6 +315,7 @@ export const useConversation = ({ greetingDelayMs = 1600 }: UseConversationOptio
     busy: phase === "thinking" || recorder.state === "transcribing",
     question,
     ask,
+    startGreeting,
     soundOn,
     setSoundOn,
     voiceAvailable,

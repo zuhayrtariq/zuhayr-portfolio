@@ -4,18 +4,29 @@ import { NAV_LINKS } from "@/constants/site";
 import { cn } from "@/lib/utils";
 import { MenuIcon, XIcon } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
+const HEADER_HEIGHT = 80;
+
 const SiteHeader = () => {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  // On the home page the header stays clear over the whole hero, including the pinned title card.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const hero = pathname === "/" ? document.querySelector('section[aria-labelledby="hero-title"]') : null;
+    const onScroll = () =>
+      setScrolled(hero ? hero.getBoundingClientRect().bottom <= HEADER_HEIGHT : window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     if (!open) return;

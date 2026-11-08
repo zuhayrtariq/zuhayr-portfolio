@@ -123,22 +123,16 @@
     animation: reveal-fallback 0s 3s forwards;
   }
 
-  /* The set starts dark and lights up. It stays painted, so it still counts for LCP. */
-  [data-js] [data-lights] {
-    filter: brightness(0.25);
-    animation: lights-fallback 0s 3s forwards;
+  /* Once the choreography runs, GSAP owns visibility. A late fallback would override
+     its inline styles and leave hidden controls focusable. */
+  [data-choreographed] [data-reveal] {
+    animation: none;
   }
 }
 
 @keyframes reveal-fallback {
   to {
     visibility: visible;
-  }
-}
-
-@keyframes lights-fallback {
-  to {
-    filter: brightness(1);
   }
 }
 
