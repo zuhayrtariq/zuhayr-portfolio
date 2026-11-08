@@ -6,7 +6,8 @@
     "dev": "NODE_OPTIONS='--disable-warning=DEP0040' next dev",
     "build": "NODE_OPTIONS='--disable-warning=DEP0040' next build",
     "start": "NODE_OPTIONS='--disable-warning=DEP0040' next start",
-    "lint": "NODE_OPTIONS='--disable-warning=DEP0040' next lint"
+    "lint": "NODE_OPTIONS='--disable-warning=DEP0040' next lint",
+    "avatar": "node scripts/prepare-avatar.mjs"
   },
   "engines": {
     "node": "22.x"

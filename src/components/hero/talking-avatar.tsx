@@ -101,7 +101,14 @@ const TalkingAvatar = ({ url, onReady, onError }: TalkingAvatarProps) => {
     };
 
     head
-      .showAvatar({ url, body: "M", avatarMood: "neutral", lipsyncLang: "en" })
+      .showAvatar({
+        url,
+        body: "M",
+        avatarMood: "neutral",
+        lipsyncLang: "en",
+        // TalkingHead's recommended head angle and eyelid baseline for Avaturn avatars.
+        baseline: { headRotateX: -0.05, eyeBlinkLeft: 0.15, eyeBlinkRight: 0.15 },
+      })
       .then(() => {
         if (disposed) return;
         setAvatarPlayer(createPlayer(head));
