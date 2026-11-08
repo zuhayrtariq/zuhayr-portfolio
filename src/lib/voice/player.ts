@@ -29,24 +29,30 @@ const decodeBase64 = (b64: string) => {
   return bytes.buffer;
 };
 
+let audioContext: AudioContext | null = null;
+
+/** One AudioContext for the whole page, shared with the 3D avatar. */
+export const sharedAudioContext = () => (audioContext ??= new AudioContext());
+
+export const decodeSpeech = (utterance: Utterance) =>
+  sharedAudioContext().decodeAudioData(decodeBase64(utterance.audio));
+
 /** Plays speech through Web Audio and reports word progress from the audio clock. */
 class WebAudioPlayer implements SpeechPlayer {
-  private ctx: AudioContext | null = null;
-
   unlock() {
-    this.ctx ??= new AudioContext();
-    if (this.ctx.state === "suspended") void this.ctx.resume();
+    const ctx = sharedAudioContext();
+    if (ctx.state === "suspended") void ctx.resume();
   }
 
   async play(utterance: Utterance, onWord: (spoken: number) => void, signal: AbortSignal) {
     this.unlock();
-    const ctx = this.ctx!;
+    const ctx = sharedAudioContext();
     const running = () => (ctx.state as AudioContextState) === "running";
     if (!running()) {
       await Promise.race([ctx.resume(), new Promise((r) => setTimeout(r, 150))]);
       if (!running()) return false;
     }
-    const buffer = await ctx.decodeAudioData(decodeBase64(utterance.audio));
+    const buffer = await decodeSpeech(utterance);
     if (signal.aborted) return true;
 
     const source = ctx.createBufferSource();

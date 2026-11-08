@@ -44,3 +44,7 @@ next-env.d.ts
 
 # local screenshots
 /.shots
+
+# local-only test avatar
+/public/avatar/dev-*
+!.env.example
