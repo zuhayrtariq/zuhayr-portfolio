@@ -70,8 +70,8 @@ const Contact = () => {
             Let&apos;s talk.
           </h2>
           <p className="mt-8 max-w-[34ch] text-lead leading-snug text-fog">
-            A new product, an AI feature for an app you already have, or a voice agent. Send a few
-            lines and I&apos;ll reply by email.
+            A new product, a feature for an app you already have, or a project that&apos;s slipping
+            and needs to land. Send a few lines and I&apos;ll reply by email.
           </p>
           <dl className="mt-12 space-y-5">
             <div>

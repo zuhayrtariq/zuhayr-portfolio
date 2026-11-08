@@ -8,26 +8,26 @@ import { Analytics } from "@vercel/analytics/react";
 import type { Metadata, Viewport } from "next";
 
 const description =
-  "Zuhayr Tariq is a full-stack and AI engineer and Lead Developer at Starling MX. He builds voice agents, RAG and agent systems, and the Next.js platforms around them.";
+  "Zuhayr Tariq is a full-stack and AI engineer and Lead Developer at Starling MX. He builds web and mobile apps, APIs, payments and AI features end to end, and ships them on the dates he commits to.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: "Zuhayr Tariq | AI products people can talk to",
+    default: "Zuhayr Tariq | I ship what I promise, when I promise it",
     template: "%s | Zuhayr Tariq",
   },
   description,
   keywords: [
     "Zuhayr Tariq",
-    "AI engineer",
-    "voice AI developer",
-    "voice agents",
-    "RAG",
-    "AI agents",
     "full-stack developer",
+    "full-stack engineer",
+    "AI engineer",
     "Next.js developer",
-    "Vapi",
-    "OpenAI Realtime API",
+    "TypeScript developer",
+    "React Native developer",
+    "AI agents",
+    "RAG",
+    "freelance developer",
     "Upwork Top Rated Plus",
     "Pakistan",
   ],
@@ -49,13 +49,13 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE.url,
     siteName: SITE.name,
-    title: "Zuhayr Tariq | AI products people can talk to",
+    title: "Zuhayr Tariq | I ship what I promise, when I promise it",
     description,
   },
   twitter: {
     card: "summary_large_image",
     creator: "@zuhayrtariq",
-    title: "Zuhayr Tariq | AI products people can talk to",
+    title: "Zuhayr Tariq | I ship what I promise, when I promise it",
     description,
   },
   verification: {
@@ -83,12 +83,14 @@ const personJsonLd = {
   worksFor: { "@type": "Organization", name: "Starling MX", url: "https://www.starlingmx.com" },
   description,
   knowsAbout: [
-    "Voice AI",
-    "AI agents",
-    "Retrieval-augmented generation",
+    "Full-stack development",
     "Next.js",
     "TypeScript",
     "Node.js",
+    "React Native",
+    "AI agents",
+    "Retrieval-augmented generation",
+    "Voice AI",
   ],
   sameAs: [SITE.github, SITE.linkedin, SITE.upwork],
   email: SITE.email,

@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const TALK_SUGGESTIONS = [
-  "What have you built with voice AI?",
+  "What have you shipped recently?",
   "How do you usually start a project?",
 ];
 

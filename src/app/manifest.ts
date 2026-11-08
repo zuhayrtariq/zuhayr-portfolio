@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Zuhayr Tariq",
     short_name: "Zuhayr Tariq",
-    description: "Zuhayr Tariq builds AI products people can talk to.",
+    description: "Zuhayr Tariq, full-stack and AI engineer. I ship what I promise, when I promise it.",
     start_url: "/",
     display: "standalone",
     background_color: "#1d2a2c",

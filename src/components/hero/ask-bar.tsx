@@ -5,8 +5,8 @@ import { MicIcon } from "lucide-react";
 import { useId, useState } from "react";
 
 export const SUGGESTED_QUESTIONS = [
-  "What have you built with voice AI?",
-  "How would you build an AI agent for my business?",
+  "What have you shipped recently?",
+  "How do you keep a project on schedule?",
   "Are you taking on new projects?",
 ];
 

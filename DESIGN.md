@@ -1,9 +1,10 @@
 # Design: "The Interview"
 
 ## Brief
-- **Subject:** Zuhayr Tariq builds AI products people can talk to: voice agents, RAG and agent systems, and the web platforms around them. He is Lead Developer at Starling MX and Top Rated Plus on Upwork.
+- **Subject:** Zuhayr Tariq is a full-stack and AI engineer who builds whatever a product needs, end to end, and ships it on the dates he commits to. He is Lead Developer at Starling MX and Top Rated Plus on Upwork.
+- **Positioning line:** "I ship what I promise, when I promise it." Reliability is the claim; breadth is shown by the work, not listed.
 - **Audience:** founders and product teams who opened a shared link from a proposal, a DM or WhatsApp. They are deciding in under a minute whether he is worth a call.
-- **Primary job:** prove he builds conversational AI better than the next profile by letting visitors talk to his AI self, then back it up with shipped work, then make starting a project easy.
+- **Primary job:** make the reliability claim, let visitors interview his AI self (proof he can build hard things), back it up with shipped work, then make starting a project easy.
 - **Pinned by the client:** dark, editorial, WebGL, big type, a custom shader hero, smooth scroll, a 3D scene that responds to the cursor.
 
 ## Concept
@@ -55,9 +56,9 @@ HERO, after the title card (desktop, 100svh)
 +--------------------------------------------------------------------------+
 | Zuhayr Tariq                                Work  Experience  About  [Talk] |
 |                                                                          |
-|  I build AI                                         ( avatar, lit from   |
-|  products people                                      the left, eyes     |
-|  can talk to.                                         follow cursor )    |
+|  I ship what I promise,                             ( avatar, lit from   |
+|  when I promise it.                                   the left, eyes     |
+|                                                       follow cursor )    |
 |                                                                          |
 |  ( Ask me anything.......................... [mic] [ask] )               |
 |                                                                          |
@@ -71,8 +72,9 @@ HERO (mobile)
 | Zuhayr Tariq    Menu |
 |  ( avatar, 55svh )   |
 |  "subtitle line..."  |
-|  I build AI products |
-|  people can talk to. |
+|  I ship what I       |
+|  promise, when I     |
+|  promise it.         |
 |  ( Ask me... [mic] ) |
 +----------------------+
 

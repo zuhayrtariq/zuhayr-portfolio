@@ -231,9 +231,10 @@ const Hero = () => {
             ref={titleRef}
             id="hero-title"
             data-reveal="title"
-            className="pointer-events-auto font-display text-[length:29.5vw] font-normal leading-[0.97] tracking-[-0.015em] [text-wrap:wrap] md:text-[length:min(18.6vw,266px)] md:leading-[0.86] [&_.title-line-mask]:-mb-[0.14em] [&_.title-line-mask]:pb-[0.14em]"
+            className="pointer-events-auto font-display text-[length:29.5vw] font-normal leading-[0.97] tracking-[-0.015em] [text-wrap:wrap] md:text-[length:min(16vw,230px)] md:leading-[0.86] [&_.title-line-mask]:-mb-[0.14em] [&_.title-line-mask]:pb-[0.14em]"
           >
-            I build AI products people can talk to.
+            I ship what I promise,
+            <br className="hidden lg:block" /> when I promise it.
           </h1>
         </div>
 

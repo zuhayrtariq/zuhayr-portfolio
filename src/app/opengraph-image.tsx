@@ -1,11 +1,11 @@
 import { loadGoogleFont, OG_COLORS, OG_SIZE } from "@/lib/og";
 import { ImageResponse } from "next/og";
 
-export const alt = "Zuhayr Tariq: I build AI products people can talk to.";
+export const alt = "Zuhayr Tariq: I ship what I promise, when I promise it.";
 export const size = OG_SIZE;
 export const contentType = "image/png";
 
-const TITLE = "I build AI products people can talk to.";
+const TITLE = "I ship what I promise, when I promise it.";
 const NAME = "Zuhayr Tariq";
 const ROLE = "Full-stack and AI engineer, Lead Developer at Starling MX";
 
@@ -30,7 +30,11 @@ export default async function Image() {
           color: OG_COLORS.caption,
         }}
       >
-        <div style={{ fontFamily: "Imbue", fontSize: 132, lineHeight: 0.9, maxWidth: 900 }}>{TITLE}</div>
+        <div style={{ display: "flex", flexDirection: "column", fontFamily: "Imbue", fontSize: 140, lineHeight: 0.92 }}>
+          {TITLE.split(", ").map((line, i, lines) => (
+            <div key={line}>{i < lines.length - 1 ? `${line},` : line}</div>
+          ))}
+        </div>
         <div style={{ display: "flex", flexDirection: "column", fontFamily: "Atkinson" }}>
           <div style={{ fontSize: 34, fontWeight: 700 }}>{NAME}</div>
           <div style={{ fontSize: 28, color: OG_COLORS.fog }}>{ROLE}</div>

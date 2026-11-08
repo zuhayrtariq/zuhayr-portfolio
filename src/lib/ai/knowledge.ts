@@ -9,7 +9,8 @@ import { SKILLS } from "@/constants/skills";
  */
 export const PROFILE = [
   `Name: ${SITE.name}. Based in Pakistan, works with clients worldwide.`,
-  "Positioning: I build AI products people can talk to: voice agents, RAG and agent systems, and the Next.js platforms around them.",
+  "Positioning: I ship what I promise, when I promise it. I'm a full-stack engineer who builds whatever the product needs, end to end: web and mobile apps, APIs and databases, payments and auth, and AI features such as agents, RAG and voice.",
+  "On delivery: I agree on scope and dates up front, ship in small working pieces, keep clients updated as I go, and hit the timelines I commit to.",
   "Availability: taking on new projects. The way to start is the contact form at the bottom of the home page, or email.",
   `Contact: email ${SITE.email}, WhatsApp ${SITE.phone}, GitHub ${SITE.github}, LinkedIn ${SITE.linkedin}, Upwork ${SITE.upwork}.`,
   "Upwork: Top Rated Plus (top 3% of freelancers) with a 100% job success score. More than 30 projects shipped for over 10 clients since 2022.",

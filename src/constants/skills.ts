@@ -1,22 +1,5 @@
 export const SKILLS = [
   {
-    title: "Voice",
-    stack: ["Vapi", "the OpenAI Realtime API", "ElevenLabs", "Deepgram", "Twilio"],
-  },
-  {
-    title: "Agents and retrieval",
-    stack: [
-      "OpenAI",
-      "Anthropic Claude",
-      "Gemini",
-      "the Vercel AI SDK",
-      "LangChain",
-      "LangGraph",
-      "Pinecone",
-      "tool calling",
-    ],
-  },
-  {
     title: "Product engineering",
     stack: [
       "TypeScript",
@@ -35,8 +18,25 @@ export const SKILLS = [
     stack: ["PostgreSQL", "Supabase", "Neon", "Convex", "MongoDB", "Firebase", "Redis on Upstash", "Drizzle", "Prisma"],
   },
   {
+    title: "AI and agents",
+    stack: [
+      "OpenAI",
+      "Anthropic Claude",
+      "Gemini",
+      "the Vercel AI SDK",
+      "LangChain",
+      "LangGraph",
+      "Pinecone",
+      "tool calling",
+    ],
+  },
+  {
     title: "Payments and auth",
     stack: ["Stripe", "Stripe Connect", "Clerk", "Auth.js"],
+  },
+  {
+    title: "Voice",
+    stack: ["Vapi", "the OpenAI Realtime API", "ElevenLabs", "Deepgram", "Twilio"],
   },
   {
     title: "Shipping",
