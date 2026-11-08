@@ -2,8 +2,7 @@
 
 import { SITE } from "@/constants/site";
 import { CONTACT_TOPIC_EVENT, CONTACT_TOPIC_KEY } from "@/lib/contact-topic";
-import { FormValidator, FormValues } from "@/lib/validators/form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import type { FormValues } from "@/lib/validators/form";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -14,9 +13,25 @@ import { Textarea } from "../ui/textarea";
 const labelClass = "text-ui font-bold text-caption";
 const messageClass = "text-fine text-error";
 
+// Mirrors FormValidator, which the server enforces.
+const rules = {
+  name: {
+    validate: (v: string) => (v.trim().length >= 2 ? true : "Enter your name"),
+    maxLength: { value: 50, message: "Name must be at most 50 characters long" },
+  },
+  email: {
+    pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Enter a valid email address" },
+    required: "Enter a valid email address",
+  },
+  phone: { maxLength: { value: 30, message: "Phone number is too long" } },
+  message: {
+    validate: (v: string) => (v.trim().length >= 10 ? true : "Add a sentence or two about your project"),
+    maxLength: { value: 2000, message: "Message must be at most 2000 characters long" },
+  },
+};
+
 const Contact = () => {
   const form = useForm<FormValues>({
-    resolver: zodResolver(FormValidator),
     mode: "onBlur",
     defaultValues: { name: "", email: "", phone: "", message: "" },
   });
@@ -96,6 +111,7 @@ const Contact = () => {
                   <FormField
                     control={form.control}
                     name="name"
+                    rules={rules.name}
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className={labelClass}>Name</FormLabel>
@@ -109,6 +125,7 @@ const Contact = () => {
                   <FormField
                     control={form.control}
                     name="email"
+                    rules={rules.email}
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className={labelClass}>Email</FormLabel>
@@ -130,6 +147,7 @@ const Contact = () => {
                 <FormField
                   control={form.control}
                   name="phone"
+                  rules={rules.phone}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className={labelClass}>
@@ -145,6 +163,7 @@ const Contact = () => {
                 <FormField
                   control={form.control}
                   name="message"
+                  rules={rules.message}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className={labelClass}>About your project</FormLabel>

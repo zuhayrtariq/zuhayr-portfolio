@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useEffect, useRef } from "react";
+import { type RefObject, useEffect, useRef } from "react";
 
 const VERT = `#version 300 es
 in vec2 aPos;
@@ -39,7 +39,7 @@ float fbm(vec2 p) {
   float v = 0.0;
   float a = 0.5;
   mat2 m = mat2(1.6, 1.2, -1.2, 1.6);
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < 4; i++) {
     v += a * noise(p);
     p = m * p;
     a *= 0.5;
@@ -72,8 +72,8 @@ void main() {
   outColor = vec4(col, 1.0);
 }`;
 
-const RESOLUTION_SCALE = 0.55;
 const LIGHTS_UP_MS = 1400;
+const FRAME_MS = 1000 / 30;
 const REST_LIGHT: [number, number] = [0.3, 0.68];
 
 const easeOutQuint = (x: number) => 1 - Math.pow(1 - x, 5);
@@ -88,6 +88,143 @@ const compile = (gl: WebGL2RenderingContext, type: number, src: string) => {
     return null;
   }
   return shader;
+};
+
+/** Starts the shader on `canvas`. Returns a cleanup function, or nothing if WebGL isn't worth running. */
+const startShader = (
+  canvas: HTMLCanvasElement,
+  litRef: RefObject<boolean>,
+  redrawRef: RefObject<() => void>
+) => {
+  const gl = canvas.getContext("webgl2", { antialias: false, alpha: false, powerPreference: "low-power" });
+  if (!gl) return;
+
+  // Software rasterizers would run the shader on the CPU; keep the CSS gradient instead.
+  const debug = gl.getExtension("WEBGL_debug_renderer_info");
+  const renderer = debug ? String(gl.getParameter(debug.UNMASKED_RENDERER_WEBGL)) : "";
+  if (/swiftshader|llvmpipe|software|basic render/i.test(renderer)) return;
+
+  const vs = compile(gl, gl.VERTEX_SHADER, VERT);
+  const fs = compile(gl, gl.FRAGMENT_SHADER, FRAG);
+  const program = gl.createProgram();
+  if (!vs || !fs || !program) return;
+  gl.attachShader(program, vs);
+  gl.attachShader(program, fs);
+  gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+  gl.useProgram(program);
+
+  const buffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  const aPos = gl.getAttribLocation(program, "aPos");
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+  const uRes = gl.getUniformLocation(program, "uRes");
+  const uTime = gl.getUniformLocation(program, "uTime");
+  const uLight = gl.getUniformLocation(program, "uLight");
+  const uLit = gl.getUniformLocation(program, "uLit");
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const finePointer = window.matchMedia("(pointer: fine)").matches;
+  // The texture is soft, so render small and let CSS scale it up.
+  const scale = window.innerWidth < 768 ? 0.4 : 0.55;
+
+  const light = [...REST_LIGHT];
+  const target = [...REST_LIGHT];
+  let litStart = -1;
+  let visible = true;
+  let frame = 0;
+  let lastFrame = 0;
+
+  const resize = () => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const w = Math.max(1, Math.round(canvas.clientWidth * dpr * scale));
+    const h = Math.max(1, Math.round(canvas.clientHeight * dpr * scale));
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width = w;
+      canvas.height = h;
+      gl.viewport(0, 0, w, h);
+    }
+  };
+
+  const draw = (now: number) => {
+    resize();
+    let litValue = 0;
+    if (litRef.current) {
+      if (litStart < 0) litStart = now;
+      litValue = reduceMotion ? 1 : easeOutQuint(Math.min(1, (now - litStart) / LIGHTS_UP_MS));
+    }
+    light[0] += (target[0] - light[0]) * 0.04;
+    light[1] += (target[1] - light[1]) * 0.04;
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+    gl.uniform1f(uTime, reduceMotion ? 0 : now / 1000);
+    gl.uniform2f(uLight, light[0], light[1]);
+    gl.uniform1f(uLit, litValue);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    canvas.style.opacity = "1";
+  };
+
+  const loop = (now: number) => {
+    if (now - lastFrame >= FRAME_MS) {
+      lastFrame = now;
+      draw(now);
+    }
+    if (visible && !reduceMotion) frame = requestAnimationFrame(loop);
+  };
+
+  const run = () => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(loop);
+  };
+
+  const onPointer = (e: PointerEvent) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = 1 - (e.clientY - rect.top) / rect.height;
+    // The light leans toward the cursor but stays a key light, up and to the left.
+    target[0] = REST_LIGHT[0] + (x - 0.5) * 0.35;
+    target[1] = REST_LIGHT[1] + (y - 0.5) * 0.25;
+  };
+
+  const io = new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    if (visible) run();
+  });
+  io.observe(canvas);
+
+  const onVisibility = () => {
+    visible = document.visibilityState === "visible";
+    if (visible) run();
+  };
+  document.addEventListener("visibilitychange", onVisibility);
+  if (finePointer && !reduceMotion) window.addEventListener("pointermove", onPointer, { passive: true });
+
+  const ro = new ResizeObserver(() => {
+    if (reduceMotion) draw(performance.now());
+  });
+  ro.observe(canvas);
+
+  // Reduced motion has no render loop, so repaint when `lit` changes.
+  redrawRef.current = () => {
+    if (reduceMotion) draw(performance.now());
+  };
+
+  run();
+
+  return () => {
+    cancelAnimationFrame(frame);
+    redrawRef.current = () => {};
+    io.disconnect();
+    ro.disconnect();
+    document.removeEventListener("visibilitychange", onVisibility);
+    window.removeEventListener("pointermove", onPointer);
+    gl.deleteProgram(program);
+    gl.deleteShader(vs);
+    gl.deleteShader(fs);
+    gl.deleteBuffer(buffer);
+  };
 };
 
 interface BackdropProps {
@@ -109,126 +246,14 @@ const Backdrop = ({ className, lit = true }: BackdropProps) => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const gl = canvas.getContext("webgl2", {
-      antialias: false,
-      alpha: false,
-      powerPreference: "low-power",
-    });
-    if (!gl) return;
-
-    const vs = compile(gl, gl.VERTEX_SHADER, VERT);
-    const fs = compile(gl, gl.FRAGMENT_SHADER, FRAG);
-    const program = gl.createProgram();
-    if (!vs || !fs || !program) return;
-    gl.attachShader(program, vs);
-    gl.attachShader(program, fs);
-    gl.linkProgram(program);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
-    gl.useProgram(program);
-
-    const buffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-    const aPos = gl.getAttribLocation(program, "aPos");
-    gl.enableVertexAttribArray(aPos);
-    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-
-    const uRes = gl.getUniformLocation(program, "uRes");
-    const uTime = gl.getUniformLocation(program, "uTime");
-    const uLight = gl.getUniformLocation(program, "uLight");
-    const uLit = gl.getUniformLocation(program, "uLit");
-
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const finePointer = window.matchMedia("(pointer: fine)").matches;
-
-    const light = [...REST_LIGHT];
-    const target = [...REST_LIGHT];
-    let litStart = -1;
-    let visible = true;
-    let frame = 0;
-
-    const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      const w = Math.max(1, Math.round(canvas.clientWidth * dpr * RESOLUTION_SCALE));
-      const h = Math.max(1, Math.round(canvas.clientHeight * dpr * RESOLUTION_SCALE));
-      if (canvas.width !== w || canvas.height !== h) {
-        canvas.width = w;
-        canvas.height = h;
-        gl.viewport(0, 0, w, h);
-      }
-    };
-
-    const draw = (now: number) => {
-      resize();
-      let litValue = 0;
-      if (litRef.current) {
-        if (litStart < 0) litStart = now;
-        litValue = reduceMotion ? 1 : easeOutQuint(Math.min(1, (now - litStart) / LIGHTS_UP_MS));
-      }
-      light[0] += (target[0] - light[0]) * 0.04;
-      light[1] += (target[1] - light[1]) * 0.04;
-      gl.uniform2f(uRes, canvas.width, canvas.height);
-      gl.uniform1f(uTime, reduceMotion ? 0 : now / 1000);
-      gl.uniform2f(uLight, light[0], light[1]);
-      gl.uniform1f(uLit, litValue);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
-    };
-
-    const loop = (now: number) => {
-      draw(now);
-      if (visible && !reduceMotion) frame = requestAnimationFrame(loop);
-    };
-
-    const start = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(loop);
-    };
-
-    const onPointer = (e: PointerEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = 1 - (e.clientY - rect.top) / rect.height;
-      // The light leans toward the cursor but stays a key light, up and to the left.
-      target[0] = REST_LIGHT[0] + (x - 0.5) * 0.35;
-      target[1] = REST_LIGHT[1] + (y - 0.5) * 0.25;
-    };
-
-    const io = new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
-      if (visible) start();
-    });
-    io.observe(canvas);
-
-    const onVisibility = () => {
-      visible = document.visibilityState === "visible";
-      if (visible) start();
-    };
-    document.addEventListener("visibilitychange", onVisibility);
-    if (finePointer && !reduceMotion) window.addEventListener("pointermove", onPointer, { passive: true });
-
-    const ro = new ResizeObserver(() => {
-      if (reduceMotion) draw(performance.now());
-    });
-    ro.observe(canvas);
-
-    // Reduced motion has no render loop, so repaint when `lit` changes.
-    redrawRef.current = () => {
-      if (reduceMotion) draw(performance.now());
-    };
-
-    start();
-
+    let cleanup: (() => void) | undefined;
+    // The CSS gradient carries first paint; the shader starts once the page is idle.
+    const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 600));
+    const cancelIdle = window.cancelIdleCallback ?? window.clearTimeout;
+    const handle = idle(() => (cleanup = startShader(canvas, litRef, redrawRef)), { timeout: 1500 });
     return () => {
-      cancelAnimationFrame(frame);
-      redrawRef.current = () => {};
-      io.disconnect();
-      ro.disconnect();
-      document.removeEventListener("visibilitychange", onVisibility);
-      window.removeEventListener("pointermove", onPointer);
-      gl.deleteProgram(program);
-      gl.deleteShader(vs);
-      gl.deleteShader(fs);
-      gl.deleteBuffer(buffer);
+      cancelIdle(handle);
+      cleanup?.();
     };
   }, []);
 
@@ -241,7 +266,7 @@ const Backdrop = ({ className, lit = true }: BackdropProps) => {
         className
       )}
     >
-      <canvas ref={canvasRef} className="size-full" />
+      <canvas ref={canvasRef} className="size-full opacity-0 transition-opacity duration-700" />
       <div className="grain absolute inset-0" />
     </div>
   );

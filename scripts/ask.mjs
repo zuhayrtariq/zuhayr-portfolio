@@ -12,8 +12,9 @@ page.on("pageerror", (e) => errors.push(e.message));
 page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
 page.on("response", (r) => r.url().includes("/api/") && console.log("API", r.status(), r.url()));
 
-await page.goto(url, { waitUntil: "networkidle" });
-await page.waitForTimeout(1500);
+await page.goto(url, { waitUntil: "domcontentloaded" });
+// The greeting caption only appears once the app has hydrated and its effects ran.
+await page.getByText("Hi, I'm Zuhayr.", { exact: false }).first().waitFor({ timeout: 60_000 });
 await page.getByLabel("Ask Zuhayr a question").first().fill(question);
 await page.getByRole("button", { name: "Ask", exact: true }).first().click();
 await page.waitForTimeout(Number(wait));

@@ -92,19 +92,6 @@ const TalkingAvatar = ({ url, onReady, onError }: TalkingAvatarProps) => {
     });
     head.lipsync.en = new LipsyncEn();
 
-    head
-      .showAvatar({ url, body: "M", avatarMood: "neutral", lipsyncLang: "en" })
-      .then(() => {
-        if (disposed) return;
-        setAvatarPlayer(createPlayer(head));
-        callbacks.current.onReady();
-      })
-      .catch((error) => {
-        if (disposed) return;
-        console.error("Avatar failed to load", error);
-        callbacks.current.onError();
-      });
-
     let lastLook = 0;
     const onPointer = (e: PointerEvent) => {
       const now = performance.now();
@@ -112,9 +99,23 @@ const TalkingAvatar = ({ url, onReady, onError }: TalkingAvatarProps) => {
       lastLook = now;
       head.lookAt(e.clientX, e.clientY, 500);
     };
-    if (window.matchMedia("(pointer: fine)").matches) {
-      window.addEventListener("pointermove", onPointer, { passive: true });
-    }
+
+    head
+      .showAvatar({ url, body: "M", avatarMood: "neutral", lipsyncLang: "en" })
+      .then(() => {
+        if (disposed) return;
+        setAvatarPlayer(createPlayer(head));
+        // Eye tracking needs the loaded rig, so it starts only now.
+        if (window.matchMedia("(pointer: fine)").matches) {
+          window.addEventListener("pointermove", onPointer, { passive: true });
+        }
+        callbacks.current.onReady();
+      })
+      .catch((error) => {
+        if (disposed) return;
+        console.error("Avatar failed to load", error);
+        callbacks.current.onError();
+      });
 
     const io = new IntersectionObserver(([entry]) => (entry.isIntersecting ? head.start() : head.stop()));
     io.observe(node.current);

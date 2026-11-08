@@ -122,11 +122,23 @@
     visibility: hidden;
     animation: reveal-fallback 0s 3s forwards;
   }
+
+  /* The set starts dark and lights up. It stays painted, so it still counts for LCP. */
+  [data-js] [data-lights] {
+    filter: brightness(0.25);
+    animation: lights-fallback 0s 3s forwards;
+  }
 }
 
 @keyframes reveal-fallback {
   to {
     visibility: visible;
+  }
+}
+
+@keyframes lights-fallback {
+  to {
+    filter: brightness(1);
   }
 }
 

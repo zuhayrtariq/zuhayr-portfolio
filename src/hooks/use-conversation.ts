@@ -4,8 +4,7 @@ import { SITE } from "@/constants/site";
 import { CONTACT_TOPIC_EVENT, CONTACT_TOPIC_KEY } from "@/lib/contact-topic";
 import { getPlayer, type Utterance } from "@/lib/voice/player";
 import { countWords, splitSentences } from "@/lib/voice/sentences";
-import { useChat } from "@ai-sdk/react";
-import { DefaultChatTransport, type UIMessage } from "ai";
+import { streamTalk, TalkError, type TalkMessage } from "@/lib/voice/talk-stream";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRecorder } from "./use-recorder";
 
@@ -33,18 +32,8 @@ interface Segment {
   speech: Promise<Utterance | null>;
 }
 
-const textOf = (message: UIMessage) =>
-  message.parts
-    .map((part) => (part.type === "text" ? part.text : ""))
-    .join(" ")
-    .replace(/\s+/g, " ")
-    .trim();
-
-const friendlyError = (error: Error) => {
-  try {
-    const data = JSON.parse(error.message) as { error?: string };
-    if (data.error?.startsWith("You're asking")) return data.error;
-  } catch {}
+const friendlyError = (error: unknown) => {
+  if (error instanceof TalkError && error.status === 429) return error.message;
   return `I can't answer right now. Email me at ${SITE.email} and I'll get back to you.`;
 };
 
@@ -72,10 +61,7 @@ interface UseConversationOptions {
 }
 
 export const useConversation = ({ greetingDelayMs = 1600 }: UseConversationOptions = {}) => {
-  const { messages, sendMessage, status, error, stop } = useChat({
-    transport: new DefaultChatTransport({ api: "/api/talk" }),
-  });
-
+  const [messages, setMessages] = useState<TalkMessage[]>([]);
   const [phase, setPhase] = useState<ConversationPhase>("waiting");
   const [caption, setCaption] = useState("");
   const [spoken, setSpoken] = useState(0);
@@ -84,11 +70,12 @@ export const useConversation = ({ greetingDelayMs = 1600 }: UseConversationOptio
   const [voiceAvailable, setVoiceAvailable] = useState<boolean | null>(null);
   const [action, setAction] = useState<ConversationAction | null>(null);
 
+  const messagesRef = useRef(messages);
   const phaseRef = useRef(phase);
   const soundOnRef = useRef(soundOn);
   const voiceRef = useRef(voiceAvailable);
   const interacted = useRef(false);
-  const handledAction = useRef<string | null>(null);
+  const request = useRef<AbortController | null>(null);
   const pipe = useRef({
     id: 0,
     segments: [] as Segment[],
@@ -102,6 +89,7 @@ export const useConversation = ({ greetingDelayMs = 1600 }: UseConversationOptio
     settle: 0,
   });
 
+  messagesRef.current = messages;
   phaseRef.current = phase;
   soundOnRef.current = soundOn;
   voiceRef.current = voiceAvailable;
@@ -201,92 +189,91 @@ export const useConversation = ({ greetingDelayMs = 1600 }: UseConversationOptio
     setCaption("");
   }, []);
 
+  /** Speaks a local line (greeting or error) as captions, without voice. */
+  const say = useCallback(
+    (text: string, nextPhase: ConversationPhase) => {
+      reset(false);
+      setPhase(nextPhase);
+      feed(text, true);
+    },
+    [reset, feed]
+  );
+
   const unlockAudio = useCallback(() => {
     interacted.current = true;
     getPlayer().unlock();
   }, []);
 
-  const wantsVoice = () => soundOnRef.current && interacted.current && voiceRef.current !== false;
-
   // The greeting plays once, captions only, since browsers block sound before a gesture.
   useEffect(() => {
     const t = window.setTimeout(() => {
-      if (phaseRef.current !== "waiting") return;
-      reset(false);
-      setPhase("greeting");
-      feed(GREETING, true);
+      if (phaseRef.current === "waiting") say(GREETING, "greeting");
     }, greetingDelayMs);
     return () => window.clearTimeout(t);
-  }, [greetingDelayMs, reset, feed]);
+  }, [greetingDelayMs, say]);
+
+  useEffect(() => () => request.current?.abort(), []);
 
   const ask = useCallback(
-    (q: string) => {
+    async (q: string) => {
       const text = q.trim();
       if (!text) return;
       unlockAudio();
-      stop();
-      reset(wantsVoice());
+      request.current?.abort();
+      const controller = new AbortController();
+      request.current = controller;
+
+      const history: TalkMessage[] = [...messagesRef.current, { id: crypto.randomUUID(), role: "user", text }];
+      setMessages(history);
+      reset(soundOnRef.current && interacted.current && voiceRef.current !== false);
       setQuestion(text);
       setAction(null);
       setPhase("thinking");
-      void sendMessage({ text });
+
+      let answer = "";
+      try {
+        await streamTalk(history, {
+          signal: controller.signal,
+          onText: (delta) => {
+            answer += delta;
+            setPhase("answering");
+            feed(answer, false);
+          },
+          onToolOutput: (toolName, output) => {
+            if (toolName !== "start_project") return;
+            const topic = (output as { topic?: string } | null)?.topic ?? "";
+            setAction({ kind: "start-project", topic });
+            sessionStorage.setItem(CONTACT_TOPIC_KEY, topic);
+            window.dispatchEvent(new CustomEvent(CONTACT_TOPIC_EVENT, { detail: topic }));
+          },
+        });
+        if (controller.signal.aborted) return;
+        feed(answer, true);
+        if (answer.trim()) {
+          setMessages((m) => [...m, { id: crypto.randomUUID(), role: "assistant", text: answer.trim() }]);
+        }
+      } catch (error) {
+        if (controller.signal.aborted) return;
+        say(friendlyError(error), "answering");
+      }
     },
-    [unlockAudio, stop, reset, sendMessage]
+    [unlockAudio, reset, feed, say]
   );
 
-  // Follow the streaming answer.
-  useEffect(() => {
-    const last = messages.at(-1);
-    if (!last || last.role !== "assistant") return;
-    const text = textOf(last);
-    const done = status === "ready";
-    if (text) {
-      setPhase((current) => (current === "thinking" ? "answering" : current));
-      feed(text, done);
-    } else if (done) {
-      feed("", true);
-    }
-
-    for (const part of last.parts) {
-      if (
-        part.type === "tool-start_project" &&
-        part.state === "output-available" &&
-        handledAction.current !== part.toolCallId
-      ) {
-        handledAction.current = part.toolCallId;
-        const topic = (part.output as { topic?: string })?.topic ?? "";
-        setAction({ kind: "start-project", topic });
-        sessionStorage.setItem(CONTACT_TOPIC_KEY, topic);
-        window.dispatchEvent(new CustomEvent(CONTACT_TOPIC_EVENT, { detail: topic }));
-      }
-    }
-  }, [messages, status, feed]);
-
-  useEffect(() => {
-    if (status !== "error" || !error) return;
-    reset(false);
-    setPhase("answering");
-    queueMicrotask(() => feed(friendlyError(error), true));
-  }, [status, error, reset, feed]);
-
   const recorder = useRecorder({
-    onTranscript: ask,
-    onError: (message) => {
-      reset(false);
-      setPhase("answering");
-      queueMicrotask(() => feed(message, true));
-    },
+    onTranscript: (text) => void ask(text),
+    onError: (message) => say(message, "answering"),
   });
 
   const toggleMic = useCallback(() => {
     unlockAudio();
     if (recorder.state === "idle") {
-      stop();
+      request.current?.abort();
       reset(false);
       setPhase("ready");
     }
     recorder.toggle();
-  }, [unlockAudio, recorder, stop, reset]);
+  }, [unlockAudio, recorder, reset]);
 
   const setSoundOn = useCallback(
     (on: boolean) => {
@@ -297,24 +284,15 @@ export const useConversation = ({ greetingDelayMs = 1600 }: UseConversationOptio
   );
 
   const transcript = useMemo<TranscriptLine[]>(
-    () =>
-      messages
-        .map((m) => ({
-          id: m.id,
-          speaker: m.role === "user" ? ("visitor" as const) : ("zuhayr" as const),
-          text: textOf(m),
-        }))
-        .filter((line) => line.text),
+    () => messages.map((m) => ({ id: m.id, speaker: m.role === "user" ? "visitor" : "zuhayr", text: m.text })),
     [messages]
   );
-
-  const speaking = phase === "greeting" || phase === "answering";
 
   return {
     phase,
     caption,
     spokenWords: spoken,
-    speaking,
+    speaking: phase === "greeting" || phase === "answering",
     busy: phase === "thinking" || recorder.state === "transcribing",
     question,
     ask,

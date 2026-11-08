@@ -36,17 +36,12 @@ const Hero = () => {
       const reveal = gsap.utils.toArray<HTMLElement>("[data-reveal]");
       if (skip) {
         gsap.set(reveal, { autoAlpha: 1 });
+        gsap.set("[data-lights]", { filter: "brightness(1)" });
         return;
       }
 
       const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
-      tl.fromTo("[data-reveal=stage]", { autoAlpha: 0, filter: "brightness(0.3)" }, {
-        autoAlpha: 1,
-        filter: "brightness(1)",
-        duration: 1.4,
-        ease: "power2.out",
-        clearProps: "filter",
-      }, 0);
+      tl.to("[data-lights]", { filter: "brightness(1)", duration: 1.4, ease: "power2.out" }, 0);
 
       SplitText.create("[data-reveal=title]", {
         type: "lines",
@@ -73,7 +68,7 @@ const Hero = () => {
       <Backdrop lit={lit} />
 
       <div
-        data-reveal="stage"
+        data-lights
         className="relative h-[52svh] w-full md:absolute md:inset-y-0 md:right-0 md:h-auto md:w-[54%]"
       >
         <AvatarStage speaking={speaking} />

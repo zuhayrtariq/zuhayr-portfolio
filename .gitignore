@@ -48,3 +48,4 @@ next-env.d.ts
 # local-only test avatar
 /public/avatar/dev-*
 !.env.example
+/.next-prod/
