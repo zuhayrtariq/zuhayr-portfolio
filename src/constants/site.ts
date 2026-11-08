@@ -1,5 +1,6 @@
 export const SITE = {
   name: "Zuhayr Tariq",
+  url: "https://zuhayrr.com",
   email: "zuhayrtariq4@gmail.com",
   phone: "+92 304 1420123",
   whatsapp: "https://wa.link/vk5n28",
@@ -10,10 +11,10 @@ export const SITE = {
 };
 
 export const NAV_LINKS = [
-  { name: "Projects", href: "/#projects" },
+  { name: "Work", href: "/#work" },
   { name: "Experience", href: "/#experience" },
   { name: "About", href: "/#about" },
-  { name: "Ask my AI", href: "/chat" },
+  { name: "Talk to me", href: "/chat" },
 ];
 
 export const askAiHref = (question: string) =>

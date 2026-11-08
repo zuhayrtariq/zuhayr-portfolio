@@ -1,60 +1,109 @@
-import Link from "next/link";
-import HeroChat from "./hero-chat";
+"use client";
+
+import AskBar from "@/components/hero/ask-bar";
+import AvatarStage from "@/components/hero/avatar-stage";
+import Backdrop from "@/components/hero/backdrop";
+import Captions from "@/components/hero/captions";
+import LowerThird from "@/components/hero/lower-third";
+import { useConversation } from "@/hooks/use-conversation";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { SplitText } from "gsap/SplitText";
+import { useRef, useState } from "react";
+
+gsap.registerPlugin(useGSAP, SplitText);
+
+const SESSION_KEY = "lights-up-played";
 
 const Hero = () => {
+  const root = useRef<HTMLElement>(null);
+  const [lit, setLit] = useState(false);
+  const [greetingDelay] = useState(() =>
+    typeof window !== "undefined" && sessionStorage.getItem(SESSION_KEY) ? 300 : 1600
+  );
+  const { caption, spokenWords, speaking, busy, ask, phase } = useConversation({
+    greetingDelayMs: greetingDelay,
+  });
+
+  useGSAP(
+    () => {
+      setLit(true);
+      const skip =
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+        sessionStorage.getItem(SESSION_KEY) === "1";
+      sessionStorage.setItem(SESSION_KEY, "1");
+
+      const reveal = gsap.utils.toArray<HTMLElement>("[data-reveal]");
+      if (skip) {
+        gsap.set(reveal, { autoAlpha: 1 });
+        return;
+      }
+
+      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+      tl.fromTo("[data-reveal=stage]", { autoAlpha: 0, filter: "brightness(0.3)" }, {
+        autoAlpha: 1,
+        filter: "brightness(1)",
+        duration: 1.4,
+        ease: "power2.out",
+        clearProps: "filter",
+      }, 0);
+
+      SplitText.create("[data-reveal=title]", {
+        type: "lines",
+        mask: "lines",
+        autoSplit: true,
+        onSplit(self) {
+          gsap.set("[data-reveal=title]", { autoAlpha: 1 });
+          return tl.from(self.lines, { yPercent: 105, duration: 1.1, stagger: 0.08 }, 0.3);
+        },
+      });
+
+      tl.fromTo("[data-reveal=ask]", { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.8 }, 0.95)
+        .fromTo("[data-reveal=lower-third]", { autoAlpha: 0, x: -16 }, { autoAlpha: 1, x: 0, duration: 0.8 }, 1.2);
+    },
+    { scope: root }
+  );
+
   return (
     <section
+      ref={root}
       aria-labelledby="hero-title"
-      className="mx-auto grid max-w-6xl items-center md:min-h-[min(calc(100svh-4rem),52rem)] gap-12 px-5 py-16 md:grid-cols-12 md:gap-8 md:px-8"
+      className="relative isolate flex min-h-[100svh] flex-col overflow-hidden md:block"
     >
-      <div className="md:col-span-7 md:pr-8">
-        <p className="text-[17px] text-muted-foreground">
-          Zuhayr Tariq, full-stack and AI engineer
-        </p>
-        <h1
-          id="hero-title"
-          className="mt-4 text-[44px] font-semibold leading-[1.02] tracking-[-0.03em] sm:text-[56px] lg:text-[72px]"
-        >
-          I build AI products people can talk to.
-        </h1>
-        <p className="mt-6 max-w-[34rem] text-[19px] leading-relaxed text-muted-foreground">
-          Lead Developer at{" "}
-          <a
-            href="https://starlingaix.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="link-underline text-foreground"
-          >
-            Starling AIX
-          </a>
-          . I ship production apps in Next.js and TypeScript, with agents, RAG
-          pipelines and real-time voice on Vapi and the OpenAI Realtime API.
-        </p>
+      <Backdrop lit={lit} />
 
-        <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-          <Link
-            href="#contact"
-            className="inline-flex h-12 items-center justify-center rounded-full bg-primary px-7 text-[16px] font-medium text-primary-foreground transition-colors hover:bg-foreground"
+      <div
+        data-reveal="stage"
+        className="relative h-[52svh] w-full md:absolute md:inset-y-0 md:right-0 md:h-auto md:w-[54%]"
+      >
+        <AvatarStage speaking={speaking} />
+      </div>
+
+      <div className="relative mx-auto flex w-full max-w-[1440px] flex-1 flex-col px-[clamp(20px,4vw,64px)] pb-8 md:min-h-[100svh] md:pb-10 md:pt-28">
+        <div className="-mt-16 flex flex-1 flex-col justify-center md:mt-0 md:max-w-[46rem]">
+          <h1
+            id="hero-title"
+            data-reveal="title"
+            className="font-display text-[clamp(52px,8.6vw,148px)] font-semibold leading-[0.9] tracking-[-0.01em] [text-wrap:wrap]"
           >
-            Start a project
-          </Link>
-          <Link
-            href="#projects"
-            className="inline-flex h-12 items-center justify-center rounded-full border border-foreground/20 px-7 text-[16px] font-medium transition-colors hover:border-foreground"
-          >
-            See my projects
-          </Link>
+            I build AI products people can talk to.
+          </h1>
+          <div data-reveal="ask" className="mt-8 md:mt-12">
+            <AskBar onAsk={ask} busy={busy} />
+          </div>
         </div>
 
-        <p className="mt-8 text-[15px] text-muted-foreground">
-          Top Rated Plus on Upwork with 100% job success, and 30+ projects
-          shipped for 10+ clients since 2022.
-        </p>
+        <div className="mt-10 grid items-end gap-6 md:mt-0 md:grid-cols-[1fr_minmax(0,46ch)_1fr]">
+          <div data-reveal="lower-third" className="order-2 md:order-none">
+            <LowerThird />
+          </div>
+          <Captions text={caption} spokenWords={spokenWords} className="order-1 md:order-none" />
+        </div>
       </div>
 
-      <div className="md:col-span-5">
-        <HeroChat />
-      </div>
+      <p className="sr-only" aria-live="polite">
+        {phase === "ready" ? caption : ""}
+      </p>
     </section>
   );
 };

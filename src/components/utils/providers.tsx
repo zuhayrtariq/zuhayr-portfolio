@@ -14,7 +14,7 @@ const Providers = ({
     return (
         <QueryClientProvider client={queryClient}>
             <Toaster
-                theme="light"
+                theme="dark"
                 position="top-center"
             />
             {children}

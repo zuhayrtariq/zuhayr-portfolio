@@ -1,49 +1,89 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+@theme {
+  --color-backdrop: #1d2a2c;
+  --color-umbra: #11191b;
+  --color-caption: #f3f4ef;
+  --color-fog: #97a6a4;
+  --color-signal: #f1d86b;
+  --color-tungsten: #f0c28a;
+  --color-error: #f2998d;
+
+  --text-fine: 14px;
+  --text-ui: 16px;
+  --text-body: 18px;
+  --text-lead: 24px;
+  --text-q-sm: 36px;
+  --text-q: 48px;
+
+  --ease-lights: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --breakpoint-xs: 30rem;
+}
+
+@theme inline {
+  --font-display: var(--font-imbue), "Times New Roman", serif;
+  --font-text: var(--font-atkinson), ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: var(--color-backdrop);
+  --color-foreground: var(--color-caption);
+  --color-muted-foreground: var(--color-fog);
+  --color-primary: var(--color-caption);
+  --color-primary-foreground: var(--color-umbra);
+  --color-secondary: color-mix(in oklab, var(--color-caption) 8%, transparent);
+  --color-secondary-foreground: var(--color-caption);
+  --color-muted: color-mix(in oklab, var(--color-caption) 8%, transparent);
+  --color-accent: color-mix(in oklab, var(--color-caption) 10%, transparent);
+  --color-accent-foreground: var(--color-caption);
+  --color-card: var(--color-umbra);
+  --color-card-foreground: var(--color-caption);
+  --color-popover: var(--color-umbra);
+  --color-popover-foreground: var(--color-caption);
+  --color-destructive: var(--color-error);
+  --color-destructive-foreground: var(--color-umbra);
+  --color-border: color-mix(in oklab, var(--color-caption) 14%, transparent);
+  --color-input: color-mix(in oklab, var(--color-caption) 26%, transparent);
+  --color-ring: var(--color-signal);
+}
 
 @layer base {
-  :root {
-    /* paper #EDEFF2, surface #FFFFFF, ink #111317, graphite #555B66,
-       rule #D5D9DF, signal #2440F0, live #E5484D */
-    --background: 216 15% 94%;
-    --foreground: 220 13% 8%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 220 13% 8%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 13% 8%;
-
-    --primary: 231 87% 54%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 216 14% 89%;
-    --secondary-foreground: 220 13% 8%;
-
-    --muted: 216 14% 89%;
-    --muted-foreground: 219 9% 37%;
-
-    --accent: 216 14% 89%;
-    --accent-foreground: 220 13% 8%;
-
-    --destructive: 358 75% 59%;
-    --destructive-foreground: 0 0% 100%;
-
-    --live: 358 75% 59%;
-
-    --border: 216 13% 85%;
-    --input: 216 13% 80%;
-    --ring: 231 87% 54%;
-
-    --radius: 0.75rem;
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-border);
   }
 
   html {
-    color-scheme: light;
-    scroll-behavior: smooth;
+    color-scheme: dark;
+    background-color: var(--color-backdrop);
     scroll-padding-top: 5rem;
     -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-text);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    color: var(--color-caption);
+    background-color: var(--color-backdrop);
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 
   a,
@@ -54,33 +94,17 @@
     touch-action: manipulation;
   }
 
-  body {
-    font-feature-settings: "ss01", "cv11";
-    text-rendering: optimizeLegibility;
-  }
-
-  h1,
-  h2,
-  h3 {
-    font-family: var(--font-heading);
-    text-wrap: balance;
-  }
-
-  p {
-    text-wrap: pretty;
-  }
-
   :focus-visible {
-    outline: 2px solid hsl(var(--ring));
+    outline: 2px solid var(--color-signal);
     outline-offset: 3px;
-    border-radius: 4px;
+  }
+
+  ::selection {
+    background-color: var(--color-signal);
+    color: var(--color-umbra);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-
     *,
     *::before,
     *::after {
@@ -91,64 +115,91 @@
   }
 }
 
-@layer components {
-  .prose-container {
-    @apply w-full max-w-full;
-  }
-
-  .prose-container pre {
-    @apply w-full max-w-full overflow-x-auto;
-  }
-
-  .prose-container code {
-    @apply whitespace-pre-wrap break-words;
-  }
-
-  .link-underline {
-    @apply underline decoration-foreground/25 underline-offset-[5px] transition-colors duration-200 hover:decoration-primary hover:text-primary;
+/* Hide choreographed elements only when JS is running; reveal them anyway if
+   the animation never starts. */
+@layer base {
+  [data-js] [data-reveal] {
+    visibility: hidden;
+    animation: reveal-fallback 0s 3s forwards;
   }
 }
 
-::selection {
-  background-color: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
-}
-
-/* Loader */
-.loader {
-  --uib-size: 45px;
-  --uib-color: #000;
-  --uib-speed: 1.75s;
-  position: relative;
-  height: var(--uib-size);
-  width: var(--uib-size);
-  animation: rotate calc(var(--uib-speed) * 4) linear infinite;
-}
-
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
+@keyframes reveal-fallback {
+  to {
+    visibility: visible;
   }
 }
 
-@keyframes live-pulse {
-  0% {
-    box-shadow: 0 0 0 0 hsl(var(--live) / 0.5);
-  }
+@utility link-underline {
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(in oklab, currentcolor 30%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.28em;
+  transition:
+    text-decoration-color 200ms ease,
+    text-decoration-thickness 200ms ease;
 
-  70% {
-    box-shadow: 0 0 0 8px hsl(var(--live) / 0);
-  }
-
-  100% {
-    box-shadow: 0 0 0 0 hsl(var(--live) / 0);
+  &:hover {
+    text-decoration-color: var(--color-signal);
+    text-decoration-thickness: 2px;
   }
 }
 
-.live-dot {
-  animation: live-pulse 2.4s ease-out infinite;
+@utility prose-container {
+  width: 100%;
+  max-width: 100%;
+
+  & pre {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  & code {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}
+
+@utility grain {
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  background-size: 160px 160px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* Footage: a pre-blurred copy over the sharp frame fades out as the frame
+   crosses the viewport, which reads as a focus pull. */
+@utility footage-blur {
+  opacity: 0;
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      opacity: 1;
+      animation: rack-focus linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 42%;
+    }
+  }
+}
+
+@keyframes rack-focus {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes ken-burns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.12);
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+  }
 }

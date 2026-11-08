@@ -1,6 +1,6 @@
 "use client";
 import cx from "classnames";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { memo, useState } from "react";
 import { PencilEditIcon } from "./icons";

@@ -35,7 +35,7 @@ const AboutMe = () => {
           </p>
         </div>
 
-        <figure className="relative aspect-[4/5] w-full max-w-[16rem] overflow-hidden rounded-[18px] bg-secondary">
+        <figure className="relative aspect-4/5 w-full max-w-[16rem] overflow-hidden rounded-[18px] bg-secondary">
           <Image
             src="/images/me.png"
             alt="Portrait of Zuhayr Tariq"

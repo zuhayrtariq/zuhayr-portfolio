@@ -1,45 +1,38 @@
+import SmoothScroll from "@/components/site/smooth-scroll";
 import Providers from "@/components/utils/providers";
-import { base, heading } from "@/constants/fonts";
+import { display, text } from "@/constants/fonts";
+import { SITE } from "@/constants/site";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
-import { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
-import Head from "./head";
+import type { Metadata, Viewport } from "next";
+
+const description =
+  "Zuhayr Tariq is a full-stack and AI engineer and Lead Developer at Starling AIX. He builds voice agents, RAG and agent systems, and the Next.js platforms around them.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE.url),
   title: {
-    default:
-      "Zuhayr Tariq - Top Rated Full Stack Web Developer & Software Engineer",
+    default: "Zuhayr Tariq | AI products people can talk to",
     template: "%s | Zuhayr Tariq",
   },
-  description:
-    "Zuhayr Tariq - Top Rated Full Stack Web Developer specializing in Next.js, React, Node.js, and AI-powered applications. Freelance developer with expertise in e-commerce, analytics platforms, and modern web technologies. Available for hire on Upwork.",
+  description,
   keywords: [
     "Zuhayr Tariq",
-    "Zuhayr",
-    "Full Stack Developer",
-    "Web Developer",
-    "Software Engineer",
-    "Next.js Developer",
-    "React Developer",
-    "Node.js Developer",
-    "Freelance Developer",
-    "Upwork Developer",
-    "AI Developer",
-    "E-commerce Developer",
-    "Portfolio",
-    "Web Development",
-    "JavaScript",
-    "TypeScript",
-    "Frontend Developer",
-    "Backend Developer",
-    "MERN Stack Developer",
-    "Portfolio Website",
-    "Hire Developer",
-    "Pakistan Developer",
+    "AI engineer",
+    "voice AI developer",
+    "voice agents",
+    "RAG",
+    "AI agents",
+    "full-stack developer",
+    "Next.js developer",
+    "Vapi",
+    "OpenAI Realtime API",
+    "Upwork Top Rated Plus",
+    "Pakistan",
   ],
-  authors: [{ name: "Zuhayr Tariq", url: "https://zuhayrr.com" }],
-  creator: "Zuhayr Tariq",
-  publisher: "Zuhayr Tariq",
+  authors: [{ name: SITE.name, url: SITE.url }],
+  creator: SITE.name,
   robots: {
     index: true,
     follow: true,
@@ -54,40 +47,52 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://zuhayrr.com",
-    title:
-      "Zuhayr Tariq - Top Rated Full Stack Web Developer & Software Engineer",
-    description:
-      "Top Rated Full Stack Web Developer specializing in Next.js, React, Node.js, and AI-powered applications. Freelance developer available for hire.",
-    siteName: "Zuhayr Tariq - Portfolio",
-    images: [
-      {
-        url: "https://zuhayrr.com/images/me.png",
-        width: 1200,
-        height: 630,
-        alt: "Zuhayr Tariq - Full Stack Web Developer",
-      },
-    ],
+    url: SITE.url,
+    siteName: SITE.name,
+    title: "Zuhayr Tariq | AI products people can talk to",
+    description,
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Zuhayr Tariq - Top Rated Full Stack Web Developer & Software Engineer",
-    description:
-      "Top Rated Full Stack Web Developer specializing in Next.js, React, Node.js, and AI-powered applications. Freelance developer available for hire.",
     creator: "@zuhayrtariq",
-    images: ["https://zuhayrr.com/images/me.png"],
+    title: "Zuhayr Tariq | AI products people can talk to",
+    description,
   },
   verification: {
-    google: "SDIF20D5qYtRWbuFWvVITF0BYmcj1xvOynhNHPMcWJU", // You'll need to add this from Google Search Console
-    // other: {
-    //   "msvalidate.01": "your-bing-verification-code", // Add Bing verification if needed
-    // },
+    google: "SDIF20D5qYtRWbuFWvVITF0BYmcj1xvOynhNHPMcWJU",
   },
   alternates: {
-    canonical: "https://zuhayrr.com",
+    canonical: "/",
   },
   category: "technology",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#1d2a2c",
+  colorScheme: "dark",
+  viewportFit: "cover",
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: SITE.name,
+  url: SITE.url,
+  image: `${SITE.url}/images/me.png`,
+  jobTitle: "Lead Developer",
+  worksFor: { "@type": "Organization", name: "Starling AIX", url: "https://starlingaix.com" },
+  description,
+  knowsAbout: [
+    "Voice AI",
+    "AI agents",
+    "Retrieval-augmented generation",
+    "Next.js",
+    "TypeScript",
+    "Node.js",
+  ],
+  sameAs: [SITE.github, SITE.linkedin, SITE.upwork],
+  email: SITE.email,
+  address: { "@type": "PostalAddress", addressCountry: "Pakistan" },
 };
 
 export default function RootLayout({
@@ -96,22 +101,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={cn(display.variable, text.variable)}
+      suppressHydrationWarning
+    >
       <head>
-        <Head />
-        <link rel="dns-prefetch" href="//vercel.live" />
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.dataset.js=''" }} />
+        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
       </head>
-      <body
-        className={cn(
-          "min-h-screen bg-background text-foreground antialiased font-base text-[17px] leading-relaxed relative",
-          heading.variable,
-          base.variable
-        )}
-      >
-        <Providers>
-          {/* <Navbar /> */}
-          {children}
-        </Providers>
+      <body className="min-h-screen bg-background text-foreground">
+        <SmoothScroll />
+        <Providers>{children}</Providers>
         <Analytics />
       </body>
     </html>

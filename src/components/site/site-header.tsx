@@ -8,6 +8,14 @@ import { useEffect, useState } from "react";
 
 const SiteHeader = () => {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -17,34 +25,36 @@ const SiteHeader = () => {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur-md">
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
+        scrolled || open ? "bg-backdrop" : "bg-transparent"
+      )}
+    >
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-md focus:bg-card focus:px-3 focus:py-2"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:bg-umbra focus:px-3 focus:py-2"
       >
         Skip to content
       </a>
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:px-8">
-        <Link
-          href="/"
-          className="font-heading text-lg font-semibold tracking-tight"
-        >
+      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-[clamp(20px,4vw,64px)] md:h-20">
+        <Link href="/" className="font-display text-[26px] font-semibold leading-none">
           Zuhayr Tariq
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-8 md:flex">
+        <nav aria-label="Main" className="hidden items-center gap-9 md:flex">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-[15px] text-muted-foreground transition-colors hover:text-foreground"
+              className="text-ui text-fog transition-colors hover:text-caption"
             >
               {link.name}
             </Link>
           ))}
           <Link
             href="/#contact"
-            className="inline-flex h-10 items-center rounded-full bg-foreground px-5 text-[15px] font-medium text-background transition-colors hover:bg-primary"
+            className="inline-flex h-11 items-center rounded-full bg-caption px-6 text-ui font-bold text-umbra transition-colors hover:bg-signal"
           >
             Start a project
           </Link>
@@ -52,38 +62,33 @@ const SiteHeader = () => {
 
         <button
           type="button"
-          className="-mr-2 inline-flex size-11 items-center justify-center rounded-full md:hidden"
+          className="-mr-2 inline-flex size-11 items-center justify-center md:hidden"
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((v) => !v)}
         >
-          {open ? <XIcon className="size-5" /> : <MenuIcon className="size-5" />}
+          {open ? <XIcon className="size-6" /> : <MenuIcon className="size-6" />}
         </button>
       </div>
 
       <nav
         id="mobile-nav"
         aria-label="Mobile"
-        className={cn(
-          "border-t border-border/70 bg-background px-5 pb-6 pt-2 md:hidden",
-          open ? "block" : "hidden"
-        )}
+        className={cn("bg-backdrop px-[clamp(20px,4vw,64px)] pb-8 md:hidden", open ? "block" : "hidden")}
       >
         <ul className="flex flex-col">
-          {[...NAV_LINKS, { name: "Start a project", href: "/#contact" }].map(
-            (link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="flex h-12 items-center font-heading text-xl"
-                >
-                  {link.name}
-                </Link>
-              </li>
-            )
-          )}
+          {[...NAV_LINKS, { name: "Start a project", href: "/#contact" }].map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="flex h-14 items-center font-display text-[34px] font-semibold"
+              >
+                {link.name}
+              </Link>
+            </li>
+          ))}
         </ul>
       </nav>
     </header>

@@ -1,13 +1,16 @@
-import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google";
+import { Atkinson_Hyperlegible_Next, Imbue } from "next/font/google";
 
-export const heading = Bricolage_Grotesque({
-    subsets: ["latin"],
-    variable: "--font-heading",
-    display: "swap",
+export const display = Imbue({
+  subsets: ["latin"],
+  axes: ["opsz"],
+  variable: "--font-imbue",
+  display: "swap",
 });
 
-export const base = Instrument_Sans({
-    subsets: ["latin"],
-    variable: "--font-base",
-    display: "swap",
+export const text = Atkinson_Hyperlegible_Next({
+  subsets: ["latin"],
+  variable: "--font-atkinson",
+  display: "swap",
+  adjustFontFallback: false,
+  fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
 });

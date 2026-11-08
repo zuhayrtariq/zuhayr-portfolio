@@ -19,7 +19,7 @@ import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { SuggestedActions } from './suggested-actions';
 import type { UseChatHelpers } from '@ai-sdk/react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from "motion/react";
 import { ArrowDown } from 'lucide-react';
 import { useScrollToBottom } from '@/hooks/use-scroll-to-bottom';
 import type { ChatMessage } from '@/lib/types';
@@ -170,7 +170,7 @@ function PureMultimodalInput({
         value={input}
         onChange={handleInput}
         className={cx(
-          'min-h-[24px] max-h-[calc(75dvh)] overflow-hidden resize-none rounded-[20px] !text-base bg-card border-input px-4 pt-3.5 pb-12 shadow-[0_12px_32px_-20px_hsl(220_13%_8%/0.25)] focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-primary',
+          'min-h-[24px] max-h-[calc(75dvh)] overflow-hidden resize-none rounded-[20px] text-base! bg-card border-input px-4 pt-3.5 pb-12 shadow-[0_12px_32px_-20px_hsl(220_13%_8%/0.25)] focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-primary',
           className,
         )}
         rows={2}

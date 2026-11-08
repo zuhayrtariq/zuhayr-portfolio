@@ -11,7 +11,7 @@ const MySkills = () => {
       <dl className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
         {SKILLS.map((group) => (
           <div key={group.title}>
-            <dt className="font-heading text-[17px] font-semibold">
+            <dt className="font-bold">
               {group.title}
             </dt>
             <dd className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
