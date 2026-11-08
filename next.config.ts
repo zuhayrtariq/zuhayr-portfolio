@@ -24,7 +24,7 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     optimizeCss: true,
-    optimizePackageImports: ["lucide-react", "motion"],
+    optimizePackageImports: ["lucide-react"],
     serverActions: {
       bodySizeLimit: "2mb",
     },

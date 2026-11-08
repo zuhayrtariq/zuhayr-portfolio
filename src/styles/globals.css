@@ -148,12 +148,14 @@
   text-decoration-thickness: 1px;
   text-underline-offset: 0.28em;
   transition:
-    text-decoration-color 200ms ease,
-    text-decoration-thickness 200ms ease;
+    text-decoration-color 180ms var(--ease-lights),
+    text-decoration-thickness 180ms var(--ease-lights);
 
-  &:hover {
-    text-decoration-color: var(--color-signal);
-    text-decoration-thickness: 2px;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      text-decoration-color: var(--color-signal);
+      text-decoration-thickness: 2px;
+    }
   }
 }
 
@@ -213,5 +215,6 @@
 @keyframes page-in {
   from {
     opacity: 0;
+    transform: translateY(8px);
   }
 }

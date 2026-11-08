@@ -48,8 +48,10 @@ The rest of the page uses magazine Q&A grammar. Each section heading is a questi
 - Sections are separated by space (160px on desktop, 96px on mobile), not by rules.
 - Media frames have square corners, like film frames. Inputs and buttons are pills. Nothing else is rounded, and there are no cards.
 
+The hero opens on a title card: the statement alone, set enormous over the painted set. On desktop the section is two screens tall, and scrolling scrubs the title down into the interview frame below while the key light comes up on Zuhayr. On mobile the interview sits under the title card and lights up as it scrolls in. Of three directions built (interview frame, close-up, title card), the title card was chosen because it spends the boldness in one place and doesn't depend on the stand-in portrait.
+
 ```
-HERO (desktop, 100svh)
+HERO, after the title card (desktop, 100svh)
 +--------------------------------------------------------------------------+
 | Zuhayr Tariq                                Work  Experience  About  [Talk] |
 |                                                                          |
@@ -95,10 +97,10 @@ The section questions are:
 The page ends on an end card: "Let's talk."
 
 ## Motion
-- **One orchestrated moment, "lights up", once per session:**
-  1. The frame starts dark. The key light fades up on the avatar over 1400ms with `cubic-bezier(0.22, 1, 0.36, 1)`.
-  2. The statement reveals line by line behind a mask, 80ms apart.
-  3. The lower third arrives at 1200ms, and the greeting subtitle at 1600ms.
+- **One orchestrated moment, "lights up":**
+  1. On the first visit of a session, the title card reveals line by line behind a mask, 80ms apart.
+  2. Scrolling scrubs the title into the interview frame while the key light comes up on Zuhayr. The set stays painted while dark, so it still counts for LCP.
+  3. The lower third and ask bar arrive on cue once the frame is mostly lit, and the greeting subtitle plays only once the frame is on screen.
 - **Living, not decorating:** the avatar breathes, blinks and follows the cursor with its eyes. The backdrop's light falloff drifts toward the cursor.
 - **Footage:** project frames pull focus from blurred to sharp as they cross the viewport. This is the only scroll-linked effect.
 - **Everything else answers an action:**
@@ -107,6 +109,12 @@ The page ends on an end card: "Let's talk."
   - The mic shows a listening state.
   - Sections have no entrance animations.
 - **Reduced motion:** the frame starts lit, footage is always sharp, scrolling is native, and the avatar keeps a minimal idle.
+
+## The stand-in
+Until the 3D avatar (an Avaturn T2 GLB) is set with `NEXT_PUBLIC_AVATAR_URL`, the stage shows a documentary still of Zuhayr:
+- A low-key tone curve and a warm wash.
+- Mirrored so the brightest background detail falls into the radial fade.
+- A slow push-in while he speaks.
 
 ## Writing
 - First person, plain and specific: "I build voice agents on Vapi and the OpenAI Realtime API", not "passionate about cutting-edge AI".

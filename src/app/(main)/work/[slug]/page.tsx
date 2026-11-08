@@ -40,7 +40,7 @@ export default async function CaseStudyPage({ params }: Props) {
   const stack = listFormat.format([...new Set((project.stack ?? []).map(stackName))]);
 
   return (
-    <main id="main" className="animate-[page-in_500ms_var(--ease-lights)]">
+    <main id="main" className="animate-[page-in_300ms_var(--ease-lights)]">
       <article className="mx-auto max-w-[1440px] px-[clamp(20px,4vw,64px)] pb-24 pt-36 md:pb-40 md:pt-48">
         <header className="grid gap-8 md:grid-cols-12 md:gap-x-8">
           <div className="md:col-span-8">

@@ -83,14 +83,14 @@ const AskBar = ({
       </form>
 
       {suggestions.length > 0 && (
-        <ul aria-label="Suggested questions" className="mt-4 flex flex-col items-start gap-1.5">
+        <ul aria-label="Suggested questions" className="mt-2 flex flex-col items-start">
           {suggestions.map((s) => (
             <li key={s}>
               <button
                 type="button"
                 disabled={busy}
                 onClick={() => submit(s)}
-                className="link-underline text-left text-ui text-fog decoration-transparent transition-colors hover:text-caption disabled:opacity-50"
+                className="link-underline flex min-h-11 items-center text-left text-ui text-fog decoration-transparent transition-colors hover:text-caption disabled:opacity-50"
               >
                 {s}
               </button>
