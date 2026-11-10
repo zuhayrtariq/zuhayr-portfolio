@@ -42,7 +42,7 @@ const AboutMe = () => {
       </ol>
 
       <p className="mt-14 max-w-[60ch] text-body text-fog">
-        I&apos;m based in Islamabad and lead engineering at{" "}
+        I&apos;m a full-stack web and AI developer based in Islamabad, and I lead engineering at{" "}
         <a
           href="https://www.starlingmx.com"
           target="_blank"

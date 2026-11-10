@@ -1,8 +1,8 @@
 # Design: "The Interview"
 
 ## Brief
-- **Subject:** Zuhayr Tariq is a full-stack and AI engineer who builds whatever a product needs, end to end, and ships it on the dates he commits to. He is Lead Developer at Starling MX and Top Rated Plus on Upwork.
-- **Hero copy:** his name is the title card, the way a documentary's title card names its subject. Under it: "Full-stack engineer. I take products from idea to launch, on time." and one line of proof (Lead Developer at Starling MX, Top Rated Plus, 5.0 across 13 reviews). Reliability is the claim; the work shows the breadth.
+- **Subject:** Zuhayr Tariq is a full-stack web and AI developer who builds whatever a product needs, end to end, and ships it on the dates he commits to. He is Lead Developer at Starling MX and Top Rated Plus on Upwork.
+- **Hero copy:** his name is the title card, the way a documentary's title card names its subject. Under it: "Full-stack web and AI developer. I take products from idea to launch, on time." and one line of proof (Lead Developer at Starling MX, Top Rated Plus, 5.0 across 13 reviews). Reliability is the claim; the work shows the breadth. "Full-stack web and AI developer" is also the phrase clients search for, so the page title, description and structured data use it too.
 - **Audience:** founders and product teams who opened a shared link from a proposal, a DM or WhatsApp. They are deciding in under a minute whether he is worth a call.
 - **Primary job:** make the reliability claim, let visitors interview his AI self (proof he can build hard things), back it up with shipped work, then make starting a project easy.
 - **Pinned by the client:** dark, editorial, WebGL, big type, a custom shader hero, smooth scroll, a 3D scene that responds to the cursor.
@@ -57,8 +57,8 @@ HERO, after the title card (desktop, 100svh)
 | Zuhayr Tariq                                Work  Experience  About  [Talk] |
 |                                                                          |
 |  Zuhayr Tariq                                       ( avatar, lit from   |
-|  Full-stack engineer. I take products                 the left, eyes     |
-|  from idea to launch, on time.                        follow cursor )    |
+|  Full-stack web and AI developer. I take              the left, eyes     |
+|  products from idea to launch, on time.               follow cursor )    |
 |                                                                          |
 |  ( Ask me anything.......................... [mic] [ask] )               |
 |                                                                          |
@@ -74,7 +74,8 @@ HERO (mobile)
 |  "subtitle line..."  |
 |  Zuhayr              |
 |  Tariq               |
-|  Full-stack engineer.|
+|  Full-stack web and  |
+|  AI developer.       |
 |  ( Ask me... [mic] ) |
 +----------------------+
 

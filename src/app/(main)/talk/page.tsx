@@ -1,11 +1,11 @@
 import TalkView from "@/components/talk/talk-view";
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Talk to me",
   description: "Ask Zuhayr's AI about his work, his stack, or how he'd build your product. It answers out loud.",
-  alternates: { canonical: "/talk" },
-};
+  path: "/talk",
+});
 
 export default function TalkPage() {
   return (

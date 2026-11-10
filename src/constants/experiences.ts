@@ -67,7 +67,7 @@ export const experiences = [
   {
     active: true,
     link: "https://www.upwork.com/freelancers/zuhayr",
-    title: "Top Rated Plus — Full Stack & AI Developer",
+    title: "Full Stack & AI Developer — Top Rated Plus",
     summary: "Top Rated Plus (top 3%) with 100% job success. AI chatbots, RAG pipelines, voice agents, dashboards and e-commerce for clients worldwide.",
     company_name: "Upwork — Freelance",
     icon: "/companies/upwork.png",

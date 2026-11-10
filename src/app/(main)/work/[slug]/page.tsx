@@ -1,7 +1,10 @@
 import Footage from "@/components/site/footage";
+import JsonLd from "@/components/site/json-ld";
 import { askAiHref } from "@/constants/site";
 import { caseStudies, getProject } from "@/constants/projects";
+import { pageMetadata } from "@/lib/metadata";
 import { stackName } from "@/lib/stack";
+import { caseStudySchema } from "@/lib/structured-data";
 import { hostOf } from "@/lib/utils";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -19,11 +22,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) return {};
-  return {
+  return pageMetadata({
     title: project.title,
     description: project.summary,
-    alternates: { canonical: `/work/${slug}` },
-  };
+    path: `/work/${slug}`,
+    type: "article",
+    hasOwnImage: true,
+  });
 }
 
 const listFormat = new Intl.ListFormat("en", { style: "long", type: "conjunction" });
@@ -41,6 +46,7 @@ export default async function CaseStudyPage({ params }: Props) {
 
   return (
     <main id="main" className="animate-[page-in_300ms_var(--ease-lights)]">
+      <JsonLd data={caseStudySchema(project)} />
       <article className="mx-auto max-w-[1440px] px-[clamp(20px,4vw,64px)] pb-24 pt-36 md:pb-40 md:pt-48">
         <header className="grid gap-8 md:grid-cols-12 md:gap-x-8">
           <div className="md:col-span-8">

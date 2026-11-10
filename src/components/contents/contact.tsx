@@ -90,6 +90,14 @@ const Contact = () => {
                 </a>
               </dd>
             </div>
+            <div>
+              <dt className="text-ui text-fog">Upwork</dt>
+              <dd className="text-body">
+                <a href={SITE.upwork} target="_blank" rel="noopener noreferrer" className="link-underline">
+                  Hire me on Upwork
+                </a>
+              </dd>
+            </div>
           </dl>
         </div>
 

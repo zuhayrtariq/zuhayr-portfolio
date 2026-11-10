@@ -22,7 +22,7 @@ const PINNED = "(width >= 64rem) and (prefers-reduced-motion: no-preference)";
 const STACKED = "(width < 64rem) and (prefers-reduced-motion: no-preference)";
 const REDUCED = "(prefers-reduced-motion: reduce)";
 
-const TAGLINE = "Full-stack engineer. I take products from idea to launch, on time.";
+const TAGLINE = "Full-stack web and AI developer. I take products from idea to launch, on time.";
 const PROOF = "Lead Developer at Starling MX. Top Rated Plus on Upwork, rated 5.0 across 13 client reviews.";
 
 const GREETING_CUE_DELAY = 400;

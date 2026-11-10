@@ -1,12 +1,12 @@
 import { loadGoogleFont, OG_COLORS, OG_SIZE } from "@/lib/og";
 import { ImageResponse } from "next/og";
 
-export const alt = "Zuhayr Tariq, full-stack engineer. I take products from idea to launch, on time.";
+export const alt = "Zuhayr Tariq, full-stack web and AI developer. I take products from idea to launch, on time.";
 export const size = OG_SIZE;
 export const contentType = "image/png";
 
 const NAME = "Zuhayr Tariq";
-const TAGLINE = "Full-stack engineer. I take products from idea to launch, on time.";
+const TAGLINE = "Full-stack web and AI developer. I take products from idea to launch, on time.";
 const PROOF = "Lead Developer at Starling MX. Top Rated Plus on Upwork.";
 
 export default async function Image() {
