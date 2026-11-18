@@ -9,9 +9,9 @@ const links = [
 
 const SiteFooter = () => {
   return (
-    <footer className="bg-umbra">
-      <div className="mx-auto flex max-w-[1440px] flex-col gap-6 px-[clamp(20px,4vw,64px)] pb-12 pt-4 text-ui text-fog md:flex-row md:items-center md:justify-between">
-        <p>&copy; {new Date().getFullYear()} Zuhayr Tariq</p>
+    <footer className="overflow-hidden bg-umbra">
+      <div className="mx-auto flex max-w-[1680px] flex-col gap-6 px-[clamp(20px,4vw,64px)] pt-10 text-ui text-fog md:flex-row md:items-center md:justify-between">
+        <p>&copy; {new Date().getFullYear()} Zuhayr Tariq. Islamabad, working worldwide.</p>
         <ul className="flex flex-wrap gap-x-7 gap-y-2">
           {links.map((link) => (
             <li key={link.name}>
@@ -27,6 +27,12 @@ const SiteFooter = () => {
           ))}
         </ul>
       </div>
+      {/* The name signs off the page, sunk into the bottom edge. It is decoration, so it is drawn
+          from CSS and never reaches the accessibility tree. */}
+      <div
+        aria-hidden
+        className="pointer-events-none -mb-[0.2em] mt-10 select-none whitespace-nowrap text-center font-display text-[length:25.5vw] leading-[0.8] tracking-[-0.015em] text-caption/10 before:content-['Zuhayr_Tariq']"
+      />
     </footer>
   );
 };

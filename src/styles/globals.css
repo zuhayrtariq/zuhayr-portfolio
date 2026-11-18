@@ -2,13 +2,17 @@
 @import "lenis/dist/lenis.css";
 
 @theme {
-  --color-backdrop: #1d2a2c;
-  --color-umbra: #11191b;
-  --color-caption: #f3f4ef;
-  --color-fog: #97a6a4;
-  --color-signal: #f1d86b;
+  --color-backdrop: #0b0c0c;
+  --color-umbra: #050606;
+  --color-caption: #f2efe8;
+  --color-fog: #9d9b93;
+  --color-signal: #ff4d1f;
   --color-tungsten: #f0c28a;
   --color-error: #f2998d;
+  /* Fixed ends of the palette, for surfaces that must not flip with the section. */
+  --color-ink: #0b0c0c;
+  --color-paper: #ece8df;
+  --color-ember: #ff4d1f;
 
   --text-fine: 14px;
   --text-ui: 16px;
@@ -53,7 +57,7 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-border);
+    border-color: color-mix(in oklab, var(--color-caption) 14%, transparent);
   }
 
   html {
@@ -95,13 +99,46 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-signal);
+    outline: 2px solid var(--focus, var(--color-ember));
     outline-offset: 3px;
   }
 
   ::selection {
-    background-color: var(--color-signal);
-    color: var(--color-umbra);
+    background-color: var(--color-ember);
+    color: var(--color-ink);
+  }
+
+  /* Sections flip the palette by rebinding the same tokens, so every component
+     inside follows without knowing which ground it is on. */
+  .on-paper {
+    --color-backdrop: #ece8df;
+    --color-umbra: #f8f6f1;
+    --color-caption: #0b0c0c;
+    --color-fog: #5f5d56;
+    --color-signal: #d43a0c;
+    --focus: #0b0c0c;
+    color-scheme: light;
+    color: var(--color-caption);
+    background-color: var(--color-backdrop);
+  }
+
+  .on-ember {
+    --color-backdrop: #ff4d1f;
+    --color-umbra: #ff4d1f;
+    --color-caption: #0b0c0c;
+    --color-fog: #3b1408;
+    --color-signal: #f2efe8;
+    --color-error: #0b0c0c;
+    --focus: #0b0c0c;
+    color-scheme: light;
+    color: var(--color-caption);
+    background-color: var(--color-backdrop);
+  }
+
+  .on-ember ::selection,
+  .on-paper ::selection {
+    background-color: #0b0c0c;
+    color: #f2efe8;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -197,12 +234,23 @@
   }
 }
 
-@keyframes ken-burns {
+/* Hairline field borders disappear on the orange ground, so they are drawn in near-solid ink. */
+.on-ember :is(input, textarea) {
+  border-color: color-mix(in oklab, var(--color-caption) 60%, transparent);
+}
+
+.on-ember :is(input, textarea):is(:hover, :focus-visible) {
+  border-color: var(--color-caption);
+}
+
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-caption);
+}
+
+@keyframes name-rise {
   from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.12);
+    transform: translateY(26%);
   }
 }
 

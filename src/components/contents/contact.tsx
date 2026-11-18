@@ -8,10 +8,11 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
+import Rise from "../motion/rise";
 import { Textarea } from "../ui/textarea";
 
 const labelClass = "text-ui font-bold text-caption";
-const messageClass = "text-fine text-error";
+const messageClass = "text-fine font-bold text-error";
 
 // Mirrors FormValidator, which the server enforces.
 const rules = {
@@ -60,16 +61,20 @@ const Contact = () => {
   });
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="bg-umbra">
-      <div className="mx-auto grid max-w-[1440px] gap-16 px-[clamp(20px,4vw,64px)] py-24 md:grid-cols-12 md:gap-x-8 md:py-40">
+    <section id="contact" aria-labelledby="contact-title" className="on-ember overflow-hidden">
+      <div className="mx-auto max-w-[1680px] px-[clamp(20px,4vw,64px)] pt-24 md:pt-36">
+        <Rise
+          as="h2"
+          by="lines"
+          id="contact-title"
+          className="font-display text-[length:36.5vw] leading-[0.8] tracking-[-0.02em] min-[1680px]:text-[length:600px]"
+        >
+          Let&apos;s talk.
+        </Rise>
+      </div>
+      <div className="mx-auto grid max-w-[1680px] gap-16 px-[clamp(20px,4vw,64px)] pb-24 pt-14 md:grid-cols-12 md:gap-x-8 md:pb-36 md:pt-20">
         <div className="md:col-span-5">
-          <h2
-            id="contact-title"
-            className="font-display text-[clamp(72px,10vw,168px)] leading-[0.88] font-semibold"
-          >
-            Let&apos;s talk.
-          </h2>
-          <p className="mt-8 max-w-[34ch] text-lead leading-snug text-fog">
+          <p className="max-w-[30ch] text-[clamp(24px,2.2vw,34px)] leading-[1.2]">
             A new product, a feature for an app you already have, or a project that&apos;s slipping
             and needs to land. Send a few lines and I&apos;ll reply by email.
           </p>

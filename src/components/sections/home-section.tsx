@@ -10,9 +10,9 @@ const HomeSection = () => {
     <>
       <Hero />
       <Projects />
+      <AboutMe />
       <Experience />
       <MySkills />
-      <AboutMe />
       <Contact />
     </>
   );

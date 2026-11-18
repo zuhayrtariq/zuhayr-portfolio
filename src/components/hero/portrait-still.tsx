@@ -1,49 +1,30 @@
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 
 interface PortraitStillProps {
   speaking: boolean;
   className?: string;
 }
 
-const FADE_MASK =
-  "radial-gradient(ellipse 44% 58% at 55% 36%, #000 30%, rgb(0 0 0 / 0.5) 54%, transparent 78%)";
-
 /**
- * The documentary fallback for the avatar: a treated still of Zuhayr that slowly
- * pushes in while he is speaking, the way a voiceover plays over an archive still.
- * A low-key tone curve pulls the bright background lights down to the mid-tones.
+ * The portrait without WebGL: the same cut-out, graded with the cloud's colours
+ * and standing in the same place, so the frame holds on machines with no GPU.
+ * It reads the `--portrait-*` properties the point cloud is laid out with.
  */
 const PortraitStill = ({ speaking, className }: PortraitStillProps) => {
   return (
-    <div
-      className={cn("relative overflow-hidden", className)}
-      style={{ maskImage: FADE_MASK, WebkitMaskImage: FADE_MASK }}
-    >
-      <svg aria-hidden className="absolute size-0">
-        <filter id="low-key" colorInterpolationFilters="sRGB">
-          <feColorMatrix type="saturate" values="0" />
-          <feComponentTransfer>
-            <feFuncR type="table" tableValues="0 0.2 0.42 0.55 0.6" />
-            <feFuncG type="table" tableValues="0 0.2 0.42 0.55 0.6" />
-            <feFuncB type="table" tableValues="0 0.2 0.42 0.55 0.6" />
-          </feComponentTransfer>
-        </filter>
-      </svg>
-      <div
-        className="absolute inset-0 origin-[54%_30%] animate-[ken-burns_28s_linear_forwards] motion-reduce:animate-none"
-        style={{ animationPlayState: speaking ? "running" : "paused" }}
-      >
-        <Image
-          src="/images/me.png"
-          alt="Zuhayr Tariq"
-          fill
-          priority
-          sizes="(min-width: 768px) 54vw, 100vw"
-          className="origin-[54%_30%] -scale-x-[1.4] scale-y-[1.4] object-cover [object-position:50%_18%] [filter:url(#low-key)]"
-        />
-      </div>
-      <div className="absolute inset-0 bg-tungsten opacity-30 mix-blend-soft-light" />
+    <div className={cn("pointer-events-none overflow-hidden", className)}>
+      {/* eslint-disable-next-line @next/next/no-img-element -- already sized and compressed by scripts/build-portrait.mjs */}
+      <img
+        src="/images/portrait-still.webp"
+        alt="Zuhayr Tariq"
+        width={820}
+        height={959}
+        decoding="async"
+        className={cn(
+          "absolute bottom-[calc(var(--portrait-lift,0)*100%)] left-[calc(50%+var(--portrait-shift,0)*100%)] h-[calc(var(--portrait-height,0.84)*100%)] w-auto max-w-none origin-[44%_22%] -translate-x-1/2 transition-transform duration-[2400ms] ease-[var(--ease-lights)] motion-reduce:transition-none",
+          speaking ? "scale-[1.03]" : "scale-100"
+        )}
+      />
     </div>
   );
 };

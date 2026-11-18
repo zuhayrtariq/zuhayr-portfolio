@@ -13,8 +13,8 @@ export async function loadGoogleFont(axes: string, text: string) {
 export const OG_SIZE = { width: 1200, height: 630 };
 
 export const OG_COLORS = {
-  backdrop: "#1d2a2c",
-  umbra: "#11191b",
-  caption: "#f3f4ef",
-  fog: "#97a6a4",
+  backdrop: "#0b0c0c",
+  umbra: "#050606",
+  caption: "#f2efe8",
+  fog: "#9d9b93",
 };

@@ -13,12 +13,22 @@ const SiteHeader = () => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
-  // On the home page the header stays clear over the whole hero, including the pinned title card.
+  // On the home page the header stays clear over the whole hero. Past it, the bar
+  // steps out of the way while reading down and returns on the first scroll up.
   useEffect(() => {
     const hero = pathname === "/" ? document.querySelector('section[aria-labelledby="hero-title"]') : null;
-    const onScroll = () =>
-      setScrolled(hero ? hero.getBoundingClientRect().bottom <= HEADER_HEIGHT : window.scrollY > 24);
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      const past = hero ? hero.getBoundingClientRect().bottom <= HEADER_HEIGHT : y > 24;
+      setScrolled(past);
+      if (Math.abs(y - last) > 6) {
+        setHidden(past && y > last);
+        last = y;
+      }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
@@ -38,8 +48,9 @@ const SiteHeader = () => {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
-        scrolled || open ? "bg-backdrop" : "bg-transparent"
+        "fixed inset-x-0 top-0 z-50 transition-[background-color,translate] duration-500 ease-[var(--ease-lights)] focus-within:translate-y-0",
+        scrolled || open ? "bg-backdrop" : "bg-transparent",
+        hidden && !open && "-translate-y-full"
       )}
     >
       <a
@@ -48,7 +59,7 @@ const SiteHeader = () => {
       >
         Skip to content
       </a>
-      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-[clamp(20px,4vw,64px)] md:h-20">
+      <div className="mx-auto flex h-16 max-w-[1680px] items-center justify-between px-[clamp(20px,4vw,64px)] md:h-20">
         <Link href="/" className="font-display text-[26px] font-semibold leading-none">
           Zuhayr Tariq
         </Link>

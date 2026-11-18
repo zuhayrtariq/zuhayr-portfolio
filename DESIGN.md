@@ -1,141 +1,86 @@
-# Design: "The Interview"
+# Design: "Made of light"
 
 ## Brief
 - **Subject:** Zuhayr Tariq is a full-stack web and AI developer who builds whatever a product needs, end to end, and ships it on the dates he commits to. He is Lead Developer at Starling MX and Top Rated Plus on Upwork.
-- **Hero copy:** his name is the title card, the way a documentary's title card names its subject. Under it: "Full-stack web and AI developer. I take products from idea to launch, on time." and one line of proof (Lead Developer at Starling MX, Top Rated Plus, 5.0 across 13 reviews). Reliability is the claim; the work shows the breadth. "Full-stack web and AI developer" is also the phrase clients search for, so the page title, description and structured data use it too.
+- **Hero copy:** his name, split by his own portrait. Under it: "Full-stack web and AI developer." and one line of proof. The promise, "I take products from idea to launch, on time.", gets the whole frame to itself on the first scroll. "Full-stack web and AI developer" is also the phrase clients search for, so the page title, description and structured data use it too.
 - **Audience:** founders and product teams who opened a shared link from a proposal, a DM or WhatsApp. They are deciding in under a minute whether he is worth a call.
-- **Primary job:** make the reliability claim, let visitors interview his AI self (proof he can build hard things), back it up with shipped work, then make starting a project easy.
-- **Pinned by the client:** dark, editorial, WebGL, big type, a custom shader hero, smooth scroll, a 3D scene that responds to the cursor.
+- **Primary job:** stop them in the first second, make the reliability claim, let them question his AI self, back it up with shipped work and a checkable record, then make starting a project easy.
+- **Pinned by the client:** dark, WebGL, big type, 3D that responds to the cursor, a version of him that talks. The first design ("The Interview", a quiet editorial page on slate teal) was rejected as basic. This one is allowed to be loud.
 
 ## Concept
-The site is an interview, and the visitor is the interviewer.
+The page is built from one image: Zuhayr drawn as a cloud of about 70,000 points of light with real depth (about 24,000 on phones).
 
-The hero is an interview frame:
-- His avatar sits in front of a hand-painted canvas backdrop under a single key light.
-- A lower third names him.
-- Subtitles show what he says.
-- Visitors type or speak questions, and he answers out loud with subtitles.
+- It assembles on load, turns toward the cursor, swells where the cursor touches it, and ripples from the mouth when his AI self speaks.
+- On the first scroll it lets go and streams past the camera, and the promise takes the frame.
+- It is his actual photograph, with depth estimated once at build time, so it is a likeness and not a stock avatar. A rigged 3D avatar can still replace it (see "The avatar").
 
-The rest of the page uses magazine Q&A grammar. Each section heading is a question in the interviewer's voice, and the content is his answer. Project media is treated as footage: sharp frames that pull into focus as they arrive.
+After the hero, the page alternates between three full-bleed grounds, and each section has one large move of its own. The work runs sideways as a reel. The record is set in numerals the height of a hand. The process fills a rail as you read down it. The stack is four lines of type sliding against each other. The page ends on a wall of orange.
 
 ## Color
+Three grounds, used as whole sections and never mixed inside one.
+
 | Name | Hex | Role |
 | --- | --- | --- |
-| Backdrop | `#1D2A2C` | The painted slate-teal canvas. Dominant surface; the shader mottles it lighter and darker. |
-| Umbra | `#11191B` | The backdrop's shadow: vignette, the end card, the footer. |
-| Caption | `#F3F4EF` | Subtitle white. Primary text and the primary button. |
-| Fog | `#97A6A4` | Secondary text and the interviewer's voice. 6:1 on Backdrop. |
-| Signal | `#F1D86B` | Interaction only: focus rings, link underlines on hover, the mic while listening. Never decoration. |
-| Tungsten | `#F0C28A` | The key light in 3D. Never used in UI. |
+| Ink | `#0B0C0C` | The dark ground: hero, record and process. `#050606` (Umbra) for the footer. |
+| Paper | `#ECE8DF` | The light ground: work, experience and stack. Screenshots of dark products sit hard against it. |
+| Ember | `#FF4D1F` | An international orange, the aerospace colour worn by flight-test aircraft and astronauts' launch suits so they can be seen. It is the "launch, on time" colour: the accent on Ink, and the entire ground of the contact section. |
+| Bone | `#F2EFE8` | Text on Ink. |
+| Fog | `#9D9B93` | Secondary text on Ink (`#5F5D56` on Paper, `#3B1408` on Ember). |
+| Tungsten | `#F0C28A` | Mid-tones of the portrait only. Never used in UI. |
+
+Sections flip ground with `.on-paper` and `.on-ember`, which rebind the same tokens (`caption`, `fog`, `backdrop`, `signal`), so components don't know which ground they are on. `ink`, `paper` and `ember` are the fixed ends for the few surfaces that must not flip.
+
+The portrait's ramp runs umber, rust, tungsten, bone: he is lit like someone beside a fire, and Ember is the fire.
 
 ## Type
-- **Imbue** (condensed high-contrast serif, variable `opsz` and `wght`) for headings and the questions. It's set large at optical size 100, with tight leading and sentence case. It reads like a film title card.
-- **Atkinson Hyperlegible Next** for everything else: body, UI, captions and the lower third. It was designed for legibility, which is what subtitles are for.
-- **Scale (px), after Bringhurst:**
-  - 14 for fine print.
-  - 16 for UI.
-  - 18 for body.
-  - 24 for captions and the lead.
-  - 36 and 48 for section questions.
-  - Display uses `clamp(56px, 9vw, 152px)`.
-- **Measure:**
-  - Body text is at most 64ch.
-  - Captions follow the broadcast rule: at most 42 characters per line, two lines, centered.
-  - Captions are the only centered text on the site.
-- No italics or color for single-word emphasis. No all-caps. No monospace.
+- **Imbue** (condensed high-contrast serif, variable `opsz`) for everything large. It is set far bigger than before: the name at 22vw, section titles at 13.5vw, "Let's talk." at 36vw, numerals at 9.6vw. Leading between 0.8 and 0.92, sentence case.
+- **Atkinson Hyperlegible Next** for body, UI, captions and labels.
+- **Scale (px):** 14 fine print, 16 UI, 18 body, 24 lead. Display sizes are fluid and set per section.
+- Body text is at most 60ch. Captions follow the broadcast rule: at most 42 characters per line, two lines, centered.
+- No all-caps, no monospace, no italics for emphasis. Emphasis is a colour change to Ember, used for the half of a sentence that carries the promise ("on time.", "Then the dates hold.").
 
 ## Layout
-- 12-column grid, `max-width: 1440px`, side margins `clamp(20px, 4vw, 64px)`. Everything is left-aligned except captions.
-- Sections are separated by space (160px on desktop, 96px on mobile), not by rules.
-- Media frames have square corners, like film frames. Inputs and buttons are pills. Nothing else is rounded, and there are no cards.
-
-The hero opens on a title card: his name, set enormous over the painted set, with the tagline and proof line beneath. On desktop the section is two screens tall, and scrolling scrubs the name down into the interview frame while the tagline steps aside below while the key light comes up on Zuhayr. On mobile the interview sits under the title card and lights up as it scrolls in. Of three directions built (interview frame, close-up, title card), the title card was chosen because it spends the boldness in one place and doesn't depend on the stand-in portrait.
-
-```
-HERO, after the title card (desktop, 100svh)
-+--------------------------------------------------------------------------+
-| Zuhayr Tariq                                Work  Experience  About  [Talk] |
-|                                                                          |
-|  Zuhayr Tariq                                       ( avatar, lit from   |
-|  Full-stack web and AI developer. I take              the left, eyes     |
-|  products from idea to launch, on time.               follow cursor )    |
-|                                                                          |
-|  ( Ask me anything.......................... [mic] [ask] )               |
-|                                                                          |
-|  Zuhayr Tariq                 "Hi, I'm Zuhayr. Ask me what I've          |
-|  Lead Developer, Starling MX   built, or how I'd build yours."          |
-|  ^ lower third                  ^ subtitles, centered, max 42ch/line     |
-+--------------------------------------------------------------------------+
-
-HERO (mobile)
-+----------------------+
-| Zuhayr Tariq    Menu |
-|  ( avatar, 55svh )   |
-|  "subtitle line..."  |
-|  Zuhayr              |
-|  Tariq               |
-|  Full-stack web and  |
-|  AI developer.       |
-|  ( Ask me... [mic] ) |
-+----------------------+
-
-SECTION (Q&A)
-+--------------------------------------------------------------------------+
-|  What have you shipped?                                  <- h2, Imbue 48 |
-|                                                                          |
-|  +------------------------------------------------------------------+   |
-|  |  footage frame 16:9, pulls into focus on arrival                 |   |
-|  +------------------------------------------------------------------+   |
-|  Starling MX        Lead Developer, 2026        Visit  Case study       |
-|  One plain sentence about what it is and what I did.                     |
-+--------------------------------------------------------------------------+
-```
-
-The section questions are:
-- What have you shipped?
-- Where have you worked?
-- What do you build with?
-- How do you work with clients?
-
-The page ends on an end card: "Let's talk."
+- Side margins `clamp(20px, 4vw, 64px)`, content up to 1680px, type allowed to run to the margins.
+- **Hero:** the name spans the frame with the portrait standing in the gap between the two words, shoulders over the descenders. Role and proof bottom left, captions bottom centre, the ask bar bottom right.
+- **Work:** above 1024px, a horizontal reel pinned for its own length. Each project title is set across the bottom edge of its screenshot with `mix-blend-difference`, so it is dark on paper and light on the image. Below 1024px, the same panels stack.
+- **Record and process:** the statement, four numerals divided by hairlines, then the four steps beside a sticky heading.
+- **Experience:** full-width rows; the company name is the row.
+- **Stack:** four lines of names at display size, alternating solid and outlined.
+- **Contact:** the heading fills the width; details and form beneath.
+- **Footer:** the name once more, sunk into the bottom edge at 10% Bone.
 
 ## Motion
-- **One orchestrated moment, "lights up":**
-  1. On the first visit of a session, the title card reveals line by line behind a mask, 80ms apart.
-  2. Scrolling scrubs the title into the interview frame while the key light comes up on Zuhayr. The set stays painted while dark, so it still counts for LCP.
-  3. The lower third and ask bar arrive on cue once the frame is mostly lit, and the greeting subtitle plays only once the frame is on screen.
-- **Living, not decorating:** the avatar breathes, blinks and follows the cursor with its eyes. The backdrop's light falloff drifts toward the cursor.
-- **Footage:** project frames pull focus from blurred to sharp as they cross the viewport. This is the only scroll-linked effect.
-- **Everything else answers an action:**
-  - Links grow a Signal underline.
-  - Buttons invert.
-  - The mic shows a listening state.
-  - Sections have no entrance animations.
-- **Reduced motion:** the frame starts lit, footage is always sharp, scrolling is native, and the avatar keeps a minimal idle.
+- **Arrival:** the name is on screen at first paint and settles upward (CSS, so the largest element never waits for JavaScript). The portrait flies in from a wide swirl over 2.6s. The hero UI follows.
+- **The portrait is alive:** it sways, follows the cursor up to about 20 degrees, lifts under it, and ripples when he speaks (driven by the real loudness of the voice through an analyser node).
+- **First scroll (pinned, scrubbed):** the two halves of the name part, the cloud bursts toward the camera, and the promise arrives word by word.
+- **Work reel:** vertical scroll drives horizontal travel. Screenshots slide inside their frames against the direction of travel, and the reel leans a little with scroll speed.
+- **Rise:** headings and numerals lift out of a mask once, when they enter.
+- **Process rail:** fills with Ember as you scroll; each numeral lights when the fill reaches it.
+- **Stack:** the four lines travel in alternating directions with scroll.
+- **Cursor:** a ring trails the pointer, swells over anything clickable, and carries a label over the work ("Open case study"). The native cursor is never hidden.
+- **Header:** steps out of the way while scrolling down, returns on the first scroll up.
+- **Reduced motion:** nothing is pinned or scrubbed. The portrait is drawn once, formed and still. The promise sits below the hero as a plain block, the reel stacks, the stack lines wrap, and scrolling is native.
 
-## The stand-in
-Until the 3D avatar (an Avaturn T2 GLB) is set with `NEXT_PUBLIC_AVATAR_URL`, the stage shows a documentary still of Zuhayr:
-- A low-key tone curve and a warm wash.
-- Mirrored so the brightest background detail falls into the radial fade.
-- A slow push-in while he speaks.
+## Performance
+- The portrait is one WebGL2 draw call written by hand; three.js is not loaded for it. The data is a single 512px texture (brightness, depth, mask), built by `scripts/build-portrait.mjs`.
+- Shaders compile off the main thread where the driver allows it.
+- A software rasterizer is detected from a throwaway worker before any context is created on the page, because creating one there can block for over a second. Those machines get a graded still of the same cut-out in the same place.
+- The loop stops when the hero is off screen or the tab is hidden.
+
+## The avatar
+`NEXT_PUBLIC_AVATAR_URL` still swaps the point cloud on `/talk` for a rigged, lip-synced GLB (TalkingHead, prepared with `npm run avatar`). It is unset by default: a generic sample head looks worse than his own face made of light, so the avatar should only go in once it is a real scan of him.
 
 ## Writing
 - First person, plain and specific: "I build voice agents on Vapi and the OpenAI Realtime API", not "passionate about cutting-edge AI".
-- Numbers only when they are true and checkable: Top Rated Plus, 100% job success.
-- Actions say what happens: "Ask", "Start a project", "Send message", "Turn on sound".
+- Numbers only when they are true and checkable: 5.0 across 13 reviews, 100% job success, about 2,500 hours, Top Rated Plus.
+- Actions say what happens: "Ask", "Start a project", "Send message", "Open case study".
 
-## Critique of the first draft, and what changed
-1. **Accent color.** The first draft used Tungsten as the UI accent. A warm peach accent on dark sits too close to the warm-clay default.
-   - Tungsten is now light-only, inside the 3D scene.
-   - Interaction moved to Signal, a soft yellow tied to the captions-and-listening idea, used only for interaction.
-2. **Background.** The first draft considered near-black. Near-black with one bright accent is the commonest dark default.
-   - The surface is now a colored, painted slate-teal backdrop that has a reason to exist (the interview set).
-3. **Separators.** The other agent's rows used hairline rules between items, which drifts toward the broadsheet default.
-   - Rules are removed. Spacing and type scale separate content.
-4. **Cards.** The contact block was a rounded dark card, the SaaS-card default.
-   - It is now a full-bleed end card on Umbra.
-5. **Stack section.** The plan had a 3D cloud of tool logos, a template component in its own right.
-   - It's now a typeset answer to "What do you build with?", grouped by what each tool does.
-6. **Effects.** Cursor-following image previews and custom cursors are portfolio tropes, so neither is used. Boldness is spent once, in the hero.
-7. **Section labels.** Small question labels above big headings would be eyebrow labels.
-   - The question is the heading itself, in the display face, the way a magazine Q&A sets its questions.
+## What changed from the first design, and why
+The first design avoided anything that could read as a portfolio trope: near-black, a bright accent, a custom cursor, scroll effects, hairlines. What was left was one teal ground and columns of text, and the client's verdict was "very basic". Restraint everywhere is its own default.
+
+This pass keeps the rule that every move needs a reason in the subject, and drops the rule that there should be few moves.
+1. **The stand-in avatar is gone.** A sample head that isn't him was the weakest thing on the page. His photograph, rebuilt in depth, is the strongest.
+2. **Near-black is back, but it is one ground of three.** The page is not a dark site with an accent; it is ink, paper and orange in blocks the size of the screen.
+3. **The accent has a job.** Soft yellow could not carry a section. International orange can, and it is the colour of the claim.
+4. **Scroll does work.** It bursts the portrait, runs the reel, fills the rail and slides the stack. Each of those shows content; none is a fade-in.
+5. **The cursor ring is kept honest.** It labels what a click will do and leaves the native cursor alone.

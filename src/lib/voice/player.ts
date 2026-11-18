@@ -34,6 +34,33 @@ let audioContext: AudioContext | null = null;
 /** One AudioContext for the whole page, shared with the 3D avatar. */
 export const sharedAudioContext = () => (audioContext ??= new AudioContext());
 
+let analyser: AnalyserNode | null = null;
+let samples: Uint8Array<ArrayBuffer> | null = null;
+
+/** Speech is routed through an analyser so the portrait can move with the voice. */
+const voiceOutput = () => {
+  const ctx = sharedAudioContext();
+  if (!analyser) {
+    analyser = ctx.createAnalyser();
+    analyser.fftSize = 256;
+    analyser.connect(ctx.destination);
+    samples = new Uint8Array(analyser.fftSize);
+  }
+  return analyser;
+};
+
+/** Loudness of the speech playing right now, from 0 to 1. */
+export const getVoiceLevel = () => {
+  if (!analyser || !samples) return 0;
+  analyser.getByteTimeDomainData(samples);
+  let sum = 0;
+  for (let i = 0; i < samples.length; i++) {
+    const v = (samples[i] - 128) / 128;
+    sum += v * v;
+  }
+  return Math.min(1, Math.sqrt(sum / samples.length) * 4);
+};
+
 export const decodeSpeech = (utterance: Utterance) =>
   sharedAudioContext().decodeAudioData(decodeBase64(utterance.audio));
 
@@ -57,7 +84,7 @@ class WebAudioPlayer implements SpeechPlayer {
 
     const source = ctx.createBufferSource();
     source.buffer = buffer;
-    source.connect(ctx.destination);
+    source.connect(voiceOutput());
 
     await new Promise<void>((resolve) => {
       let frame = 0;

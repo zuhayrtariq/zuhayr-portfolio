@@ -17,8 +17,8 @@ uniform vec2 uLight;
 uniform float uLit;
 out vec4 outColor;
 
-const vec3 BACKDROP = vec3(0.114, 0.165, 0.173);
-const vec3 UMBRA = vec3(0.067, 0.098, 0.106);
+const vec3 BACKDROP = vec3(0.075, 0.07, 0.066);
+const vec3 UMBRA = vec3(0.02, 0.024, 0.024);
 const vec3 TUNGSTEN = vec3(0.941, 0.761, 0.541);
 
 float hash(vec2 p) {
@@ -262,7 +262,7 @@ const Backdrop = ({ className, lit = true }: BackdropProps) => {
       aria-hidden
       className={cn(
         "pointer-events-none absolute inset-0 overflow-hidden",
-        "bg-[radial-gradient(ellipse_at_30%_32%,#2b3b3e_0%,#1d2a2c_45%,#11191b_100%)]",
+        "bg-[radial-gradient(ellipse_at_30%_32%,#1c1714_0%,#0b0c0c_45%,#050606_100%)]",
         className
       )}
     >
