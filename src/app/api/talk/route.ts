@@ -1,8 +1,7 @@
+import { siteModel } from "@/lib/ai/model";
 import { instructionsFor } from "@/lib/ai/persona";
 import { retrieveNotes } from "@/lib/ai/retrieve";
 import { clientKey, rateLimit } from "@/lib/rate-limit";
-import { anthropic } from "@ai-sdk/anthropic";
-import { openai } from "@ai-sdk/openai";
 import {
   convertToModelMessages,
   createUIMessageStreamResponse,
@@ -18,16 +17,6 @@ export const maxDuration = 30;
 
 const MAX_MESSAGES = 12;
 const MAX_CHARS = 1200;
-
-const model = () => {
-  if (process.env.ANTHROPIC_API_KEY) {
-    return anthropic(process.env.ANTHROPIC_MODEL ?? "claude-sonnet-5-5");
-  }
-  if (process.env.OPENAI_API_KEY) {
-    return openai(process.env.OPENAI_MODEL ?? "gpt-5.4-mini");
-  }
-  return null;
-};
 
 const bodySchema = z.object({
   messages: z.array(z.custom<UIMessage>((m) => typeof m === "object" && m !== null)).min(1).max(40),
@@ -45,7 +34,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const selected = model();
+  const selected = siteModel();
   if (!selected) {
     return Response.json({ error: "The AI isn't configured yet." }, { status: 503 });
   }

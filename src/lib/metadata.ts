@@ -1,8 +1,12 @@
 import { SITE } from "@/constants/site";
 import { OG_SIZE } from "@/lib/og";
+import { lowerFirst } from "@/lib/utils";
 import type { Metadata } from "next";
 
 export const OPEN_GRAPH = { type: "website", locale: "en_US", siteName: SITE.name } as const;
+
+export const HOME_TITLE = `${SITE.name} | ${SITE.role}`;
+const OG_ALT = `${SITE.name}, ${lowerFirst(SITE.role)}. You describe it, I build it, and it goes live on the date we set.`;
 
 interface PageMetadata {
   title: string;
@@ -33,6 +37,6 @@ export const pageMetadata = ({
     title: `${title} | ${SITE.name}`,
     description,
     url: path,
-    ...(!hasOwnImage && { images: { url: "/opengraph-image", ...OG_SIZE } }),
+    ...(!hasOwnImage && { images: { url: "/opengraph-image", ...OG_SIZE, alt: OG_ALT, type: "image/png" } }),
   },
 });

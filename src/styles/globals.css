@@ -110,18 +110,6 @@
 
   /* Sections flip the palette by rebinding the same tokens, so every component
      inside follows without knowing which ground it is on. */
-  .on-paper {
-    --color-backdrop: #ece8df;
-    --color-umbra: #f8f6f1;
-    --color-caption: #0b0c0c;
-    --color-fog: #5f5d56;
-    --color-signal: #d43a0c;
-    --focus: #0b0c0c;
-    color-scheme: light;
-    color: var(--color-caption);
-    background-color: var(--color-backdrop);
-  }
-
   .on-ember {
     --color-backdrop: #ff4d1f;
     --color-umbra: #ff4d1f;
@@ -135,8 +123,20 @@
     background-color: var(--color-backdrop);
   }
 
-  .on-ember ::selection,
-  .on-paper ::selection {
+  /* A dark surface placed on one of the light grounds takes the dark palette back. */
+  .on-ink {
+    --color-backdrop: #0b0c0c;
+    --color-umbra: #050606;
+    --color-caption: #f2efe8;
+    --color-fog: #9d9b93;
+    --color-signal: #ff4d1f;
+    --color-error: #f2998d;
+    --focus: #ff4d1f;
+    color-scheme: dark;
+    color: var(--color-caption);
+  }
+
+  .on-ember ::selection {
     background-color: #0b0c0c;
     color: #f2efe8;
   }
@@ -234,19 +234,6 @@
   }
 }
 
-/* Hairline field borders disappear on the orange ground, so they are drawn in near-solid ink. */
-.on-ember :is(input, textarea) {
-  border-color: color-mix(in oklab, var(--color-caption) 60%, transparent);
-}
-
-.on-ember :is(input, textarea):is(:hover, :focus-visible) {
-  border-color: var(--color-caption);
-}
-
-@utility text-outline {
-  color: transparent;
-  -webkit-text-stroke: 1px var(--color-caption);
-}
 
 @keyframes name-rise {
   from {

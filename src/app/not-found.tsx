@@ -19,7 +19,7 @@ export default function NotFound() {
           Go to homepage
         </Link>
         <Link
-          href="/chat"
+          href="/talk"
           className="inline-flex h-12 items-center justify-center rounded-full border border-foreground/20 px-7 font-medium transition-colors hover:border-foreground"
         >
           Ask my AI

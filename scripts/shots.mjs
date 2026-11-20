@@ -1,4 +1,4 @@
-// Local review screenshots: node scripts/shots.mjs <name> [scrollY ...] [--mobile] [--reduced] [--path=/x] [--wait=ms] [--mouse=x,y]
+// Local review screenshots: node scripts/shots.mjs <name> [scrollY ...] [--mobile] [--width=px] [--reduced] [--path=/x] [--wait=ms] [--mouse=x,y]
 import { chromium } from "playwright-core";
 
 const args = process.argv.slice(2);
@@ -15,7 +15,7 @@ const browser = await chromium.launch({
   args: args.includes("--nogpu") ? ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"] : ["--enable-gpu", "--use-angle=metal", "--ignore-gpu-blocklist"],
 });
 const page = await browser.newPage({
-  viewport: mobile ? { width: 390, height: 844 } : { width: 1440, height: 900 },
+  viewport: mobile ? { width: 390, height: 844 } : { width: Number(flag("width") ?? 1440), height: flag("width") ? 1024 : 900 },
   deviceScaleFactor: mobile ? 2 : 1,
   isMobile: mobile,
   hasTouch: mobile,

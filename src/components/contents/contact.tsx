@@ -1,15 +1,28 @@
 "use client";
 
+import BrandIcon from "@/components/ui/brand-icon";
 import { SITE } from "@/constants/site";
 import { CONTACT_TOPIC_EVENT, CONTACT_TOPIC_KEY } from "@/lib/contact-topic";
 import type { FormValues } from "@/lib/validators/form";
 import { useMutation } from "@tanstack/react-query";
+import { ArrowUpRightIcon, MailIcon, MessageCircleIcon, type LucideIcon } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import Rise from "../motion/rise";
+import ContactBackdrop from "./contact-backdrop";
 import { Textarea } from "../ui/textarea";
+
+const UpworkIcon = ({ className }: { className?: string }) => (
+  <BrandIcon name="Upwork" colored={false} className={className} />
+);
+
+const CHANNELS: { label: string; value: string; href: string; Icon: LucideIcon | typeof UpworkIcon }[] = [
+  { label: "Email", value: SITE.email, href: `mailto:${SITE.email}`, Icon: MailIcon },
+  { label: "WhatsApp", value: SITE.phone, href: SITE.whatsapp, Icon: MessageCircleIcon },
+  { label: "Upwork", value: "Hire me on Upwork", href: SITE.upwork, Icon: UpworkIcon },
+];
 
 const labelClass = "text-ui font-bold text-caption";
 const messageClass = "text-fine font-bold text-error";
@@ -38,10 +51,14 @@ const Contact = () => {
   });
 
   useEffect(() => {
+    // What the site last wrote into the message, so a newer handoff may replace it but never the visitor's own words.
+    let written = "";
     const prefill = (topic: string | null) => {
-      if (topic && !form.getValues("message")) {
-        form.setValue("message", `I'd like to talk about ${topic.replace(/[.\s]+$/, "")}.`);
-      }
+      const current = form.getValues("message");
+      if (!topic || (current && current !== written)) return;
+      // One line is a topic to put in a sentence; several lines are a message already.
+      written = topic.includes("\n") ? topic : `I'd like to talk about ${topic.replace(/[.\s]+$/, "")}.`;
+      form.setValue("message", written);
     };
     prefill(sessionStorage.getItem(CONTACT_TOPIC_KEY));
     const onTopic = (e: Event) => prefill((e as CustomEvent<string>).detail);
@@ -61,52 +78,51 @@ const Contact = () => {
   });
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="on-ember overflow-hidden">
-      <div className="mx-auto max-w-[1680px] px-[clamp(20px,4vw,64px)] pt-24 md:pt-36">
+    <section id="contact" aria-labelledby="contact-title" className="on-ember relative isolate overflow-hidden">
+      <ContactBackdrop />
+      <div className="mx-auto max-w-[1680px] px-[clamp(16px,4vw,64px)] pt-24 md:pt-36">
         <Rise
           as="h2"
           by="lines"
           id="contact-title"
-          className="font-display text-[length:36.5vw] leading-[0.8] tracking-[-0.02em] min-[1680px]:text-[length:600px]"
+          className="font-display text-[length:32.6vw] leading-[0.8] tracking-[-0.02em] min-[1680px]:text-[length:536px]"
         >
-          Let&apos;s talk.
+          Your turn.
         </Rise>
       </div>
-      <div className="mx-auto grid max-w-[1680px] gap-16 px-[clamp(20px,4vw,64px)] pb-24 pt-14 md:grid-cols-12 md:gap-x-8 md:pb-36 md:pt-20">
-        <div className="md:col-span-5">
+      <div className="mx-auto grid max-w-[1680px] gap-12 px-[clamp(16px,4vw,64px)] pb-24 pt-14 lg:grid-cols-12 lg:gap-x-8 lg:pb-36 lg:pt-20">
+        <div className="lg:col-span-5">
           <p className="max-w-[30ch] text-[clamp(24px,2.2vw,34px)] leading-[1.2]">
-            A new product, a feature for an app you already have, or a project that&apos;s slipping
-            and needs to land. Send a few lines and I&apos;ll reply by email.
+            Describe what you need built: a new product, a feature for the app you have, or a
+            project that&apos;s slipping and needs to land. I&apos;ll reply by email with how I&apos;d build
+            it and when it could go live.
           </p>
-          <dl className="mt-12 space-y-5">
-            <div>
-              <dt className="text-ui text-fog">Email</dt>
-              <dd className="text-body">
-                <a href={`mailto:${SITE.email}`} className="link-underline">
-                  {SITE.email}
+          <ul className="mt-10 max-w-[30rem] space-y-3">
+            {CHANNELS.map(({ label, value, href, Icon }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  {...(href.startsWith("mailto:") ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+                  className="on-ink group/channel flex items-center gap-4 rounded-[22px] bg-ink p-3 pr-5 shadow-[0_24px_50px_-24px_rgb(59_20_8/0.8),inset_0_1px_0_rgb(255_255_255/0.08)] transition-transform duration-500 ease-[var(--ease-lights)] hover:translate-x-1.5"
+                >
+                  <span className="grid size-13 shrink-0 place-items-center rounded-2xl bg-white/8 text-caption transition-colors duration-300 group-hover/channel:bg-ember group-hover/channel:text-ink">
+                    <Icon aria-hidden className="size-6" />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-fine text-fog">{label}</span>
+                    <span className="block truncate text-body font-bold leading-tight">{value}</span>
+                  </span>
+                  <ArrowUpRightIcon
+                    aria-hidden
+                    className="size-5 shrink-0 transition-transform duration-500 ease-[var(--ease-lights)] group-hover/channel:-translate-y-0.5 group-hover/channel:translate-x-0.5"
+                  />
                 </a>
-              </dd>
-            </div>
-            <div>
-              <dt className="text-ui text-fog">WhatsApp</dt>
-              <dd className="text-body">
-                <a href={SITE.whatsapp} target="_blank" rel="noopener noreferrer" className="link-underline">
-                  {SITE.phone}
-                </a>
-              </dd>
-            </div>
-            <div>
-              <dt className="text-ui text-fog">Upwork</dt>
-              <dd className="text-body">
-                <a href={SITE.upwork} target="_blank" rel="noopener noreferrer" className="link-underline">
-                  Hire me on Upwork
-                </a>
-              </dd>
-            </div>
-          </dl>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <div className="md:col-span-6 md:col-start-7 md:pt-4">
+        <div className="on-ink relative rounded-[28px] bg-ink p-6 shadow-[0_50px_100px_-30px_rgb(59_20_8/0.75),inset_0_1px_0_rgb(255_255_255/0.08)] sm:p-9 lg:col-span-7 lg:rounded-[36px] lg:p-12">
           {isSuccess ? (
             <div role="status" className="flex h-full flex-col justify-center">
               <h3 className="font-display text-q-sm leading-none font-semibold md:text-q">Message sent</h3>
@@ -185,7 +201,7 @@ const Contact = () => {
                           {...field}
                           rows={5}
                           disabled={isPending}
-                          placeholder="What are you building, and where could I help?"
+                          placeholder="What do you need built, and when do you need it live?"
                           className="resize-none"
                         />
                       </FormControl>
@@ -203,7 +219,7 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="inline-flex h-13 w-full items-center justify-center rounded-full bg-caption px-8 text-ui font-bold text-umbra transition-colors hover:bg-signal disabled:opacity-60 sm:w-auto"
+                  className="inline-flex h-14 w-full items-center justify-center rounded-full bg-signal px-10 text-ui font-bold text-ink transition-colors duration-300 hover:bg-caption disabled:opacity-60 sm:w-auto"
                 >
                   {isPending ? "Sending…" : "Send message"}
                 </button>

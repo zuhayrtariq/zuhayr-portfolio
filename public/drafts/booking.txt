@@ -1,0 +1,76 @@
+NAME: Chairside
+PITCH: Patients book and pay for dental visits online, and the front desk runs the whole day from one screen.
+V1: Online booking by treatment and dentist
+V1: Card deposits through Stripe
+V1: Text and email reminders
+V1: Front-desk day view with check-in
+V1: Patient accounts with visit history
+LATER: Insurance claims
+LATER: Native mobile app
+STACK: Next.js
+STACK: TypeScript
+STACK: PostgreSQL
+STACK: Stripe
+STACK: Clerk
+STACK: Twilio
+WEEK: 1 | A clickable booking flow with your treatments and hours
+WEEK: 2-3 | Real bookings and Stripe deposits on a staging link
+WEEK: 4 | Reminders and the front-desk day view
+WEEK: 5 | Live on your domain, with your team walked through it
+LIKE: the-ticket-zone
+ASK: How many dentists and chairs need their own calendar?
+ASK: Is a deposit refunded on cancellation, and until when?
+ASK: Which system holds your patient records today?
+SCREEN:
+<style>
+body{background:#f3f7f6;color:#12302d;display:grid;grid-template-columns:212px 1fr 300px}
+.sb{background:#0f3b37;color:#cfe5e1;padding:26px 18px;display:flex;flex-direction:column;gap:6px}
+.lg{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;color:#fff;margin-bottom:26px}
+.lg i{width:30px;height:30px;border-radius:9px;background:#3fd0b6;display:block}
+.nv{padding:11px 12px;border-radius:10px;font-size:14.5px}
+.nv.on{background:#1b524c;color:#fff;font-weight:600}
+.sb small{margin-top:auto;font-size:12.5px;opacity:.7;line-height:1.5}
+.mn{padding:26px 28px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.hd{display:flex;align-items:center;justify-content:space-between}
+.hd h1{margin:0;font-size:25px;letter-spacing:-.02em}
+.hd p{margin:3px 0 0;font-size:14px;color:#5b7773}
+.bt{background:#0f3b37;color:#fff;border:0;border-radius:11px;padding:12px 18px;font-size:14.5px;font-weight:600}
+.st{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.cd{background:#fff;border-radius:14px;padding:15px 16px;box-shadow:0 1px 0 #dfe9e7}
+.cd b{display:block;font-size:26px;letter-spacing:-.02em;margin-top:5px}
+.cd span{font-size:12.5px;color:#5b7773}
+.cd em{font-style:normal;font-size:12px;color:#0f9d84;font-weight:600}
+.gr{flex:1;background:#fff;border-radius:16px;display:grid;grid-template-columns:56px repeat(3,1fr);grid-template-rows:44px repeat(5,1fr);overflow:hidden;box-shadow:0 1px 0 #dfe9e7}
+.gr>div{border-right:1px solid #edf3f2;border-bottom:1px solid #edf3f2;padding:6px;font-size:12.5px;color:#7b9591;min-height:0}
+.gr .h{font-weight:700;color:#12302d;font-size:13.5px;display:flex;align-items:center;gap:8px;padding-left:12px}
+.gr .h i{width:22px;height:22px;border-radius:50%;display:block}
+.ap{height:100%;border-radius:9px;padding:8px 10px;font-size:12.5px;line-height:1.35;color:#12302d;border-left:4px solid}
+.ap b{display:block;font-size:13.5px}
+.a1{background:#e2f7f2;border-color:#3fd0b6}.a2{background:#fff3df;border-color:#f2a93b}.a3{background:#e9eefc;border-color:#6f8df0}.a4{background:#fde9ea;border-color:#e86a72}
+.rt{background:#fff;border-left:1px solid #e3ecea;padding:26px 22px;display:flex;flex-direction:column;gap:14px}
+.rt h2{margin:0;font-size:13px;text-transform:none;color:#5b7773;font-weight:600}
+.pt{display:flex;gap:12px;align-items:center}
+.pt i{width:50px;height:50px;border-radius:50%;background:#3fd0b6;display:grid;place-items:center;font-style:normal;font-weight:700;color:#0f3b37;font-size:18px}
+.pt b{font-size:18px;display:block}.pt span{font-size:13px;color:#5b7773}
+.rw{display:flex;justify-content:space-between;font-size:13.5px;padding:10px 0;border-bottom:1px solid #edf3f2}
+.rw span{color:#5b7773}.rw b{font-weight:600}
+.ok{background:#e2f7f2;color:#0b7a66;border-radius:11px;padding:11px 13px;font-size:13px;line-height:1.45}
+.ck{margin-top:auto;background:#3fd0b6;color:#0f3b37;border:0;border-radius:12px;padding:15px;font-size:15.5px;font-weight:700}
+</style>
+<aside class="sb"><div class="lg"><i></i>Chairside</div><div class="nv on">Today</div><div class="nv">Calendar</div><div class="nv">Patients</div><div class="nv">Payments</div><div class="nv">Reminders</div><small>Maple Street Dental<br>3 dentists, 4 chairs</small></aside>
+<main class="mn">
+<div class="hd"><div><h1>Thursday, 14 May</h1><p>18 visits booked, 7 checked in so far</p></div><button class="bt">New booking</button></div>
+<div class="st"><div class="cd"><span>Visits today</span><b>18</b><em>4 booked online overnight</em></div><div class="cd"><span>Checked in</span><b>7</b><em>On time</em></div><div class="cd"><span>Deposits taken</span><b>$640</b><em>All paid by card</em></div><div class="cd"><span>No-shows this week</span><b>1</b><em>Down from 5</em></div></div>
+<div class="gr">
+<div></div><div class="h"><i style="background:#3fd0b6"></i>Dr. Amara Okafor</div><div class="h"><i style="background:#f2a93b"></i>Dr. Daniel Reyes</div><div class="h"><i style="background:#6f8df0"></i>Dr. Hana Sato</div>
+<div>9:00</div><div><div class="ap a1"><b>Lucia Fernandes</b>Check-up and clean</div></div><div><div class="ap a2"><b>Tom Whitaker</b>Filling, upper left</div></div><div></div>
+<div>10:00</div><div><div class="ap a1"><b>Priya Nair</b>Whitening consult</div></div><div></div><div><div class="ap a3"><b>Marcus Bell</b>Crown fitting</div></div>
+<div>11:00</div><div></div><div><div class="ap a2"><b>Sofia Marino</b>Check-up and clean</div></div><div><div class="ap a3"><b>Ibrahim Yusuf</b>Aligner review</div></div>
+<div>12:00</div><div><div class="ap a4"><b>Emma Lindqvist</b>Emergency: chipped tooth</div></div><div></div><div><div class="ap a3"><b>Noah Kim</b>Root canal, visit 2</div></div>
+<div>13:00</div><div></div><div><div class="ap a2"><b>Grace Adeyemi</b>Child check-up</div></div><div></div>
+</div>
+</main>
+<aside class="rt"><h2>Next up, 10:00</h2><div class="pt"><i>PN</i><div><b>Priya Nair</b><span>Patient since 2022</span></div></div>
+<div><div class="rw"><span>Treatment</span><b>Whitening consult</b></div><div class="rw"><span>Dentist</span><b>Dr. Okafor</b></div><div class="rw"><span>Deposit</span><b>$40 paid</b></div><div class="rw"><span>Booked</span><b>Online, Tuesday</b></div></div>
+<div class="ok">Reminder sent by text yesterday at 6 pm. Priya replied "See you then".</div>
+<button class="ck">Check in Priya</button></aside>

@@ -3,18 +3,17 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Zuhayr Tariq",
-    short_name: "Zuhayr Tariq",
-    description: "Zuhayr Tariq, full-stack web and AI developer. I take products from idea to launch, on time.",
+    short_name: "Zuhayr",
+    description: "Zuhayr Tariq, full-stack web and AI developer. You describe it, I build it, and it goes live on the date we set.",
     start_url: "/",
     display: "standalone",
-    background_color: "#1d2a2c",
-    theme_color: "#1d2a2c",
+    background_color: "#0b0c0c",
+    theme_color: "#0b0c0c",
+    // Drawn by scripts/build-avatar.mjs.
     icons: [
-      {
-        src: "/icons/favicon.png",
-        sizes: "any",
-        type: "image/png",
-      },
+      { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+      { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
+      { src: "/icons/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
     ],
     categories: ["portfolio", "technology", "developer"],
     lang: "en",

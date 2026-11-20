@@ -1,0 +1,71 @@
+NAME: Ledgerline
+PITCH: One dashboard for revenue and ad spend that explains what changed each week in plain language.
+V1: Stripe revenue and subscriptions, synced daily
+V1: Google and Meta ad spend imported
+V1: A weekly summary written by AI
+V1: Ask a question, get a chart
+V1: Team logins with roles
+LATER: Forecasting
+LATER: A Monday digest in Slack
+STACK: Next.js
+STACK: TypeScript
+STACK: PostgreSQL
+STACK: Drizzle
+STACK: Stripe
+STACK: OpenAI
+WEEK: 1 | Your Stripe revenue live on a private dashboard
+WEEK: 2-3 | Ad spend joined in, with return per channel
+WEEK: 4-5 | The weekly AI summary and ask-a-question
+WEEK: 6 | Team logins, then launch
+LIKE: analytra
+ASK: Which ad platforms matter most to you today?
+ASK: Who should see revenue, and who only spend?
+SCREEN:
+<style>
+body{background:#eef1f5;color:#151a23;padding:26px 32px;display:flex;flex-direction:column;gap:16px}
+.tp{display:flex;align-items:center;justify-content:space-between}
+.lg{font-weight:800;font-size:21px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
+.lg i{width:26px;height:26px;background:#1d4ed8;border-radius:7px;display:block}
+.tb{display:flex;gap:6px;background:#dfe4ec;padding:5px;border-radius:12px;font-size:13.5px}
+.tb span{padding:8px 15px;border-radius:9px;color:#5c6675}.tb .on{background:#fff;color:#151a23;font-weight:600}
+.wk{font-size:13.5px;color:#5c6675;background:#fff;border-radius:11px;padding:10px 15px}
+.kp{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.k{background:#fff;border-radius:16px;padding:17px 19px}
+.k span{font-size:13px;color:#5c6675}.k b{display:block;font-size:31px;letter-spacing:-.03em;margin:5px 0 3px}
+.up,.dn{font-style:normal;font-size:13px;font-weight:600}.up{color:#15803d}.dn{color:#b91c1c}
+.rw{flex:1;display:grid;grid-template-columns:1.55fr 1fr;gap:14px;min-height:0}
+.ch{background:#fff;border-radius:16px;padding:19px 21px;display:flex;flex-direction:column;min-height:0}
+.ch h2{margin:0;font-size:15.5px}.ch p{margin:3px 0 10px;font-size:13px;color:#5c6675}
+.ch svg{flex:1;width:100%;min-height:0}
+.lgd{display:flex;gap:18px;font-size:12.5px;color:#5c6675}.lgd i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
+.sm{background:#151a23;color:#eef1f5;border-radius:16px;padding:21px 23px;display:flex;flex-direction:column;gap:11px}
+.sm h2{margin:0;font-size:13px;color:#97a1b3;font-weight:600}
+.sm p{margin:0;font-size:15.5px;line-height:1.5}
+.sm p b{color:#93b4ff}
+.sm ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:13.5px;color:#cfd6e2}
+.sm li{display:flex;justify-content:space-between;border-top:1px solid #2b3342;padding-top:8px}
+.sm li b{color:#fff}
+.ak{margin-top:auto;background:#222a38;border-radius:12px;padding:13px 15px;font-size:13.5px;color:#97a1b3;display:flex;justify-content:space-between}
+.ak b{color:#93b4ff}
+</style>
+<div class="tp"><div class="lg"><i></i>Ledgerline</div><div class="tb"><span class="on">Overview</span><span>Revenue</span><span>Ad spend</span><span>Customers</span></div><div class="wk">Week of 11 May, compared with last week</div></div>
+<div class="kp">
+<div class="k"><span>Revenue</span><b>$48,920</b><em class="up">Up 12.4%</em></div>
+<div class="k"><span>Ad spend</span><b>$9,310</b><em class="dn">Up 21.0%</em></div>
+<div class="k"><span>Return on ad spend</span><b>5.3x</b><em class="dn">Down from 5.7x</em></div>
+<div class="k"><span>New subscribers</span><b>214</b><em class="up">Up 31</em></div>
+</div>
+<div class="rw">
+<div class="ch"><h2>Revenue and ad spend</h2><p>Daily, last 14 days</p>
+<svg viewBox="0 0 640 250" preserveAspectRatio="none"><g stroke="#e6eaf0" stroke-width="1"><path d="M0 50H640M0 110H640M0 170H640M0 230H640"/></g>
+<path d="M0 168 46 160 92 164 138 142 184 150 230 128 276 134 322 112 368 118 414 92 460 100 506 70 552 78 598 48 640 40V250H0Z" fill="#1d4ed8" opacity=".08"/>
+<path d="M0 168 46 160 92 164 138 142 184 150 230 128 276 134 322 112 368 118 414 92 460 100 506 70 552 78 598 48 640 40" fill="none" stroke="#1d4ed8" stroke-width="3.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+<path d="M0 214 46 212 92 213 138 208 184 209 230 205 276 206 322 200 368 201 414 190 460 186 506 176 552 174 598 166 640 162" fill="none" stroke="#e0672a" stroke-width="3" stroke-dasharray="7 6" vector-effect="non-scaling-stroke"/>
+</svg>
+<div class="lgd"><span><i style="background:#1d4ed8"></i>Revenue</span><span><i style="background:#e0672a"></i>Ad spend</span></div></div>
+<div class="sm"><h2>What changed this week</h2>
+<p>Revenue rose <b>12.4%</b>, mostly from the annual plan promotion. Spend rose faster, so each ad dollar returned a little less than last week.</p>
+<ul><li><span>Meta, annual plan campaign</span><b>7.1x</b></li><li><span>Google, brand search</span><b>6.4x</b></li><li><span>Google, display retargeting</span><b>1.2x</b></li></ul>
+<p style="font-size:13.5px;color:#cfd6e2">Display retargeting took 24% of spend and brought 6% of revenue. It is the first place to cut.</p>
+<div class="ak"><span>Ask about your numbers</span><b>Enter</b></div></div>
+</div>

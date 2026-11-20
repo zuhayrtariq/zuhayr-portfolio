@@ -4,6 +4,9 @@ export const projects: Project[] = [
   {
     title: "Starling MX",
     slug: "starling-mx",
+    kind: "Enterprise AI platform",
+    accent: "#E08A3C",
+    scroll: { src: "/work/starling-mx-long.webp", width: 1280, height: 3022 },
     image: "/work/starling-mx.jpg",
     summary:
       "An enterprise AI platform that loads an organization's knowledge into every model call. I lead engineering, from the web platform to the agent layer.",
@@ -18,6 +21,9 @@ export const projects: Project[] = [
   {
     title: "ZFit-AI",
     slug: "zfit-ai",
+    kind: "Voice AI fitness coach",
+    accent: "#22D3EE",
+    scroll: { src: "/work/zfit-ai-long.webp", width: 1280, height: 2228 },
     image: "/work/zfit-ai.jpg",
     summary:
       "A fitness coach you talk to: a voice agent on Vapi and Gemini that turns a short conversation into a workout and diet plan.",
@@ -31,6 +37,9 @@ export const projects: Project[] = [
   {
     title: "Hypecaster",
     slug: "hypecaster",
+    kind: "AI video agent",
+    accent: "#9B6BFF",
+    scroll: { src: "/work/hypecaster-long.webp", width: 1280, height: 3022 },
     image: "/work/hypecaster.jpg",
     summary:
       "An AI agent that writes a script, voices it, matches B-roll and adds captions to produce a short video.",
@@ -43,6 +52,9 @@ export const projects: Project[] = [
   {
     title: "Analytra",
     slug: "analytra",
+    kind: "AI analytics",
+    accent: "#35B8B3",
+    scroll: { src: "/work/analytra-long.webp", width: 1280, height: 3022 },
     image: "/work/analytra.jpg",
     summary:
       "AI analytics that connects websites, ad platforms, CRMs and Stripe, and answers questions about the data in plain language.",

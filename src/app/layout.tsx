@@ -2,18 +2,16 @@ import SmoothScroll from "@/components/site/smooth-scroll";
 import Providers from "@/components/utils/providers";
 import { display, text } from "@/constants/fonts";
 import { SITE } from "@/constants/site";
-import { OPEN_GRAPH } from "@/lib/metadata";
+import { HOME_TITLE, OPEN_GRAPH } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata, Viewport } from "next";
 
-const title = `${SITE.name} | Full-stack web and AI developer`;
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: title,
+    default: HOME_TITLE,
     template: `%s | ${SITE.name}`,
   },
   description: SITE.description,
@@ -23,16 +21,23 @@ export const metadata: Metadata = {
     "AI web developer",
     "full-stack web developer",
     "hire AI developer",
+    "freelance full-stack developer",
     "Next.js developer",
+    "React developer",
     "React Native developer",
+    "Node.js developer",
+    "AI chatbot developer",
+    "MVP development",
     "AI agents",
     "RAG",
     "voice AI",
     "Upwork Top Rated Plus",
     "Pakistan",
   ],
+  applicationName: SITE.name,
   authors: [{ name: SITE.name, url: SITE.url }],
   creator: SITE.name,
+  publisher: SITE.name,
   robots: {
     index: true,
     follow: true,
@@ -44,7 +49,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  openGraph: { ...OPEN_GRAPH, title, description: SITE.description },
+  // Only the home page keeps these: every page below it sets its own through pageMetadata,
+  // and setting openGraph on the home page itself would drop the app/opengraph-image file.
+  openGraph: { ...OPEN_GRAPH, title: HOME_TITLE, description: SITE.description, url: "/" },
   // X falls back to the Open Graph title, description and image.
   twitter: {
     card: "summary_large_image",

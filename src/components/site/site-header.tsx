@@ -60,7 +60,16 @@ const SiteHeader = () => {
         Skip to content
       </a>
       <div className="mx-auto flex h-16 max-w-[1680px] items-center justify-between px-[clamp(20px,4vw,64px)] md:h-20">
-        <Link href="/" className="font-display text-[26px] font-semibold leading-none">
+        <Link href="/" className="flex items-center gap-3 font-display text-[26px] font-semibold leading-none">
+          {/* eslint-disable-next-line @next/next/no-img-element -- the favicon's own drawing, from scripts/build-avatar.mjs */}
+          <img
+            src="/images/avatar-mark.webp"
+            alt=""
+            width={32}
+            height={32}
+            decoding="async"
+            className="size-8"
+          />
           Zuhayr Tariq
         </Link>
 

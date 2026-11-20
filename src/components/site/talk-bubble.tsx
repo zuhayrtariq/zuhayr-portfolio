@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -10,7 +9,17 @@ const TalkBubble = () => {
   const pathname = usePathname();
   const [pastHero, setPastHero] = useState(false);
   const [atContact, setAtContact] = useState(false);
+  const [atFooter, setAtFooter] = useState(false);
   const onHome = pathname === "/";
+
+  // The footer carries its own way in, and the bubble would sit on its links.
+  useEffect(() => {
+    const footer = document.querySelector("footer");
+    if (!footer) return;
+    const io = new IntersectionObserver(([entry]) => setAtFooter(entry.isIntersecting));
+    io.observe(footer);
+    return () => io.disconnect();
+  }, [pathname]);
 
   // The hero is the conversation, so the bubble waits until it has scrolled away.
   useEffect(() => {
@@ -32,7 +41,7 @@ const TalkBubble = () => {
   }, [onHome]);
 
   if (pathname.startsWith("/talk")) return null;
-  const visible = !onHome || (pastHero && !atContact);
+  const visible = !atFooter && (!onHome || (pastHero && !atContact));
 
   return (
     <Link
@@ -44,13 +53,15 @@ const TalkBubble = () => {
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
       )}
     >
-      <span className="relative size-10 overflow-hidden rounded-full bg-ink">
-        <Image
-          src="/images/me.png"
+      <span className="flex size-10 items-end justify-center overflow-hidden rounded-full bg-ink">
+        {/* eslint-disable-next-line @next/next/no-img-element -- already sized and compressed by scripts/build-avatar.mjs */}
+        <img
+          src="/images/avatar.webp"
           alt=""
-          fill
-          sizes="40px"
-          className="-scale-x-100 object-cover [object-position:50%_16%] grayscale"
+          width={44}
+          height={44}
+          decoding="async"
+          className="size-11 max-w-none"
         />
       </span>
       Talk to me

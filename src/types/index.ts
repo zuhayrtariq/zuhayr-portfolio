@@ -25,6 +25,12 @@ export interface Project {
   slug?: string;
   /** Screenshot of the live product, under /public. */
   image?: string;
+  /** What the product is, in a few words. */
+  kind?: string;
+  /** The product's own brand colour, used to light its card. */
+  accent?: string;
+  /** A tall capture of the live site that scrolls inside the browser frame. */
+  scroll?: { src: string; width: number; height: number };
 }
 
 export interface AboutProps {

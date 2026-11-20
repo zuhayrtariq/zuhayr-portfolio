@@ -1,0 +1,80 @@
+NAME: Deskmate
+PITCH: An AI agent that answers your store's customers from your help docs and order data, and hands off when unsure.
+V1: Chat widget on the storefront
+V1: Answers drawn only from your help docs
+V1: Order status lookup by email
+V1: Handoff to a person, transcript attached
+V1: Inbox to review every conversation
+LATER: Refunds started by the agent
+LATER: A phone line with the same agent
+STACK: Next.js
+STACK: TypeScript
+STACK: Anthropic Claude
+STACK: the Vercel AI SDK
+STACK: Pinecone
+STACK: Supabase
+WEEK: 1 | The agent answering from your docs on a test page
+WEEK: 2 | Order lookup connected to your store
+WEEK: 3 | The review inbox and handoff to your team
+WEEK: 4 | Live on the storefront, with a weekly accuracy report
+LIKE: starling-mx
+ASK: Which platform runs the store, and does it expose orders?
+ASK: Where do your help docs live today?
+ASK: Who picks up a conversation when the agent hands off?
+SCREEN:
+<style>
+body{background:#0e1020;color:#e8e9f5;display:grid;grid-template-columns:300px 1fr 290px}
+.ls{border-right:1px solid #23264a;padding:22px 14px;display:flex;flex-direction:column;gap:8px}
+.lg{font-weight:700;font-size:19px;padding:0 8px 16px;display:flex;align-items:center;gap:10px}
+.lg i{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#8f7bff,#4fd3ff);display:block}
+.cv{padding:13px 13px;border-radius:13px;font-size:13.5px;line-height:1.4;color:#a9acd0}
+.cv.on{background:#1a1d3a;color:#e8e9f5;box-shadow:inset 0 0 0 1px #343a78}
+.cv b{display:flex;justify-content:space-between;color:#fff;font-size:14.5px;margin-bottom:3px}
+.cv b span{font-weight:400;font-size:12px;color:#7d81ad}
+.tg{display:inline-block;margin-top:7px;font-size:11.5px;padding:3px 9px;border-radius:99px}
+.ai{background:#173b33;color:#5fe0b7}.hm{background:#40311a;color:#ffc46b}
+.th{padding:24px 30px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.tp{display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid #23264a}
+.tp h1{margin:0;font-size:20px}.tp p{margin:3px 0 0;font-size:13px;color:#8d91bd}
+.tp button{background:#1a1d3a;border:1px solid #343a78;color:#e8e9f5;border-radius:10px;padding:10px 15px;font-size:13.5px}
+.m{max-width:74%;padding:13px 16px;border-radius:17px;font-size:14.5px;line-height:1.5}
+.u{background:#1a1d3a;align-self:flex-start;border-bottom-left-radius:5px}
+.b{background:linear-gradient(135deg,#5d4ee6,#3d7ff0);align-self:flex-end;border-bottom-right-radius:5px;color:#fff}
+.or{margin-top:11px;background:rgba(10,12,30,.42);border-radius:12px;padding:11px 13px;display:flex;justify-content:space-between;font-size:13px}
+.or b{display:block;font-size:14px}.or em{font-style:normal;color:#9df0cf;font-weight:600}
+.sr{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
+.sr span{font-size:11.5px;background:rgba(255,255,255,.16);padding:4px 9px;border-radius:99px}
+.cp{margin-top:auto;background:#151831;border:1px solid #2a2e5c;border-radius:14px;padding:14px 16px;font-size:14px;color:#7d81ad;display:flex;justify-content:space-between}
+.cp b{color:#8f7bff}
+.sd{border-left:1px solid #23264a;padding:24px 20px;display:flex;flex-direction:column;gap:14px}
+.sd h2{margin:0;font-size:13px;color:#8d91bd;font-weight:600}
+.rg{display:flex;align-items:center;gap:16px}
+.rg b{font-size:34px;letter-spacing:-.02em;display:block}.rg span{font-size:12.5px;color:#8d91bd;line-height:1.4;display:block}
+.kp{background:#151831;border-radius:13px;padding:13px 15px;font-size:12.5px;color:#8d91bd}
+.kp b{display:block;font-size:21px;color:#fff;margin-top:3px}
+.br{display:grid;gap:9px;font-size:12.5px;color:#a9acd0}
+.br i{display:block;height:7px;border-radius:9px;background:#8f7bff;margin-top:4px}
+</style>
+<aside class="ls"><div class="lg"><i></i>Deskmate</div>
+<div class="cv on"><b>Jonas Weber <span>now</span></b>Where is my order? It was due Monday.<br><span class="tg ai">Answered by AI</span></div>
+<div class="cv"><b>Aiko Tanaka <span>4 min</span></b>Can I swap the medium for a large?<br><span class="tg ai">Answered by AI</span></div>
+<div class="cv"><b>Rachel Osei <span>12 min</span></b>The zip on my jacket broke after a week.<br><span class="tg hm">Handed to Maya</span></div>
+<div class="cv"><b>Luca Romano <span>26 min</span></b>Do you ship to Norway?<br><span class="tg ai">Answered by AI</span></div>
+<div class="cv"><b>Chloe Martin <span>41 min</span></b>I was charged twice for one order.<br><span class="tg hm">Handed to Maya</span></div></aside>
+<main class="th">
+<div class="tp"><div><h1>Jonas Weber</h1><p>jonas.weber@mail.com, 3 orders since March</p></div><button>Take over</button></div>
+<div class="m u">Where is my order? It was due Monday and nothing has arrived.</div>
+<div class="m b">Sorry about the wait, Jonas. Your parcel left our warehouse on Friday and the courier has it out for delivery today.
+<div class="or"><div><b>Order 48213</b>Trail jacket, slate, size M</div><em>Out for delivery</em></div>
+<div class="sr"><span>Order data</span><span>Shipping times, section 2</span></div></div>
+<div class="m u">OK. And if it does not turn up today?</div>
+<div class="m b">If it has not arrived by 8 pm, reply here and I will pass this to Maya on our team with everything above, so you will not need to repeat yourself.
+<div class="sr"><span>Late delivery policy</span></div></div>
+<div class="cp"><span>The agent is replying. Type to step in.</span><b>Enter</b></div>
+</main>
+<aside class="sd"><h2>This week</h2>
+<div class="rg"><svg width="84" height="84" viewBox="0 0 84 84"><circle cx="42" cy="42" r="34" fill="none" stroke="#23264a" stroke-width="9"/><circle cx="42" cy="42" r="34" fill="none" stroke="#5fe0b7" stroke-width="9" stroke-linecap="round" stroke-dasharray="166 214" transform="rotate(-90 42 42)"/></svg><div><b>78%</b><span>resolved without<br>a person</span></div></div>
+<div class="kp">Median first reply<b>4 seconds</b></div>
+<div class="kp">Conversations<b>1,284</b></div>
+<h2>What people ask about</h2>
+<div class="br"><div>Where is my order <i style="width:92%"></i></div><div>Returns and swaps <i style="width:61%"></i></div><div>Shipping abroad <i style="width:34%"></i></div><div>Billing <i style="width:18%;background:#ffc46b"></i></div></div></aside>

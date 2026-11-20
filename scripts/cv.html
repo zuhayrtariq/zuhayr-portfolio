@@ -1,0 +1,319 @@
+<!doctype html>
+<!-- The source of public/cv.pdf. Edit this, then run `npm run cv`. It must stay on one page. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Zuhayr Tariq, full-stack web and AI developer</title>
+    <meta name="author" content="Zuhayr Tariq" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&family=Imbue:opsz,wght@10..100,400..600&display=block"
+    />
+    <style>
+      @page {
+        size: Letter;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+      }
+      body {
+        width: 8.5in;
+        height: 11in;
+        padding: 0.4in 0.55in 0.36in;
+        overflow: hidden;
+        font-family: "Atkinson Hyperlegible Next", ui-sans-serif, system-ui, sans-serif;
+        font-size: 9pt;
+        line-height: 1.3;
+        color: #0b0c0c;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      h1,
+      h2,
+      h3,
+      p,
+      ul {
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 0.3in;
+        padding-bottom: 9pt;
+        border-bottom: 1.6pt solid #ff4d1f;
+      }
+      h1 {
+        font-family: "Imbue", "Times New Roman", serif;
+        font-optical-sizing: auto;
+        font-weight: 500;
+        font-size: 40pt;
+        line-height: 0.82;
+        letter-spacing: -0.01em;
+      }
+      .role {
+        margin-top: 7pt;
+        font-size: 11pt;
+        font-weight: 700;
+      }
+      .contact {
+        text-align: right;
+        font-size: 8.9pt;
+        line-height: 1.42;
+      }
+      .contact a {
+        border-bottom: 0.5pt solid #b9b5ab;
+      }
+
+      section {
+        margin-top: 9pt;
+      }
+      h2 {
+        margin-bottom: 3.5pt;
+        font-size: 9pt;
+        font-weight: 700;
+        color: #c9370f;
+      }
+      h2 .more {
+        font-weight: 400;
+        color: #55534d;
+      }
+      .job + .job {
+        margin-top: 5.5pt;
+      }
+      .line {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12pt;
+      }
+      h3 {
+        font-size: 9.5pt;
+        font-weight: 700;
+      }
+      h3 span {
+        font-weight: 400;
+      }
+      .when {
+        flex-shrink: 0;
+        color: #55534d;
+      }
+      p,
+      li,
+      dd {
+        text-wrap: pretty;
+      }
+      ul {
+        margin-top: 2pt;
+        padding-left: 11pt;
+      }
+      li {
+        padding-left: 1pt;
+      }
+      li::marker {
+        color: #ff4d1f;
+      }
+      .rows {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        column-gap: 12pt;
+        row-gap: 1.5pt;
+      }
+      .rows dt {
+        font-weight: 700;
+      }
+      .rows dd {
+        margin: 0;
+      }
+      dl {
+        margin: 0;
+      }
+      .muted {
+        color: #55534d;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>Zuhayr Tariq</h1>
+        <p class="role">Full-stack web and AI developer</p>
+      </div>
+      <p class="contact">
+        Islamabad, Pakistan &nbsp;·&nbsp; +92 304 1420123<br />
+        <a href="mailto:zuhayrtariq4@gmail.com">zuhayrtariq4@gmail.com</a> &nbsp;·&nbsp;
+        <a href="https://www.zuhayrr.com">zuhayrr.com</a><br />
+        <a href="https://linkedin.com/in/zuhayrtariq">linkedin.com/in/zuhayrtariq</a> &nbsp;·&nbsp;
+        <a href="https://github.com/zuhayrtariq">github.com/zuhayrtariq</a> &nbsp;·&nbsp;
+        <a href="https://www.upwork.com/freelancers/zuhayr">Upwork profile</a>
+      </p>
+    </header>
+
+    <section>
+      <h2>Summary</h2>
+      <p>
+        Full-stack web and AI developer who builds products end to end: web and mobile apps, APIs and databases,
+        payments and auth, and AI features such as agents, retrieval (RAG) and voice. Lead Developer at Starling MX and
+        Top Rated Plus on Upwork (top 3% of freelancers), with 100% job success and a 5.0 rating across 13 client
+        reviews. Agrees scope and dates up front and delivers on them.
+      </p>
+    </section>
+
+    <section>
+      <h2>Experience</h2>
+
+      <div class="job">
+        <div class="line">
+          <h3>Lead Developer <span>· <a href="https://www.starlingmx.com">Starling MX</a> · Remote</span></h3>
+          <span class="when">April 2026 – Present</span>
+        </div>
+        <ul>
+          <li>Lead engineering on an enterprise AI platform that loads an organization's knowledge into every model call.</li>
+          <li>
+            Own the full stack, from the Next.js web platform and live model playgrounds to the orchestration layer that
+            runs session-based agents over client-owned knowledge.
+          </li>
+          <li>Set technical direction, code quality and AI strategy for the team while shipping customer-facing features.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="line">
+          <h3>
+            Full-Stack and AI Developer, Top Rated Plus
+            <span>· <a href="https://www.upwork.com/freelancers/zuhayr">Upwork</a> · Freelance, remote</span>
+          </h3>
+          <span class="when">April 2025 – Present</span>
+        </div>
+        <ul>
+          <li>
+            Top Rated Plus, the top 3% of freelancers: 100% job success, a 5.0 rating across 13 reviews, 18 jobs and
+            about 2,500 hours.
+          </li>
+          <li>
+            Build production AI features (RAG pipelines, agents, tool calling) with OpenAI, Anthropic Claude, Gemini and
+            the Vercel AI SDK, and real-time voice agents with Vapi, the OpenAI Realtime API, Twilio and ElevenLabs.
+          </li>
+          <li>
+            Ship full-stack web apps, dashboards, chatbots and e-commerce in Next.js, React, Node.js and TypeScript,
+            with Stripe, Clerk, Supabase, Convex and Pinecone, on Vercel, AWS and Cloudflare.
+          </li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="line">
+          <h3>Business Application Development Officer <span>· Prime Pakistan · Karachi</span></h3>
+          <span class="when">August 2023 – July 2024</span>
+        </div>
+        <ul>
+          <li>
+            Designed and built a contract management tool that tracks active contracts, call-offs and requisitions and
+            sends automated email alerts, reducing manual follow-ups by 30%.
+          </li>
+          <li>
+            Built in-house products with cross-functional teams, including a display screen system and the internal
+            company website, improving internal communication and cutting manual work.
+          </li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="line">
+          <h3>Full Stack Developer <span>· TFM Digital · Remote</span></h3>
+          <span class="when">August 2022 – March 2023</span>
+        </div>
+        <ul>
+          <li>Built and maintained websites for digital marketing campaigns, working with the marketing team on each one.</li>
+          <li>Reworked site design and interface, leading to a 35% increase in user engagement and conversion rates.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Selected projects <span class="more">· more at <a href="https://www.zuhayrr.com/projects">zuhayrr.com/projects</a></span></h2>
+      <dl class="rows">
+        <dt><a href="https://www.starlingmx.com">Starling MX</a></dt>
+        <dd>
+          An enterprise AI platform whose "Org Brain" gives every model call the context of the whole organization, with
+          live model playgrounds and session-based agents.
+          <span class="muted">Next.js, OpenAI, Vercel AI SDK, Supabase, Pinecone.</span>
+        </dd>
+        <dt><a href="https://analytra.io">Analytra</a></dt>
+        <dd>
+          AI analytics that connects websites, ad platforms, CRMs and Stripe, answers questions in plain language and
+          writes dashboard summaries with trends and recommendations.
+          <span class="muted">Next.js, OpenAI, Vercel AI SDK, Supabase, Snowflake.</span>
+        </dd>
+        <dt><a href="https://hypecaster.ai">Hypecaster</a></dt>
+        <dd>
+          An AI agent that writes a script, voices it, matches B-roll and adds captions to produce a finished short
+          video.
+          <span class="muted">Next.js, OpenAI, Supabase, Clerk.</span>
+        </dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>Skills</h2>
+      <dl class="rows">
+        <dt>Languages</dt>
+        <dd>TypeScript, JavaScript, Python, SQL, C++</dd>
+        <dt>Frameworks</dt>
+        <dd>Next.js, React, React Native (Expo), Node.js, NestJS, Express, Hono, tRPC, FastAPI, Tailwind CSS</dd>
+        <dt>AI and voice</dt>
+        <dd>
+          OpenAI, Anthropic Claude, Gemini, Vercel AI SDK, LangChain, LangGraph, Pinecone, Vapi, OpenAI Realtime API,
+          ElevenLabs, Deepgram, Twilio
+        </dd>
+        <dt>Data</dt>
+        <dd>PostgreSQL, Supabase, Neon, Convex, MongoDB, MySQL, SQL Server, Firebase, Redis (Upstash), Drizzle, Prisma</dd>
+        <dt>Payments, auth, shipping</dt>
+        <dd>Stripe, Stripe Connect, Clerk, Auth.js, Vercel, AWS, Cloudflare, Docker, GitHub Actions, Git, Figma</dd>
+        <dt>Spoken languages</dt>
+        <dd>English, Urdu</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>Education</h2>
+
+      <div class="job">
+        <div class="line">
+          <h3>
+            MS in Computer Science
+            <span>· FAST NUCES, Karachi · GPA 3.89/4 · Advanced Algorithms, Machine Learning, Artificial Intelligence</span>
+          </h3>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="line">
+          <h3>BS in Computer Science <span>· Institute of Business Management, Karachi · CGPA 3.8/4</span></h3>
+          <span class="when">Graduated August 2023</span>
+        </div>
+        <p class="muted">Gold Medalist, Dean's List, Presidential Merit Scholarship.</p>
+      </div>
+
+      <div class="job">
+        <div class="line">
+          <h3>Exchange program <span>· Istanbul Aydin University, Istanbul · Web development, software QA</span></h3>
+          <span class="when">February 2022 – July 2022</span>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

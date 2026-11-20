@@ -1,5 +1,7 @@
 import ProjectsSection from "@/components/sections/projects-section";
+import JsonLd from "@/components/site/json-ld";
 import { pageMetadata } from "@/lib/metadata";
+import { projectsSchema } from "@/lib/structured-data";
 
 export const metadata = pageMetadata({
   title: "Full-stack and AI projects",
@@ -11,6 +13,7 @@ export const metadata = pageMetadata({
 const ProjectsPage = () => {
   return (
     <main id="main">
+      <JsonLd data={projectsSchema} />
       <ProjectsSection />
     </main>
   );
