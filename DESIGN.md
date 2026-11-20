@@ -140,3 +140,9 @@ The client's verdict: still generic. Every section so far tells a visitor what h
 3. **It is never empty.** A finished example plays when the section scrolls in, and two more are a click away. A typed idea goes to the model; if that fails, the last whole draft stays and the idea can go straight to the contact form.
 4. **It ends in the form.** "Send me this brief" writes the draft into the contact message, so the first email already has a scope in it.
 5. **The drawn screen is untrusted.** It is model output, so it renders in a sandboxed frame with no scripts and a policy that loads nothing.
+
+## What changed in the seventh pass, and why
+The client wants to be found: by search engines, and by ChatGPT and Claude when someone asks them for a developer.
+1. **"Straight answers" sits above the contact card.** Six questions clients ask before writing, answered in plain text that is on the page without JavaScript. AI crawlers do not run scripts, and they quote text that is already shaped as question and answer.
+2. **One source for the answers.** The section, its FAQPage markup and llms.txt all read from `src/constants/faq.ts`, so they cannot drift apart.
+

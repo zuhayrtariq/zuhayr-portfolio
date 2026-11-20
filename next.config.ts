@@ -30,9 +30,25 @@ const nextConfig: NextConfig = {
     },
   },
   compiler: {
-    removeConsole: process.env.NODE_ENV === "production",
+    // Errors stay, so a failed email or AI call still shows up in the server log.
+    removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["error"] } : false,
   },
   poweredByHeader: false,
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          // No other site may put these pages in a frame.
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          // The voice conversation needs the microphone; nothing needs the rest.
+          { key: "Permissions-Policy", value: "microphone=(self), camera=(), geolocation=(), payment=(), usb=()" },
+        ],
+      },
+    ];
+  },
   async redirects() {
     return [{ source: "/chat", destination: "/talk", permanent: true }];
   },

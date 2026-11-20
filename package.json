@@ -8,7 +8,8 @@
     "start": "NODE_OPTIONS='--disable-warning=DEP0040' next start",
     "lint": "NODE_OPTIONS='--disable-warning=DEP0040' next lint",
     "avatar": "node scripts/prepare-avatar.mjs",
-    "cv": "node scripts/build-cv.mjs"
+    "cv": "node scripts/build-cv.mjs",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "engines": {
     "node": "22.x"
@@ -21,7 +22,7 @@
     "@pinecone-database/pinecone": "^6.1.2",
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-slot": "^1.1.1",
-    "@react-email/components": "^0.0.34",
+    "@react-email/components": "^1.0.12",
     "@tanstack/react-query": "^5.62.7",
     "@vercel/analytics": "^1.5.0",
     "ai": "^7.0.165",
@@ -41,7 +42,7 @@
     "simple-icons": "^16.38.0",
     "tailwind-merge": "^2.6.0",
     "three": "^0.186.1",
-    "zod": "^3.25.76"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -53,8 +54,13 @@
     "eslint": "^9",
     "eslint-config-next": "^15.5.18",
     "playwright-core": "^1.65.0",
-    "postcss": "^8",
+    "postcss": "^8.5.32",
     "tailwindcss": "^4.3.5",
     "typescript": "^5"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "$postcss"
+    }
   }
 }

@@ -40,12 +40,15 @@ export async function POST(req: Request) {
       react: NewMessageEmail({ name, email, phone, message }),
     });
 
+    // The provider's error can name the account and its limits, so it goes to the log and not to the visitor.
     if (error) {
-      return Response.json({ error }, { status: 500 });
+      console.error("Contact email failed", error);
+      return Response.json({ error: "The message could not be sent" }, { status: 502 });
     }
 
-    return Response.json(data);
+    return Response.json({ id: data?.id });
   } catch (error) {
-    return Response.json({ error }, { status: 500 });
+    console.error("Contact email failed", error);
+    return Response.json({ error: "The message could not be sent" }, { status: 500 });
   }
 }

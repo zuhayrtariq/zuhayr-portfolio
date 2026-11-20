@@ -1,3 +1,4 @@
+import { FAQ } from "@/constants/faq";
 import { caseStudies, projects } from "@/constants/projects";
 import { SITE } from "@/constants/site";
 import { stackName } from "@/lib/stack";
@@ -60,6 +61,19 @@ export const profileSchema = {
       description: SITE.description,
       jobTitle: "Lead Developer",
       worksFor: { "@type": "Organization", name: "Starling MX", url: "https://www.starlingmx.com" },
+      hasOccupation: {
+        "@type": "Occupation",
+        name: SITE.role,
+        occupationLocation: { "@type": "Country", name: "Pakistan" },
+        skills: "Full-stack web development, AI agents, retrieval-augmented generation, voice AI, Next.js, React, TypeScript, Node.js",
+      },
+      award: "Upwork Top Rated Plus",
+      alumniOf: {
+        "@type": "CollegeOrUniversity",
+        name: "Institute of Business Management",
+        address: { "@type": "PostalAddress", addressLocality: "Karachi", addressCountry: "PK" },
+      },
+      knowsLanguage: ["en", "ur"],
       knowsAbout: [
         "Full-stack web development",
         "AI development",
@@ -88,6 +102,18 @@ export const profileSchema = {
           areaServed: "Worldwide",
         },
       },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${SITE.url}/#faq`,
+      inLanguage: "en",
+      isPartOf: { "@id": WEBSITE_ID },
+      about: { "@id": PERSON_ID },
+      mainEntity: FAQ.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: { "@type": "Answer", text: item.answer },
+      })),
     },
     {
       "@type": "ItemList",
@@ -126,6 +152,23 @@ export const caseStudySchema = (project: Project) => {
       breadcrumbs({ name: "Projects", path: "/projects" }, { name: project.title, path: `/work/${project.slug}` }),
     ],
   };
+};
+
+export const talkSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${SITE.url}/talk/#page`,
+      url: `${SITE.url}/talk`,
+      name: `Talk to ${SITE.name}'s AI`,
+      description: "Ask about his work, his stack or how he would build a product, and it answers out loud.",
+      inLanguage: "en",
+      isPartOf: { "@id": WEBSITE_ID },
+      about: personRef,
+    },
+    breadcrumbs({ name: "Talk to me", path: "/talk" }),
+  ],
 };
 
 export const projectsSchema = {

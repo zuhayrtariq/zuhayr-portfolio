@@ -5,6 +5,7 @@ import Experience from "../contents/experience";
 import MySkills from "../contents/my-skills";
 import Contact from "../contents/contact";
 import Draft from "../contents/draft";
+import Faq from "../contents/faq";
 
 const HomeSection = () => {
   return (
@@ -15,6 +16,7 @@ const HomeSection = () => {
       <AboutMe />
       <Experience />
       <MySkills />
+      <Faq />
       <Contact />
     </>
   );
