@@ -7,14 +7,32 @@ import { useEffect, useMemo, useRef, useState } from "react";
 const MAX_CHARS = 42;
 const MIN_CHARS = 24;
 const MAX_LINES = 2;
-/** Average Atkinson Hyperlegible glyph width, in ems. */
-const CHAR_EM = 0.52;
+/** Average B612 glyph width, in ems. */
+const CHAR_EM = 0.56;
 
 interface CaptionPage {
   lines: string[];
   firstWord: number;
   lastWord: number;
 }
+
+const SENTENCE_END = /[.?!]["')\]]*$/;
+
+/** How many lines `words` wrap to, starting on a line that already holds `used` characters. */
+const linesNeeded = (words: string[], maxChars: number, used = 0) => {
+  let count = 1;
+  let length = used;
+  for (const word of words) {
+    const next = length ? length + 1 + word.length : word.length;
+    if (next <= maxChars || !length) {
+      length = next;
+    } else {
+      count += 1;
+      length = word.length;
+    }
+  }
+  return count;
+};
 
 export const paginateCaptions = (text: string, maxChars = MAX_CHARS): CaptionPage[] => {
   const words = text.trim().split(/\s+/).filter(Boolean);
@@ -24,6 +42,23 @@ export const paginateCaptions = (text: string, maxChars = MAX_CHARS): CaptionPag
   let firstWord = 0;
 
   words.forEach((word, i) => {
+    // A sentence that would run off this page, but fits on a page of its own, starts the next
+    // one. Otherwise its last word or two can be left alone on a page, and that page is what
+    // stays on screen once the speaking stops.
+    if (line && SENTENCE_END.test(words[i - 1])) {
+      let end = i;
+      while (end < words.length - 1 && !SENTENCE_END.test(words[end])) end += 1;
+      const sentence = words.slice(i, end + 1);
+      const here = lines.length + linesNeeded(sentence, maxChars, line.length);
+      if (here > MAX_LINES && linesNeeded(sentence, maxChars) <= MAX_LINES) {
+        lines.push(line);
+        pages.push({ lines, firstWord, lastWord: i - 1 });
+        lines = [];
+        line = "";
+        firstWord = i;
+      }
+    }
+
     const candidate = line ? `${line} ${word}` : word;
     if (candidate.length <= maxChars || !line) {
       line = candidate;
@@ -37,7 +72,7 @@ export const paginateCaptions = (text: string, maxChars = MAX_CHARS): CaptionPag
       }
     }
     // A sentence that ends a page's last line closes the page, so the next one starts fresh.
-    if (/[.?!]$/.test(word) && lines.length === MAX_LINES - 1 && i < words.length - 1) {
+    if (SENTENCE_END.test(word) && lines.length === MAX_LINES - 1 && i < words.length - 1) {
       lines.push(line);
       pages.push({ lines, firstWord, lastWord: i });
       lines = [];
@@ -88,7 +123,7 @@ const Captions = ({ text, spokenWords, className }: CaptionsProps) => {
       ref={ref}
       aria-hidden
       className={cn(
-        "min-h-[2lh] text-center text-[20px] leading-snug text-caption [text-shadow:0_1px_2px_rgb(17_25_27/0.9),0_0_24px_rgb(17_25_27/0.6)] md:text-lead",
+        "min-h-[2lh] text-center text-[19px] leading-snug text-caption md:text-lead",
         className
       )}
     >

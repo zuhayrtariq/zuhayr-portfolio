@@ -8,7 +8,7 @@ import { streamTalk, TalkError, type TalkMessage } from "@/lib/voice/talk-stream
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRecorder } from "./use-recorder";
 
-export const GREETING = "Hi, I'm Zuhayr. Ask me what I've built, or how I'd build yours.";
+export const GREETING = "This is your captain speaking. Ask me what I've built, or how I'd build yours.";
 
 const WORDS_PER_SECOND = 2.7;
 const SETTLE_MS = 900;

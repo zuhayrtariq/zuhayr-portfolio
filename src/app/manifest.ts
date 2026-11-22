@@ -4,11 +4,11 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Zuhayr Tariq",
     short_name: "Zuhayr",
-    description: "Zuhayr Tariq, full-stack web and AI developer. You describe it, I build it, and it goes live on the date we set.",
+    description: "Zuhayr Tariq, full-stack web and AI developer. Anyone can take off now. I land the plane.",
     start_url: "/",
     display: "standalone",
-    background_color: "#0b0c0c",
-    theme_color: "#0b0c0c",
+    background_color: "#071233",
+    theme_color: "#1838dc",
     // Drawn by scripts/build-avatar.mjs.
     icons: [
       { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },

@@ -2,24 +2,27 @@
 @import "lenis/dist/lenis.css";
 
 @theme {
-  --color-backdrop: #0b0c0c;
-  --color-umbra: #050606;
-  --color-caption: #f2efe8;
-  --color-fog: #9d9b93;
-  --color-signal: #ff4d1f;
-  --color-tungsten: #f0c28a;
-  --color-error: #f2998d;
-  /* Fixed ends of the palette, for surfaces that must not flip with the section. */
-  --color-ink: #0b0c0c;
-  --color-paper: #ece8df;
-  --color-ember: #ff4d1f;
+  /* The four colours of the page. Everything else is a tint of one of them. */
+  --color-cloud: #f1f5fa;
+  --color-night: #071233;
+  --color-cobalt: #1838dc;
+  --color-sun: #ffce1f;
+
+  /* What a component asks for. Each ground below rebinds these, so a component
+     never needs to know which ground it is standing on. */
+  --color-backdrop: #f1f5fa;
+  --color-umbra: #e2e9f3;
+  --color-caption: #071233;
+  --color-fog: #55658a;
+  --color-signal: #1838dc;
+  --color-error: #b3261e;
 
   --text-fine: 14px;
   --text-ui: 16px;
   --text-body: 18px;
-  --text-lead: 24px;
-  --text-q-sm: 36px;
-  --text-q: 48px;
+  --text-lead: 22px;
+  --text-q-sm: 34px;
+  --text-q: 44px;
 
   --ease-lights: cubic-bezier(0.22, 1, 0.36, 1);
 
@@ -27,14 +30,15 @@
 }
 
 @theme inline {
-  --font-display: var(--font-imbue), "Times New Roman", serif;
-  --font-text: var(--font-atkinson), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-anybody), "Arial Black", sans-serif;
+  --font-text: var(--font-b612), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-b612-mono), ui-monospace, monospace;
 
   --color-background: var(--color-backdrop);
   --color-foreground: var(--color-caption);
   --color-muted-foreground: var(--color-fog);
   --color-primary: var(--color-caption);
-  --color-primary-foreground: var(--color-umbra);
+  --color-primary-foreground: var(--color-backdrop);
   --color-secondary: color-mix(in oklab, var(--color-caption) 8%, transparent);
   --color-secondary-foreground: var(--color-caption);
   --color-muted: color-mix(in oklab, var(--color-caption) 8%, transparent);
@@ -45,9 +49,9 @@
   --color-popover: var(--color-umbra);
   --color-popover-foreground: var(--color-caption);
   --color-destructive: var(--color-error);
-  --color-destructive-foreground: var(--color-umbra);
-  --color-border: color-mix(in oklab, var(--color-caption) 14%, transparent);
-  --color-input: color-mix(in oklab, var(--color-caption) 26%, transparent);
+  --color-destructive-foreground: var(--color-backdrop);
+  --color-border: color-mix(in oklab, var(--color-caption) 16%, transparent);
+  --color-input: color-mix(in oklab, var(--color-caption) 34%, transparent);
   --color-ring: var(--color-signal);
 }
 
@@ -57,12 +61,12 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: color-mix(in oklab, var(--color-caption) 14%, transparent);
+    border-color: color-mix(in oklab, var(--color-caption) 16%, transparent);
   }
 
   html {
-    color-scheme: dark;
-    background-color: var(--color-backdrop);
+    color-scheme: light;
+    background-color: var(--color-cloud);
     scroll-padding-top: 5rem;
     -webkit-tap-highlight-color: transparent;
     -webkit-font-smoothing: antialiased;
@@ -72,17 +76,21 @@
   body {
     font-family: var(--font-text);
     font-size: var(--text-body);
-    line-height: 1.6;
+    line-height: 1.55;
     color: var(--color-caption);
     background-color: var(--color-backdrop);
     text-rendering: optimizeLegibility;
   }
 
+  /* Headlines are set wide and heavy, the way a name is painted along a fuselage. */
   h1,
   h2,
   h3 {
     font-family: var(--font-display);
-    font-optical-sizing: auto;
+    font-weight: 800;
+    font-stretch: 135%;
+    letter-spacing: -0.025em;
+    line-height: 0.96;
     text-wrap: balance;
   }
 
@@ -99,46 +107,50 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--focus, var(--color-ember));
+    outline: 2px solid var(--focus, var(--color-cobalt));
     outline-offset: 3px;
   }
 
   ::selection {
-    background-color: var(--color-ember);
-    color: var(--color-ink);
+    background-color: var(--color-sun);
+    color: var(--color-night);
   }
 
-  /* Sections flip the palette by rebinding the same tokens, so every component
-     inside follows without knowing which ground it is on. */
-  .on-ember {
-    --color-backdrop: #ff4d1f;
-    --color-umbra: #ff4d1f;
-    --color-caption: #0b0c0c;
-    --color-fog: #3b1408;
-    --color-signal: #f2efe8;
-    --color-error: #0b0c0c;
-    --focus: #0b0c0c;
+  /* The grounds. A section takes one of these classes and everything inside follows. */
+  .on-cloud {
+    --color-backdrop: #f1f5fa;
+    --color-umbra: #e2e9f3;
+    --color-caption: #071233;
+    --color-fog: #55658a;
+    --color-signal: #1838dc;
+    --color-error: #b3261e;
+    --focus: #1838dc;
     color-scheme: light;
     color: var(--color-caption);
-    background-color: var(--color-backdrop);
   }
 
-  /* A dark surface placed on one of the light grounds takes the dark palette back. */
-  .on-ink {
-    --color-backdrop: #0b0c0c;
-    --color-umbra: #050606;
-    --color-caption: #f2efe8;
-    --color-fog: #9d9b93;
-    --color-signal: #ff4d1f;
-    --color-error: #f2998d;
-    --focus: #ff4d1f;
+  .on-cobalt {
+    --color-backdrop: #1838dc;
+    --color-umbra: #1230bf;
+    --color-caption: #ffffff;
+    --color-fog: #c9d3f5;
+    --color-signal: #ffce1f;
+    --color-error: #ffd9d4;
+    --focus: #ffce1f;
     color-scheme: dark;
     color: var(--color-caption);
   }
 
-  .on-ember ::selection {
-    background-color: #0b0c0c;
-    color: #f2efe8;
+  .on-night {
+    --color-backdrop: #071233;
+    --color-umbra: #040b22;
+    --color-caption: #f1f5fa;
+    --color-fog: #a3b1d4;
+    --color-signal: #ffce1f;
+    --color-error: #ffb4a8;
+    --focus: #ffce1f;
+    color-scheme: dark;
+    color: var(--color-caption);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -152,30 +164,9 @@
   }
 }
 
-/* Hide choreographed elements only when JS is running; reveal them anyway if
-   the animation never starts. */
-@layer base {
-  [data-js] [data-reveal] {
-    visibility: hidden;
-    animation: reveal-fallback 0s 3s forwards;
-  }
-
-  /* Once the choreography runs, GSAP owns visibility. A late fallback would override
-     its inline styles and leave hidden controls focusable. */
-  [data-choreographed] [data-reveal] {
-    animation: none;
-  }
-}
-
-@keyframes reveal-fallback {
-  to {
-    visibility: visible;
-  }
-}
-
 @utility link-underline {
   text-decoration-line: underline;
-  text-decoration-color: color-mix(in oklab, currentcolor 30%, transparent);
+  text-decoration-color: color-mix(in oklab, currentcolor 35%, transparent);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.28em;
   transition:
@@ -206,11 +197,22 @@
   }
 }
 
-@utility grain {
-  opacity: 0.09;
-  mix-blend-mode: overlay;
-  background-size: 160px 160px;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+/* The dot leaders of a cockpit checklist: the gap between a call and its answer. */
+@utility leaders {
+  flex: 1 1 0;
+  min-width: 1.5rem;
+  height: 0;
+  margin: 0 0.6em;
+  align-self: center;
+  border-bottom: 2px dotted color-mix(in oklab, currentcolor 45%, transparent);
+}
+
+/* The punched edge between a boarding pass and its stub. */
+@utility perforation {
+  background-image: radial-gradient(circle, var(--punch, var(--color-backdrop)) 0 3.5px, transparent 4px);
+  background-size: 2px 14px;
+  background-position: center;
+  background-repeat: repeat-y;
 }
 
 /* Footage: a pre-blurred copy over the sharp frame fades out as the frame
@@ -234,16 +236,110 @@
   }
 }
 
-
-@keyframes name-rise {
-  from {
-    transform: translateY(26%);
-  }
-}
-
 @keyframes page-in {
   from {
     opacity: 0;
     transform: translateY(8px);
+  }
+}
+
+/* A flap falling: the top half of the old character, then the bottom half of the new one. */
+@keyframes flap-down {
+  to {
+    transform: rotateX(-90deg);
+  }
+}
+
+@keyframes flap-up {
+  from {
+    transform: rotateX(90deg);
+  }
+}
+
+/* Approach lights run toward the threshold one after another. */
+@keyframes approach {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  12% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0.25;
+  }
+}
+
+/* One cell of the arrivals board: two fixed halves, and a leaf that falls between them. */
+@layer components {
+  .flap {
+    position: relative;
+    display: inline-block;
+    width: 1.14em;
+    height: 1.72em;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    line-height: 1.72em;
+    text-align: center;
+    perspective: 12em;
+    color: var(--flap-ink, #f1f5fa);
+  }
+
+  .flap > span {
+    position: absolute;
+    inset-inline: 0;
+    height: 50%;
+    overflow: hidden;
+    backface-visibility: hidden;
+  }
+
+  .flap > span > i {
+    display: block;
+    height: 200%;
+    font-style: normal;
+  }
+
+  .flap-top,
+  .flap-leaf[data-half="top"] {
+    top: 0;
+    background: #14235f;
+    border-radius: 0.14em 0.14em 0 0;
+  }
+
+  .flap-bottom,
+  .flap-leaf[data-half="bottom"] {
+    bottom: 0;
+    background: #101c50;
+    border-radius: 0 0 0.14em 0.14em;
+    box-shadow: inset 0 1.5px 0 rgb(3 8 28 / 0.9);
+  }
+
+  .flap-bottom > i,
+  .flap-leaf[data-half="bottom"] > i {
+    transform: translateY(-50%);
+  }
+
+  .flap-leaf {
+    display: none;
+    z-index: 1;
+  }
+
+  .flap-leaf[data-half] {
+    display: block;
+  }
+
+  .flap-leaf[data-half="top"] {
+    transform-origin: 50% 100%;
+  }
+
+  .flap-leaf[data-half="bottom"] {
+    transform-origin: 50% 0;
+  }
+}
+
+/* The page inside a browser window scrolls down its own length, and back. */
+@keyframes screen-pan {
+  to {
+    transform: translateY(calc(-100% + 62.5cqw));
   }
 }

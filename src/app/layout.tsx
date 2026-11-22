@@ -1,6 +1,6 @@
 import SmoothScroll from "@/components/site/smooth-scroll";
 import Providers from "@/components/utils/providers";
-import { display, text } from "@/constants/fonts";
+import { display, mono, text } from "@/constants/fonts";
 import { SITE } from "@/constants/site";
 import { HOME_TITLE, OPEN_GRAPH } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
@@ -68,8 +68,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b0c0c",
-  colorScheme: "dark",
+  themeColor: "#0c1f72",
+  colorScheme: "light",
   viewportFit: "cover",
 };
 
@@ -81,7 +81,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn(display.variable, text.variable)}
+      className={cn(display.variable, text.variable, mono.variable)}
       suppressHydrationWarning
     >
       <head>

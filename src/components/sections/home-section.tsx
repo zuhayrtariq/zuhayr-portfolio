@@ -1,25 +1,27 @@
-import Hero from "../contents/hero";
-import AboutMe from "../contents/about-me";
-import Projects from "../contents/projects";
-import Experience from "../contents/experience";
-import MySkills from "../contents/my-skills";
-import Contact from "../contents/contact";
 import Draft from "../contents/draft";
 import Faq from "../contents/faq";
-import WhyHire from "../contents/why-hire";
+import Arrivals from "../flight/arrivals";
+import Boarding from "../flight/boarding";
+import Captain from "../flight/captain";
+import Flight from "../flight/flight";
+import Instruments from "../flight/instruments";
+import Route from "../flight/route";
 
+/**
+ * The home page is one flight. It takes off and lands in the first section; what follows is
+ * what has landed before, who is flying, the record, and how to board.
+ */
 const HomeSection = () => {
   return (
     <>
-      <Hero />
+      <Flight />
+      <Arrivals />
+      <Captain />
+      <Instruments />
       <Draft />
-      <WhyHire />
-      <Projects />
-      <AboutMe />
-      <Experience />
-      <MySkills />
+      <Route />
       <Faq />
-      <Contact />
+      <Boarding />
     </>
   );
 };

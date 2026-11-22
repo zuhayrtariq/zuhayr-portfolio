@@ -8,11 +8,9 @@ import { useDraft, type DraftExample } from "@/hooks/use-draft";
 import { handToContact } from "@/lib/contact-topic";
 import { briefMessage, screenIsDrawable } from "@/lib/draft";
 import { cn } from "@/lib/utils";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRightIcon, ArrowUpRightIcon, CheckIcon } from "lucide-react";
+import { CheckIcon } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useId, useRef, useState, type ReactNode } from "react";
-import Rise from "../motion/rise";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 const EXAMPLES: (DraftExample & { label: string })[] = [
   {
@@ -40,7 +38,7 @@ const ARRIVE = "motion-safe:animate-[page-in_0.45s_var(--ease-lights)_both]";
 
 const Part = ({ title, className, children }: { title: string; className?: string; children: ReactNode }) => (
   <div className={className}>
-    <h4 className="text-fine font-bold">{title}</h4>
+    <h4 className="text-fine font-bold text-fog">{title}</h4>
     {children}
   </div>
 );
@@ -55,8 +53,10 @@ const Draft = () => {
   const [idea, setIdea] = useState("");
   const [hint, setHint] = useState("");
   const section = useRef<HTMLElement>(null);
-  const ideaId = useId();
-  const hintId = useId();
+  // Fixed names: there is one of these on a page, and a generated id can differ between the
+  // server and the browser when this component's code arrives after hydration has started.
+  const ideaId = "draft-idea";
+  const hintId = "draft-idea-hint";
 
   // The first example plays once the section is on screen.
   useEffect(() => {
@@ -73,13 +73,6 @@ const Draft = () => {
     io.observe(el);
     return () => io.disconnect();
   }, [play]);
-
-  // A draft can leave the section a little taller or shorter, which moves every pinned section below it.
-  useEffect(() => {
-    if (status === "writing" || status === "idle") return;
-    const frame = requestAnimationFrame(() => ScrollTrigger.refresh());
-    return () => cancelAnimationFrame(frame);
-  }, [status]);
 
   const submit = () => {
     const text = idea.trim();
@@ -123,19 +116,14 @@ const Draft = () => {
               : "";
 
   return (
-    <section ref={section} id="draft" aria-labelledby="draft-title" className="relative">
-      <div className="mx-auto max-w-[1680px] px-[clamp(16px,4vw,64px)] pb-24 pt-24 md:pb-40 md:pt-40">
+    <section ref={section} id="draft" aria-labelledby="draft-title" className="on-night relative bg-night">
+      <div className="mx-auto max-w-[1680px] px-[clamp(20px,4vw,64px)] pb-24 pt-24 md:pb-36 md:pt-36">
         <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
-          <Rise
-            as="h2"
-            by="lines"
-            id="draft-title"
-            className="font-display text-[clamp(72px,12vw,216px)] leading-[0.82] tracking-[-0.01em]"
-          >
-            Describe it
-          </Rise>
-          <p className="max-w-[38ch] pb-2 text-body text-fog lg:pb-5">
-            Tell me what you want built. You get the first version I&apos;d ship, a week-by-week plan and a first look
+          <h2 id="draft-title" className="text-[clamp(34px,4.6vw,80px)]">
+            Tell me where you&apos;re going.
+          </h2>
+          <p className="max-w-[40ch] pb-1 text-body text-fog">
+            Describe what you want built. You get the first version I&apos;d ship, a week-by-week plan and a first look
             at the main screen, drafted while you watch.
           </p>
         </div>
@@ -145,9 +133,9 @@ const Draft = () => {
             e.preventDefault();
             submit();
           }}
-          className="mt-12 md:mt-16"
+          className="mt-10 md:mt-14"
         >
-          <div className="flex flex-col gap-3 rounded-[28px] border border-input bg-umbra/75 p-3 pl-6 outline-offset-3 transition-colors focus-within:border-caption/60 has-[textarea:focus-visible]:outline-2 has-[textarea:focus-visible]:outline-signal sm:flex-row sm:items-end">
+          <div className="flex flex-col gap-3 rounded-xl border border-input bg-umbra/70 p-3 pl-5 outline-offset-3 transition-colors focus-within:border-caption/70 has-[textarea:focus-visible]:outline-2 has-[textarea:focus-visible]:outline-signal sm:flex-row sm:items-end">
             <label htmlFor={ideaId} className="sr-only">
               Describe the product you want built
             </label>
@@ -173,13 +161,13 @@ const Draft = () => {
             <button
               type="submit"
               disabled={writing && (waiting || live)}
-              className="inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-full bg-signal px-8 text-ui font-bold text-ink transition-colors hover:bg-caption disabled:pointer-events-none disabled:opacity-60"
+              className="inline-flex h-14 shrink-0 items-center justify-center rounded-md bg-sun px-8 text-ui font-bold text-night transition-opacity disabled:pointer-events-none disabled:opacity-60"
             >
-              Draft it <ArrowRightIcon aria-hidden className="size-4" />
+              Draft it
             </button>
           </div>
           {hint && (
-            <p id={hintId} className="mt-3 pl-6 text-fine text-error">
+            <p id={hintId} className="mt-3 pl-5 text-fine text-error">
               {hint}
             </p>
           )}
@@ -195,8 +183,8 @@ const Draft = () => {
                   aria-pressed={current}
                   onClick={() => void play(example, window.matchMedia("(prefers-reduced-motion: reduce)").matches)}
                   className={cn(
-                    "h-10 rounded-full border px-4 text-fine transition-colors",
-                    current ? "border-caption bg-caption text-ink" : "border-input text-caption hover:border-caption/60"
+                    "h-10 rounded-md border px-4 text-fine transition-colors",
+                    current ? "border-sun bg-sun font-bold text-night" : "border-input text-caption hover:border-caption/70"
                   )}
                 >
                   {example.label}
@@ -226,7 +214,7 @@ const Draft = () => {
                 {/* Until the screen exists, the frame carries the product's name. */}
                 {!drawing && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-umbra px-8 text-center">
-                    <p className="font-display text-[clamp(48px,7vw,120px)] leading-[0.85]">
+                    <p className="font-display text-[clamp(34px,5vw,84px)] font-extrabold leading-[0.95] tracking-[-0.025em] font-stretch-[135%]">
                       {draft.decline ? "No draft" : draft.name || "\u00a0"}
                     </p>
                     {!draft.decline && <p className="max-w-[44ch] text-ui text-fog">{draft.pitch}</p>}
@@ -236,12 +224,12 @@ const Draft = () => {
             </BrowserFrame>
 
             <div className={cn("mt-8 transition-opacity duration-500 lg:min-h-[9.5rem]", waiting && "opacity-40")}>
-              <h3 className="font-text text-fine font-bold">What you can open, week by week</h3>
+              <h3 className="font-text text-fine font-bold tracking-normal font-stretch-normal">What you can open, week by week</h3>
               <ol className="mt-4 grid gap-x-5 gap-y-4 sm:grid-flow-col sm:auto-cols-fr">
                 {draft.weeks.map((week, i) => (
                   <li key={i} className={cn("border-t border-caption/25 pt-3", ARRIVE)}>
-                    <p className="flex items-center gap-2 text-fine font-bold text-tungsten">
-                      <span aria-hidden className="size-1.5 rounded-full bg-signal" />
+                    <p className="flex items-center gap-2 text-fine font-bold text-sun">
+                      <span aria-hidden className="size-1.5 rounded-full bg-sun" />
                       Week {week.when}
                     </p>
                     <p className="mt-1.5 text-fine leading-snug text-caption">{week.what}</p>
@@ -253,111 +241,109 @@ const Draft = () => {
             {/* What is happening, then what to do next. */}
             <div className="mt-auto flex min-h-14 flex-wrap items-center justify-between gap-x-8 gap-y-4 pt-8">
               <p role="status" className="flex max-w-[46ch] items-center gap-3 text-ui text-fog">
-                {progress && <span aria-hidden className="size-2 shrink-0 rounded-full bg-signal motion-safe:animate-pulse" />}
+                {progress && <span aria-hidden className="size-2 shrink-0 rounded-full bg-sun motion-safe:animate-pulse" />}
                 {progress || note}
               </p>
 
               <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
                 {finished && like?.slug && (
-                  <Link href={`/work/${like.slug}`} className="link-underline inline-flex items-center gap-1 text-ui font-bold">
-                    The closest thing I&apos;ve shipped: {like.title} <ArrowUpRightIcon aria-hidden className="size-4" />
+                  <Link href={`/work/${like.slug}`} className="link-underline text-ui font-bold">
+                    The closest thing I&apos;ve shipped: {like.title}
                   </Link>
                 )}
                 {status === "done" && live && !draft.decline && (
                   <button
                     type="button"
                     onClick={() => handToContact(briefMessage(shown.idea, draft))}
-                    className="inline-flex h-13 items-center gap-2 rounded-full bg-signal px-8 text-ui font-bold text-ink transition-colors hover:bg-caption"
+                    className="inline-flex h-13 items-center rounded-md bg-sun px-7 text-ui font-bold text-night"
                   >
-                    Send me this brief <ArrowRightIcon aria-hidden className="size-4" />
+                    Send me this brief
                   </button>
                 )}
                 {(status === "offline" || status === "error") && idea.trim().length >= MIN_IDEA && (
                   <button
                     type="button"
                     onClick={() => handToContact(`I'd like to build: ${idea.trim()}\n`)}
-                    className="inline-flex h-13 items-center gap-2 rounded-full bg-signal px-8 text-ui font-bold text-ink transition-colors hover:bg-caption"
+                    className="inline-flex h-13 items-center rounded-md bg-sun px-7 text-ui font-bold text-night"
                   >
-                    Send me the idea <ArrowRightIcon aria-hidden className="size-4" />
+                    Send me the idea
                   </button>
                 )}
               </div>
             </div>
           </div>
 
-          {/* The brief, on paper. */}
+          {/* The brief, on paper: the flight plan. */}
           <article
             aria-labelledby="draft-brief"
             className={cn(
-              "flex flex-col gap-7 rounded-[28px] bg-paper p-7 text-ink transition-opacity duration-500 selection:bg-ink selection:text-paper lg:col-span-5 lg:min-h-[56rem] lg:p-9",
+              "on-cloud flex flex-col overflow-hidden rounded-xl bg-cloud transition-opacity duration-500 lg:col-span-5 lg:min-h-[54rem]",
               waiting && "opacity-40"
             )}
           >
-            <header>
-              <p className="flex items-center justify-between gap-4 text-fine text-ink/65">
-                <span>First draft of the brief</span>
-                <span className="rounded-full border border-ink/25 px-3 py-1">{live ? "Yours" : "Example"}</span>
-              </p>
-              <h3 id="draft-brief" className="mt-5 font-display text-[clamp(56px,5.6vw,92px)] leading-[0.85] tracking-[-0.01em]">
-                {draft.decline ? "No draft" : draft.name || "\u00a0"}
-              </h3>
-              <p className="mt-3 min-h-[3.4em] text-body leading-snug">{draft.decline ?? draft.pitch}</p>
-            </header>
+            <p className="flex items-center justify-between gap-4 bg-sun px-6 py-3 text-fine font-bold text-night lg:px-8">
+              <span>Flight plan, first draft</span>
+              <span className="font-mono font-normal">{live ? "Yours" : "Example"}</span>
+            </p>
+            <div className="flex flex-1 flex-col gap-7 p-6 lg:p-8">
+              <header>
+                <h3 id="draft-brief" className="text-[clamp(34px,3.5vw,58px)]">
+                  {draft.decline ? "No draft" : draft.name || "\u00a0"}
+                </h3>
+                <p className="mt-3 min-h-[3.4em] text-body leading-snug">{draft.decline ?? draft.pitch}</p>
+              </header>
 
-            {!draft.decline && (
-              <>
-                <Part title="Version one">
-                  <ul className="mt-3 space-y-2">
-                    {draft.v1.map((item, i) => (
-                      <li key={i} className={cn("flex gap-3 text-ui leading-snug", ARRIVE)}>
-                        <CheckIcon aria-hidden className="mt-0.5 size-4.5 shrink-0 text-ember" strokeWidth={3} />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </Part>
-
-                {draft.later.length > 0 && (
-                  <Part title="Left for later, on purpose" className={ARRIVE}>
-                    <p className="mt-2 text-ui leading-snug text-ink/65">{draft.later.join(". ")}.</p>
-                  </Part>
-                )}
-
-                {draft.stack.length > 0 && (
-                  <Part title="Built with" className={ARRIVE}>
-                    <ul className="mt-3 flex flex-wrap gap-2">
-                      {draft.stack.map((tool, i) => (
-                        <li
-                          key={i}
-                          className={cn("flex h-9 items-center gap-2 rounded-full border border-ink/20 px-3.5 text-fine", ARRIVE)}
-                        >
-                          <BrandIcon name={tool} colored={false} className="size-3.5" />
-                          {bareName(tool)}
+              {!draft.decline && (
+                <>
+                  <Part title="Version one">
+                    <ul className="mt-3 space-y-2">
+                      {draft.v1.map((item, i) => (
+                        <li key={i} className={cn("flex gap-3 text-ui leading-snug", ARRIVE)}>
+                          <CheckIcon aria-hidden className="mt-0.5 size-4.5 shrink-0 text-cobalt" strokeWidth={3} />
+                          {item}
                         </li>
                       ))}
                     </ul>
                   </Part>
-                )}
 
-                {draft.asks.length > 0 && (
-                  <Part title="Before starting, I'd ask" className={cn("mt-auto border-t border-ink/15 pt-6", ARRIVE)}>
-                    <ol className="mt-3 space-y-2">
-                      {draft.asks.map((ask, i) => (
-                        <li key={i} className={cn("flex gap-3 text-ui leading-snug", ARRIVE)}>
-                          <span aria-hidden className="w-4 shrink-0 font-bold tabular-nums text-ink/45">
-                            {i + 1}
-                          </span>
-                          {ask}
-                        </li>
-                      ))}
-                    </ol>
-                  </Part>
-                )}
-              </>
-            )}
+                  {draft.later.length > 0 && (
+                    <Part title="Left for later, on purpose" className={ARRIVE}>
+                      <p className="mt-2 text-ui leading-snug text-fog">{draft.later.join(". ")}.</p>
+                    </Part>
+                  )}
+
+                  {draft.stack.length > 0 && (
+                    <Part title="Built with" className={ARRIVE}>
+                      <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
+                        {draft.stack.map((tool, i) => (
+                          <li key={i} className={cn("inline-flex items-center gap-1.5 text-ui", ARRIVE)}>
+                            <BrandIcon name={tool} className="size-3.5 shrink-0" />
+                            {bareName(tool)}
+                          </li>
+                        ))}
+                      </ul>
+                    </Part>
+                  )}
+
+                  {draft.asks.length > 0 && (
+                    <Part title="Before starting, I'd ask" className={cn("mt-auto border-t border-dashed border-night/35 pt-6", ARRIVE)}>
+                      <ol className="mt-3 space-y-2">
+                        {draft.asks.map((ask, i) => (
+                          <li key={i} className={cn("flex gap-3 text-ui leading-snug", ARRIVE)}>
+                            <span aria-hidden className="w-4 shrink-0 font-mono font-bold tabular-nums text-fog">
+                              {i + 1}
+                            </span>
+                            {ask}
+                          </li>
+                        ))}
+                      </ol>
+                    </Part>
+                  )}
+                </>
+              )}
+            </div>
           </article>
         </div>
-
       </div>
     </section>
   );

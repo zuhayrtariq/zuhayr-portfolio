@@ -14,17 +14,17 @@ const BrowserFrame = ({ host, className, children }: BrowserFrameProps) => {
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-[14px] border border-white/12 bg-[#1a1b1b] shadow-[0_40px_90px_-30px_rgb(0_0_0/0.9),0_0_0_1px_rgb(0_0_0/0.6)]",
+        "overflow-hidden rounded-xl border border-white/14 bg-[#0d1947] shadow-[0_40px_90px_-30px_rgb(3_8_28/0.85)]",
         className
       )}
     >
-      <div aria-hidden className="flex h-9 items-center gap-3 border-b border-white/8 px-3.5">
+      <div aria-hidden className="flex h-9 items-center gap-3 border-b border-white/10 px-3.5">
         <div className="flex gap-1.5">
-          <span className="size-2.5 rounded-full bg-white/18" />
-          <span className="size-2.5 rounded-full bg-white/18" />
-          <span className="size-2.5 rounded-full bg-white/18" />
+          <span className="size-2.5 rounded-full bg-white/22" />
+          <span className="size-2.5 rounded-full bg-white/22" />
+          <span className="size-2.5 rounded-full bg-white/22" />
         </div>
-        <div className="mx-auto flex h-[22px] w-[min(52%,22rem)] items-center justify-center gap-1.5 rounded-md bg-white/6 text-[11px] leading-none text-white/55">
+        <div className="mx-auto flex h-[22px] w-[min(52%,22rem)] items-center justify-center gap-1.5 rounded-md bg-white/8 text-[11px] leading-none text-white/65">
           <LockIcon className="size-2.5" />
           <span className="truncate">{host}</span>
         </div>

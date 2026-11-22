@@ -1,18 +1,19 @@
-import { loadAvatar, loadGoogleFont, OG_COLORS, OG_SIZE } from "@/lib/og";
+import { loadAvatar, loadGoogleFont, OG_COLORS, OG_FONTS, OG_SIZE } from "@/lib/og";
 import { ImageResponse } from "next/og";
 
-export const alt = "Zuhayr Tariq, full-stack web and AI developer. You describe it, I build it, and it goes live on the date we set.";
+export const alt = "Zuhayr Tariq, full-stack web and AI developer. Anyone can take off now. I land the plane.";
 export const size = OG_SIZE;
 export const contentType = "image/png";
 
 const NAME = "Zuhayr Tariq";
-const TAGLINE = "Full-stack web and AI developer. You describe it, I build it, and it goes live on the date we set.";
-const PROOF = "Lead Developer at Starling MX. Top Rated Plus on Upwork.";
+const CLAIM = ["Anyone can", "take off now.", "I land the plane."];
+const ROLE = "Full-stack web and AI developer. Top Rated Plus on Upwork.";
+const ADDRESS = "zuhayrr.com";
 
 export default async function Image() {
   const [display, regular, avatar] = await Promise.all([
-    loadGoogleFont("Imbue:wght@600", NAME),
-    loadGoogleFont("Atkinson+Hyperlegible+Next:wght@400", TAGLINE + PROOF),
+    loadGoogleFont(OG_FONTS.display, NAME + CLAIM.join("")),
+    loadGoogleFont(OG_FONTS.text, ROLE + ADDRESS),
     loadAvatar(),
   ]);
 
@@ -25,28 +26,35 @@ export default async function Image() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "64px 80px 72px",
-          background: `radial-gradient(ellipse at 28% 30%, #2b3b3e 0%, ${OG_COLORS.backdrop} 46%, ${OG_COLORS.umbra} 100%)`,
-          color: OG_COLORS.caption,
-          fontFamily: "Atkinson",
+          padding: "56px 72px 64px",
+          background: `linear-gradient(180deg, ${OG_COLORS.night} 0%, ${OG_COLORS.deep} 42%, ${OG_COLORS.cobalt} 100%)`,
+          color: OG_COLORS.white,
+          fontFamily: "B612",
         }}
       >
-        <div style={{ fontFamily: "Imbue", fontSize: 220, lineHeight: 0.9 }}>{NAME}</div>
-        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 48 }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            <div style={{ fontSize: 44, lineHeight: 1.25, maxWidth: 820 }}>{TAGLINE}</div>
-            <div style={{ fontSize: 28, color: OG_COLORS.fog }}>{PROOF}</div>
+        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          {/* eslint-disable-next-line jsx-a11y/alt-text -- next/og draws plain HTML */}
+          <img src={avatar} width={64} height={64} style={{ borderRadius: 14 }} />
+          <div style={{ fontFamily: "Anybody", fontSize: 34, letterSpacing: "-0.02em" }}>{NAME}</div>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", fontFamily: "Anybody", fontSize: 92, lineHeight: 0.98, letterSpacing: "-0.03em" }}>
+          {CLAIM.map((line) => (
+            <div key={line}>{line}</div>
+          ))}
+        </div>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 40 }}>
+          <div style={{ fontSize: 28, color: OG_COLORS.mist }}>{ROLE}</div>
+          <div style={{ display: "flex", background: OG_COLORS.sun, color: OG_COLORS.night, fontSize: 28, padding: "14px 24px", borderRadius: 8 }}>
+            {ADDRESS}
           </div>
-          {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text -- next/og draws plain HTML */}
-          <img src={avatar} width={192} height={192} />
         </div>
       </div>
     ),
     {
       ...size,
       fonts: [
-        { name: "Imbue", data: display, weight: 600, style: "normal" },
-        { name: "Atkinson", data: regular, weight: 400, style: "normal" },
+        { name: "Anybody", data: display, weight: 800, style: "normal" },
+        { name: "B612", data: regular, weight: 400, style: "normal" },
       ],
     }
   );

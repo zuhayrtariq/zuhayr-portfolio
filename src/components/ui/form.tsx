@@ -76,7 +76,10 @@ const FormItem = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  const id = React.useId()
+  // Named after the field rather than generated: a generated id can differ between the server
+  // and the browser when this code arrives after hydration has started.
+  const { name } = React.useContext(FormFieldContext)
+  const id = `field-${name}`
 
   return (
     <FormItemContext.Provider value={{ id }}>

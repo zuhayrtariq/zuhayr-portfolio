@@ -47,7 +47,7 @@ export interface BlogProps {
   title: string;
   views: number;
   description: string;
-  content: any;
+  content: unknown;
   categories: CategoryProps[];
   createdAt: string;
   publishedAt: string;

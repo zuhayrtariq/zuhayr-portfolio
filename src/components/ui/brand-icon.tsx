@@ -93,13 +93,14 @@ const ICONS: Record<string, SimpleIcon> = {
   upwork: siUpwork,
 };
 
-const BONE = "#F2EFE8";
-
-/** Brand colours that would vanish on the dark ground are drawn in bone instead. */
+/**
+ * A brand colour too dark or too light to show on every ground is drawn in the colour of
+ * the text beside it instead.
+ */
 const onDark = (hex: string) => {
   const n = parseInt(hex, 16);
   const luma = (0.2126 * ((n >> 16) & 255) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255;
-  return luma < 0.32 ? BONE : `#${hex}`;
+  return luma < 0.32 || luma > 0.8 ? "currentColor" : `#${hex}`;
 };
 
 /** "the Vercel AI SDK" reads well in a sentence; a label wants the bare name. */
@@ -111,7 +112,7 @@ export const bareName = (name: string) => {
 
 export const brandColor = (name: string) => {
   const icon = ICONS[name.toLowerCase()];
-  return icon ? onDark(icon.hex) : BONE;
+  return icon ? onDark(icon.hex) : "currentColor";
 };
 
 /** The brand's slug where an open mark exists for it, so two names for one brand share a logo. */

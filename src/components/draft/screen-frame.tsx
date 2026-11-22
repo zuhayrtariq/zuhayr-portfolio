@@ -91,7 +91,7 @@ const ScreenFrame = ({ screen, done, label, className }: ScreenFrameProps) => {
       ref={host}
       role="img"
       aria-label={label}
-      className={cn("relative overflow-hidden bg-ink", className)}
+      className={cn("relative overflow-hidden bg-night", className)}
       style={{ aspectRatio: `${SCREEN_WIDTH} / ${SCREEN_HEIGHT}` }}
     >
       {([0, 1] as const).map((slot) => (

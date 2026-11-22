@@ -1,17 +1,8 @@
 import type { NextConfig } from "next";
-import path from "node:path";
 
 const nextConfig: NextConfig = {
   // Lets a local production build run next to `next dev` without sharing .next.
   distDir: process.env.NEXT_DIST_DIR || ".next",
-  // TalkingHead loads its lip-sync modules with an unanalyzable dynamic import
-  // and only exports its main file, so the English module is aliased in directly.
-  webpack(config) {
-    config.resolve.alias["talkinghead-lipsync-en"] = path.resolve(
-      "node_modules/@met4citizen/talkinghead/modules/lipsync-en.mjs"
-    );
-    return config;
-  },
   eslint: {
     ignoreDuringBuilds: true,
   },

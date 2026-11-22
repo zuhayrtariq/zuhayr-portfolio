@@ -2,8 +2,7 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement>
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
@@ -11,7 +10,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <input
         type={type}
         className={cn(
-          "flex h-13 w-full rounded-full border border-input bg-transparent px-5 text-body text-caption transition-colors placeholder:text-fog hover:border-caption/40 focus-visible:border-caption/70 focus-visible:outline-none aria-invalid:border-error disabled:cursor-not-allowed disabled:opacity-50",
+          "flex h-13 w-full rounded-md border border-input bg-white px-4 text-body text-caption transition-colors placeholder:text-fog hover:border-caption/55 focus-visible:border-cobalt focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-cobalt aria-invalid:border-error disabled:cursor-not-allowed disabled:opacity-50",
           className
         )}
         ref={ref}

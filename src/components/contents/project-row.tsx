@@ -5,7 +5,7 @@ import Link from "next/link";
 const ProjectRow = ({ project }: { project: Project }) => {
   return (
     <article className="grid gap-3 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-10">
-      <h2 className="font-display text-[32px] leading-[1.02] font-semibold md:text-[40px]">
+      <h2 className="text-[24px] md:text-[30px]">
         {project.slug ? (
           <Link href={`/work/${project.slug}`} className="transition-colors hover:text-signal">
             {project.title}

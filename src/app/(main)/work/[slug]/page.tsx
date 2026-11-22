@@ -56,7 +56,7 @@ export default async function CaseStudyPage({ params }: Props) {
                 Work
               </Link>
             </p>
-            <h1 className="mt-4 font-display text-[clamp(64px,10vw,168px)] leading-[0.88] font-semibold">
+            <h1 className="mt-4 text-[clamp(36px,5.6vw,96px)]">
               {project.title}
             </h1>
           </div>
@@ -78,14 +78,14 @@ export default async function CaseStudyPage({ params }: Props) {
 
         <div className="mt-20 grid gap-16 md:mt-32 md:grid-cols-12 md:gap-x-8">
           <section aria-labelledby="what" className="md:col-span-7">
-            <h2 id="what" className="font-display text-q-sm leading-[1.02] font-semibold md:text-q">
+            <h2 id="what" className="text-q-sm md:text-q">
               What is it?
             </h2>
             <p className="mt-6 max-w-[60ch] text-body text-fog">{description}</p>
           </section>
 
           <section aria-labelledby="built-with" className="md:col-span-4 md:col-start-9">
-            <h2 id="built-with" className="font-display text-q-sm leading-[1.02] font-semibold md:text-q">
+            <h2 id="built-with" className="text-q-sm md:text-q">
               Built with
             </h2>
             <p className="mt-6 text-body text-fog">{stack}.</p>
@@ -118,7 +118,7 @@ export default async function CaseStudyPage({ params }: Props) {
           className="group mx-auto block max-w-[1440px] px-[clamp(20px,4vw,64px)] py-20 md:py-28"
         >
           <span className="text-ui text-fog">Next case study</span>
-          <span className="mt-3 block font-display text-[clamp(56px,8vw,128px)] leading-[0.9] font-semibold transition-colors group-hover:text-signal">
+          <span className="mt-3 block font-display text-[clamp(34px,5vw,84px)] font-extrabold leading-[0.96] tracking-[-0.025em] font-stretch-[135%] transition-colors group-hover:text-signal">
             {next.title}
           </span>
         </Link>

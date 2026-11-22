@@ -49,11 +49,11 @@ const TalkBubble = () => {
       aria-hidden={!visible}
       tabIndex={visible ? undefined : -1}
       className={cn(
-        "fixed bottom-5 right-5 z-40 inline-flex h-14 items-center gap-3 rounded-full bg-ember py-2 pl-2 pr-6 text-ui font-bold text-ink shadow-[0_8px_30px_rgb(0_0_0/0.35)] transition-[opacity,transform,background-color] duration-300 ease-[var(--ease-lights)] hover:bg-paper md:bottom-8 md:right-8",
+        "fixed bottom-5 right-5 z-40 inline-flex h-14 items-center gap-3 rounded-lg bg-sun py-2 pl-2 pr-5 text-ui font-bold text-night shadow-[0_12px_34px_-8px_rgb(7_18_51/0.55)] transition-[opacity,transform] duration-300 ease-[var(--ease-lights)] md:bottom-8 md:right-8",
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
       )}
     >
-      <span className="flex size-10 items-end justify-center overflow-hidden rounded-full bg-ink">
+      <span className="flex size-10 items-end justify-center overflow-hidden rounded-md bg-cobalt">
         {/* eslint-disable-next-line @next/next/no-img-element -- already sized and compressed by scripts/build-avatar.mjs */}
         <img
           src="/images/avatar.webp"
