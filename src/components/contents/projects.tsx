@@ -240,7 +240,8 @@ const Projects = () => {
             Shipped and live
           </Rise>
           <p className="max-w-[34ch] pb-2 text-body text-fog lg:pb-5">
-            Four products I built or led. Each one is live, so open it and click around, or read how it was made.
+            Four products I built or led, one of them alone from the first line of code. Each is live, so open it
+            and click around, or read how it was made.
           </p>
         </div>
 

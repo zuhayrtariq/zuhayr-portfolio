@@ -10,7 +10,7 @@ import { cn, lowerFirst } from "@/lib/utils";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -24,17 +24,36 @@ const PROMISE_TYPE =
 
 /** The greeting waits for the lamp behind the name to come up. */
 const GREETING_DELAY = 2400;
+/** How long the lamp may take to start before the plain glow covers for it. */
+const LAMP_GRACE = 1800;
+
+/**
+ * On a wide screen the name is as large as the frame allows without touching the header
+ * above it or the row beneath it. `--base` is that row's height, padding included. The
+ * name's ink runs 0.4em above and 0.6em below the middle of its line, and the header ends
+ * at 62px, which is where the 130px (clear of both) and 32px (clear of the row) come from.
+ */
+const NAME_FIT = cn(
+  "lg:[--frame:max(100svh,600px)] lg:[--base:277px] xl:[--base:236px]",
+  "lg:[--name:min(26.2vw,54svh,calc(var(--frame)_-_var(--base)_-_130px))]",
+  "lg:[--name-y:min(41svh,calc(var(--frame)_-_var(--base)_-_32px_-_0.601_*_var(--name)))]"
+);
 
 const Hero = () => {
   const root = useRef<HTMLElement>(null);
   const title = useRef<HTMLHeadingElement>(null);
   /** How far the hero has let go, driven by scroll and read by the canvas every frame. */
   const scroll = useRef<HeroScroll>({ burst: 0, part: 0 });
-  /** "lit" once the lamp is drawing, "dark" where there is no GPU to draw it. */
-  const [lamp, setLamp] = useState<"waiting" | "lit" | "dark">("waiting");
+  /** "lit" once the lamp is drawing, "late" while it is slow to start, "dark" where there is no GPU to draw it. */
+  const [lamp, setLamp] = useState<"waiting" | "late" | "lit" | "dark">("waiting");
   const { caption, spokenWords, speaking, busy, ask, phase, mic, action, startGreeting } = useConversation({
     autoGreet: false,
   });
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setLamp((now) => (now === "waiting" ? "late" : now)), LAMP_GRACE);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   useGSAP(
     () => {
@@ -94,8 +113,13 @@ const Hero = () => {
 
   return (
     <section ref={root} aria-labelledby="hero-title" className="group relative isolate data-pinned:h-[230svh]">
-      <div className="relative flex h-[100svh] min-h-[600px] flex-col overflow-hidden group-data-pinned:sticky group-data-pinned:top-0">
-        {/* The lamp behind the name. Without a GPU it is a plain glow in the same place. */}
+      <div
+        className={cn(
+          "relative flex h-[100svh] min-h-[600px] flex-col overflow-hidden group-data-pinned:sticky group-data-pinned:top-0",
+          NAME_FIT
+        )}
+      >
+        {/* The lamp behind the name. Without a GPU, or until a slow one starts, it is a plain glow in the same place. */}
         {lamp !== "dark" && (
           <Backlight
             name={title}
@@ -110,12 +134,12 @@ const Hero = () => {
           aria-hidden
           className={cn(
             "pointer-events-none absolute inset-0 transition-opacity duration-1000",
-            lamp === "dark" ? "opacity-100" : "opacity-0"
+            lamp === "dark" || lamp === "late" ? "opacity-100" : "opacity-0"
           )}
         >
           <div
             data-glow
-            className="absolute left-1/2 top-[30%] aspect-square w-[min(150vw,120svh)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgb(240_194_138/0.5),rgb(255_77_31/0.34)_14%,rgb(255_77_31/0.1)_48%,transparent)] lg:top-[41svh]"
+            className="absolute left-1/2 top-[30%] aspect-square w-[min(150vw,120svh)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgb(240_194_138/0.5),rgb(255_77_31/0.34)_14%,rgb(255_77_31/0.1)_48%,transparent)] lg:top-(--name-y)"
           />
         </div>
 
@@ -123,7 +147,7 @@ const Hero = () => {
           ref={title}
           id="hero-title"
           aria-label={`Zuhayr Tariq, ${ROLE_IN_NAME}`}
-          className="absolute inset-x-0 top-[84px] flex flex-col px-[clamp(20px,4vw,64px)] font-display text-[length:min(48vw,25svh)] font-normal leading-[0.9] tracking-[-0.015em] lg:top-[41svh] lg:-translate-y-1/2 lg:flex-row lg:justify-center lg:gap-[0.23em] lg:text-[length:min(26.2vw,54svh)]"
+          className="absolute inset-x-0 top-[84px] flex flex-col px-[clamp(20px,4vw,64px)] font-display text-[length:min(48vw,25svh)] font-normal leading-[0.9] tracking-[-0.015em] lg:top-(--name-y) lg:-translate-y-1/2 lg:flex-row lg:justify-center lg:gap-[0.23em] lg:text-[length:var(--name)]"
         >
           {/* The name is on screen from the first paint and only settles into place, so the
               page's largest element never waits for JavaScript. The masks leave room for
@@ -140,14 +164,15 @@ const Hero = () => {
 
         <div
           data-fade
-          className="relative z-10 mx-auto mt-auto grid w-full max-w-[1680px] items-end gap-x-8 gap-y-5 px-[clamp(20px,4vw,64px)] pb-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,44ch)_minmax(0,1fr)] lg:pb-10"
+          data-base
+          className="relative z-10 mx-auto mt-auto grid w-full max-w-[1680px] items-end gap-x-8 gap-y-5 px-[clamp(20px,4vw,64px)] pb-6 lg:grid-cols-2 lg:pb-10 xl:grid-cols-[minmax(0,1fr)_minmax(0,44ch)_minmax(0,1fr)]"
         >
           <div data-ui data-reveal="ui" className="max-w-[24rem]">
             <p className="text-[22px] leading-tight text-caption lg:text-[26px]">{ROLE}</p>
             <p className="mt-2.5 text-fine leading-normal text-fog lg:text-ui">{PROOF}</p>
           </div>
 
-          <div data-ui data-reveal="ui" className="max-lg:order-first">
+          <div data-ui data-reveal="ui" className="max-xl:order-first lg:max-xl:col-span-2">
             {/* Who is speaking: the same drawing of him as the mark in the header. */}
             <span
               aria-hidden
@@ -176,7 +201,7 @@ const Hero = () => {
               busy={busy}
               onMic={mic.supported ? mic.toggle : undefined}
               listening={mic.state === "listening"}
-              className="lg:w-[24rem] max-lg:[&_ul]:hidden"
+              className="lg:w-[24rem] lg:max-w-full max-xl:[&_ul]:hidden"
             />
           </div>
         </div>

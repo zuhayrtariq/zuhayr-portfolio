@@ -1,14 +1,11 @@
 "use client";
 
+import { WHY_QUESTION } from "@/constants/faq";
 import { cn } from "@/lib/utils";
 import { MicIcon } from "lucide-react";
 import { useId, useState } from "react";
 
-export const SUGGESTED_QUESTIONS = [
-  "What have you shipped recently?",
-  "How do you keep a project on schedule?",
-  "Are you taking on new projects?",
-];
+export const SUGGESTED_QUESTIONS = [WHY_QUESTION, "What have you shipped recently?", "Are you taking on new projects?"];
 
 interface AskBarProps {
   onAsk: (question: string) => void;

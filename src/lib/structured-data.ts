@@ -65,7 +65,8 @@ export const profileSchema = {
         "@type": "Occupation",
         name: SITE.role,
         occupationLocation: { "@type": "Country", name: "Pakistan" },
-        skills: "Full-stack web development, AI agents, retrieval-augmented generation, voice AI, Next.js, React, TypeScript, Node.js",
+        skills:
+          "Full-stack web development, AI-assisted software development, AI agents, retrieval-augmented generation, voice AI, Claude, Gemini, OpenAI, Next.js, React, TypeScript, Node.js",
       },
       award: "Upwork Top Rated Plus",
       alumniOf: {
@@ -77,6 +78,11 @@ export const profileSchema = {
       knowsAbout: [
         "Full-stack web development",
         "AI development",
+        "AI-assisted software development",
+        "Taking AI-built prototypes to production",
+        "Anthropic Claude",
+        "Google Gemini",
+        "OpenAI",
         "AI agents",
         "Retrieval-augmented generation",
         "Voice AI",
@@ -98,7 +104,7 @@ export const profileSchema = {
           "@type": "Service",
           name: "Full-stack web and AI development",
           description:
-            "Web and mobile apps, APIs, payments and auth, and AI features such as agents, RAG and voice, taken from idea to launch.",
+            "Web and mobile apps, APIs, payments and auth, and AI features such as agents, RAG and voice, taken from idea to launch. Also takes prototypes built with AI tools to production.",
           areaServed: "Worldwide",
         },
       },

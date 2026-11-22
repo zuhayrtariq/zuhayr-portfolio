@@ -44,12 +44,13 @@ The lamp's ramp runs umber, rust, ember, tungsten, bone, from the edge of its re
 
 ## Layout
 - Side margins `clamp(20px, 4vw, 64px)`, content up to 1680px, type allowed to run to the margins.
+- **Why hire:** after "Describe it". The heading and a short admission that AI is fast; a five-row table (a prompt gives you / I ship / where I've done it) that becomes labelled stacks on a phone; then three tiles: the tools, the degree, and a way to put the question to his AI.
 - **Hero:** the name spans the frame on one line, the lamp behind the space between its two words. On phones the name is two lines, set to either side, with the lamp behind the seam. Role and proof bottom left, captions bottom centre under his avatar, the ask bar bottom right.
-- **Work:** four cards, each the height of the screen less a margin. Words on the left; on the right the live site in a browser window, turned in space and running off the card's edge. Above 1024px the cards stick and pile up, each leaving a strip of the last showing. Below it they stack, window first.
+- **Work:** four cards (Starling MX, Yip, Hypecaster, Analytra), each the height of the screen less a margin. Words on the left; on the right the live site in a browser window, turned in space and running off the card's edge. Above 1024px the cards stick and pile up, each leaving a strip of the last showing. Below it they stack, window first.
 - **Record:** the statement on the left, his badge hanging on the right with the drawn avatar on its front. Under it, a six-tile grid: rating (large), job success, hours, Top Rated Plus, where he is, and a tile for asking his AI self a question.
 - **Process:** four steps down the left beside a rail; a fixed stage on the right shows what the client has at that step (a scope, preview builds, a Friday update, a launch checklist). The contents are an example project. Below 1024px each step carries its own picture.
 - **Experience:** the heading and résumé download stay put on the left while the roles scroll past on a rail, each a card with the company's logo. Current roles are lit.
-- **Stack:** the six groups written out as rows of labelled chips, beside a sphere of the same logos.
+- **Stack:** the seven groups written out as rows of labelled chips, beside a sphere of the same logos.
 - **Contact:** the heading fills the width; under it, three ways to reach him as dark rows, and the form on a dark card.
 - **Footer:** the name once more, sunk into the bottom edge at 10% Bone.
 
@@ -145,4 +146,12 @@ The client's verdict: still generic. Every section so far tells a visitor what h
 The client wants to be found: by search engines, and by ChatGPT and Claude when someone asks them for a developer.
 1. **"Straight answers" sits above the contact card.** Six questions clients ask before writing, answered in plain text that is on the page without JavaScript. AI crawlers do not run scripts, and they quote text that is already shaped as question and answer.
 2. **One source for the answers.** The section, its FAQPage markup and llms.txt all read from `src/constants/faq.ts`, so they cannot drift apart.
+
+## What changed in the eighth pass, and why
+The client's point: anyone can get code out of an AI now, so the page has to say why to hire him anyway.
+1. **"A prompt gets you a demo. I ship the product." follows "Describe it".** The visitor has just watched AI draft a brief in seconds, which is the moment they wonder what a developer is for. The section answers it there.
+2. **The answer is a ledger, not a paragraph.** Five parts of a product (payments, accounts, the AI, real traffic, the date), each as a prompt returns it and as it ships, and each ending on a link to where he has done it. A claim without a link was cut.
+3. **AI is named as a tool he uses, not a rival.** Claude, Gemini, GPT and Cursor are listed as his daily tools, in this section and at the top of the stack, apart from the model APIs he builds into products.
+4. **Yip is the second work card.** It is the one product he built entirely alone, so it carries the "one person can ship all of it" claim. ZFit-AI keeps its case study and moves to the archive.
+5. **The question is everywhere a visitor can ask.** "Why hire you when AI can write code?" is the first suggested question in the hero and the record tile, and the answer is in the FAQ, the structured data, llms.txt and the AI's own profile, all from `src/constants/faq.ts`.
 

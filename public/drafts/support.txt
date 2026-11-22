@@ -9,7 +9,7 @@ LATER: Refunds started by the agent
 LATER: A phone line with the same agent
 STACK: Next.js
 STACK: TypeScript
-STACK: Anthropic Claude
+STACK: the Claude API
 STACK: the Vercel AI SDK
 STACK: Pinecone
 STACK: Supabase

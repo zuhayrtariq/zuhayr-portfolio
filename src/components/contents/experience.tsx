@@ -48,7 +48,8 @@ const Experience = () => {
   );
 
   return (
-    <section ref={root} id="experience" aria-labelledby="experience-title" className="relative">
+    // The rows wait off to the right before they slide in. Clipping keeps that from widening the page; clip, unlike hidden, leaves sticky working.
+    <section ref={root} id="experience" aria-labelledby="experience-title" className="relative overflow-x-clip">
       <div className="mx-auto grid max-w-[1680px] gap-x-8 gap-y-12 px-[clamp(16px,4vw,64px)] py-24 md:py-40 lg:grid-cols-12">
         <div className="lg:sticky lg:top-28 lg:col-span-4 lg:self-start">
           <Rise

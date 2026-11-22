@@ -63,6 +63,8 @@ export async function POST(request: Request) {
     maxOutputTokens: 320,
     stopWhen: isStepCount(2),
     abortSignal: request.signal,
+    // The visitor only sees "an error occurred"; the reason (a bad key, no credit, a retired model) belongs in the log.
+    onError: ({ error }) => console.error("Talk model call failed", error),
     tools: {
       start_project: tool({
         description:

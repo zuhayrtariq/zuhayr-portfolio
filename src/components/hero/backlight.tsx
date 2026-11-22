@@ -154,8 +154,9 @@ interface BacklightProps {
   speaking: boolean;
   /** Read every frame. */
   scroll?: RefObject<HeroScroll>;
+  /** Called once the lamp has drawn its first frame. */
   onReady?: () => void;
-  /** Called if there is no GPU to draw with, so the caller can show a plain glow instead. */
+  /** Called if there is no GPU to draw with, or the browser takes it away, so the caller can show a plain glow instead. */
   onError?: () => void;
   className?: string;
 }
@@ -365,8 +366,6 @@ const Backlight = ({ name, speaking, scroll, onReady, onError, className }: Back
         gl.uniform1i(gl.getUniformLocation(program, "uMap"), 0);
         resize();
         ready = true;
-        litAt = performance.now();
-        callbacks.current.onReady?.();
         kick();
       };
 
@@ -387,6 +386,11 @@ const Backlight = ({ name, speaking, scroll, onReady, onError, className }: Back
         frame = 0;
         if (!ready || !u || !mapped) return;
         const t = now / 1000;
+        if (!litAt) {
+          // The lamp starts coming up on the first frame that is really drawn, not before.
+          litAt = now;
+          callbacks.current.onReady?.();
+        }
 
         // Arrival: the lamp comes up behind a name that is already on screen.
         const lit = reduced ? 1 : 1 - Math.pow(1 - Math.min(1, (now - litAt) / 2400), 3);
@@ -447,6 +451,12 @@ const Backlight = ({ name, speaking, scroll, onReady, onError, className }: Back
       io.observe(canvas);
       const onVisibility = () => !document.hidden && kick();
       document.addEventListener("visibilitychange", onVisibility);
+      // A browser short of GPU memory drops the context and the canvas goes blank for good.
+      const onLost = () => {
+        ready = false;
+        fail();
+      };
+      canvas.addEventListener("webglcontextlost", onLost);
       window.addEventListener("pointermove", onPointer, { passive: true });
       const speakingPoll = reduced ? window.setInterval(() => speakingRef.current && kick(), 250) : 0;
 
@@ -457,6 +467,7 @@ const Backlight = ({ name, speaking, scroll, onReady, onError, className }: Back
         ro.disconnect();
         io.disconnect();
         document.removeEventListener("visibilitychange", onVisibility);
+        canvas.removeEventListener("webglcontextlost", onLost);
         window.removeEventListener("pointermove", onPointer);
         gl.getExtension("WEBGL_lose_context")?.loseContext();
       };

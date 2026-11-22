@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = getProject(slug);
   if (!project) return {};
   return pageMetadata({
-    // "ZFit-AI: Voice AI fitness coach" says what the page is about; a bare product name does not.
+    // "Yip: Pet adoption platform" says what the page is about; a bare product name does not.
     title: project.kind ? `${project.title}: ${project.kind}` : `${project.title} case study`,
     description: project.summary,
     path: `/work/${slug}`,

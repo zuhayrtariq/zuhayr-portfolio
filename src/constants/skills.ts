@@ -1,4 +1,25 @@
-export const SKILLS = [
+/** The models and the editor he works with every day, as opposed to what he builds into products. */
+export const AI_WORKFLOW = {
+  title: "AI in my workflow",
+  stack: ["Cursor", "Claude", "Gemini", "GPT"],
+};
+
+/** What goes into a client's product. The draft tool picks a stack from these. */
+export const PRODUCT_SKILLS = [
+  {
+    title: "AI and agents",
+    stack: [
+      "the Claude API",
+      "the OpenAI API",
+      "the Gemini API",
+      "the Vercel AI SDK",
+      "LangChain",
+      "LangGraph",
+      "Pinecone",
+      "RAG",
+      "tool calling",
+    ],
+  },
   {
     title: "Product engineering",
     stack: [
@@ -18,19 +39,6 @@ export const SKILLS = [
     stack: ["PostgreSQL", "Supabase", "Neon", "Convex", "MongoDB", "Firebase", "Redis on Upstash", "Drizzle", "Prisma"],
   },
   {
-    title: "AI and agents",
-    stack: [
-      "OpenAI",
-      "Anthropic Claude",
-      "Gemini",
-      "the Vercel AI SDK",
-      "LangChain",
-      "LangGraph",
-      "Pinecone",
-      "tool calling",
-    ],
-  },
-  {
     title: "Payments and auth",
     stack: ["Stripe", "Stripe Connect", "Clerk", "Auth.js"],
   },
@@ -40,6 +48,8 @@ export const SKILLS = [
   },
   {
     title: "Shipping",
-    stack: ["Vercel", "AWS", "Cloudflare", "Docker", "GitHub Actions", "Resend"],
+    stack: ["Vercel", "AWS", "Google Cloud", "Cloudflare", "Docker", "GitHub Actions", "Sentry", "Resend"],
   },
 ];
+
+export const SKILLS = [AI_WORKFLOW, ...PRODUCT_SKILLS];

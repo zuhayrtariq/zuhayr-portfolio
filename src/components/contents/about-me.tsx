@@ -5,7 +5,8 @@ import Record from "./record";
 
 const AboutMe = () => {
   return (
-    <section id="about" aria-labelledby="about-title" className="relative">
+    // The glow behind the process stage reaches past the right edge, so the section clips it there.
+    <section id="about" aria-labelledby="about-title" className="relative overflow-x-clip">
       <div className="mx-auto max-w-[1680px] px-[clamp(16px,4vw,64px)] py-24 md:py-40">
         {/* The statement is short, so the block keeps the height the badge needs to hang in. */}
         <div className="relative lg:flex lg:min-h-[max(34vw,30rem)] lg:flex-col lg:justify-center">

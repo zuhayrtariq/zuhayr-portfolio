@@ -6,7 +6,7 @@ import { projectsSchema } from "@/lib/structured-data";
 export const metadata = pageMetadata({
   title: "Full-stack and AI projects",
   description:
-    "Everything Zuhayr Tariq has built, from the enterprise AI platform he leads to AI agents, voice apps, analytics dashboards, ticketing and e-commerce.",
+    "Everything Zuhayr Tariq has built, from the enterprise AI platform he leads and a pet adoption platform he built alone to AI agents, voice apps, dashboards and e-commerce.",
   path: "/projects",
 });
 

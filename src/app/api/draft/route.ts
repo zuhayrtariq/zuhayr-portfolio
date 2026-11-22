@@ -33,6 +33,7 @@ export async function POST(request: Request) {
     prompt: `The visitor's description:\n"""\n${parsed.data.idea}\n"""`,
     maxOutputTokens: 5000,
     abortSignal: request.signal,
+    onError: ({ error }) => console.error("Draft model call failed", error),
   });
 
   return result.toTextStreamResponse({ headers: { "Cache-Control": "no-store" } });

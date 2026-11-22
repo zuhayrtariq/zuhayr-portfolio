@@ -12,7 +12,7 @@ STACK: TypeScript
 STACK: PostgreSQL
 STACK: Drizzle
 STACK: Stripe
-STACK: OpenAI
+STACK: the OpenAI API
 WEEK: 1 | Your Stripe revenue live on a private dashboard
 WEEK: 2-3 | Ad spend joined in, with return per channel
 WEEK: 4-5 | The weekly AI summary and ask-a-question

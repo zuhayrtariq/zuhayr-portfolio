@@ -1,5 +1,6 @@
 "use client";
 
+import { SUGGESTED_QUESTIONS } from "@/components/hero/ask-bar";
 import { BorderBeam } from "@/components/ui/border-beam";
 import BrandIcon from "@/components/ui/brand-icon";
 import Globe from "@/components/ui/globe";
@@ -13,7 +14,6 @@ import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 
 const ISLAMABAD: [number, number] = [33.6844, 73.0479];
-const QUESTIONS = ["What have you shipped recently?", "How do you keep a project on schedule?", "Are you taking on new projects?"];
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const IN_VIEW = { once: true, margin: "0px 0px -12% 0px" } as const;
@@ -197,7 +197,7 @@ const Record = ({ className }: { className?: string }) => {
             </div>
           </div>
           <ul className="mt-7 flex flex-col items-start gap-2.5">
-            {QUESTIONS.map((question) => (
+            {SUGGESTED_QUESTIONS.map((question) => (
               <li key={question}>
                 <Link
                   href={askAiHref(question)}

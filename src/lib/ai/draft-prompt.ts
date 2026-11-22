@@ -1,8 +1,8 @@
 import { caseStudies } from "@/constants/projects";
-import { SKILLS } from "@/constants/skills";
+import { PRODUCT_SKILLS } from "@/constants/skills";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@/lib/draft";
 
-const TOOLS = SKILLS.flatMap((group) => group.stack).join(", ");
+const TOOLS = PRODUCT_SKILLS.flatMap((group) => group.stack).join(", ");
 const CASE_STUDIES = caseStudies.map((p) => `${p.slug} (${p.summary})`).join("\n");
 
 /**

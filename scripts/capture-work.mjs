@@ -5,6 +5,7 @@ import { mkdir } from "node:fs/promises";
 
 const SITES = {
   "starling-mx": "https://www.starlingmx.com",
+  yip: "https://www.getyip.app",
   "zfit-ai": "https://zfit-ai.vercel.app",
   hypecaster: "https://hypecaster.ai",
   analytra: "https://analytra.io",

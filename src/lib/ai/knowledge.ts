@@ -1,4 +1,5 @@
 import { experiences } from "@/constants/experiences";
+import { FAQ } from "@/constants/faq";
 import { projects } from "@/constants/projects";
 import { SITE } from "@/constants/site";
 import { SKILLS } from "@/constants/skills";
@@ -15,6 +16,9 @@ export const PROFILE = [
   `Contact: email ${SITE.email}, WhatsApp ${SITE.phone}, GitHub ${SITE.github}, LinkedIn ${SITE.linkedin}, Upwork ${SITE.upwork}.`,
   "Upwork: Top Rated Plus (top 3% of freelancers) with a 100% job success score, rated 5.0 across 13 client reviews, 18 jobs and about 2,500 hours. More than 30 projects shipped for over 10 clients since 2022.",
   "How I work with clients: we agree on the smallest useful version, I ship it quickly, and we improve it from real usage without letting performance or code quality slide. I work best with founders and small product teams.",
+  "How I use AI: I work with Claude, Gemini and GPT models every day, inside Cursor, and I build the same models into client products. AI does much of the typing; I decide the architecture, read and test everything before it ships, and answer for the result.",
+  "Why hire me when AI can write code: a prompt gets you a demo, and a product is everything the demo leaves out, such as payments that survive failed cards and refunds, access rules so no customer sees another's data, AI that says when it doesn't know and stays inside a budget, and a launch date someone answers for. I also take prototypes that were built with AI tools and get them ready for production.",
+  "Education: MS in Computer Science at FAST NUCES, Karachi, GPA 3.89 out of 4, with advanced algorithms, machine learning and artificial intelligence. BS in Computer Science from the Institute of Business Management, Karachi, CGPA 3.8 out of 4, graduated August 2023 as gold medalist, on the Dean's List and a Presidential Merit Scholarship. Exchange semester at Istanbul Aydin University in 2022.",
   "",
   "Experience (most recent first):",
   ...experiences.toReversed().map((job) =>
@@ -32,4 +36,7 @@ export const PROFILE = [
   "",
   "Tools:",
   ...SKILLS.map((g) => `- ${g.title}: ${g.stack.join(", ")}.`),
+  "",
+  "Answers I give to the questions clients ask most:",
+  ...FAQ.map((item) => `- ${item.question} ${item.answer}`),
 ].join("\n");
