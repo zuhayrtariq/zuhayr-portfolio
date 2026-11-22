@@ -18,10 +18,13 @@ const SiteHeader = () => {
   /** Pages that open on a dark picture, where the bar starts out clear with light type. */
   const overDark = pathname === "/" || pathname.startsWith("/talk");
 
-  // On the home page the bar stays clear over the whole flight. Past it, it steps out of
-  // the way while reading down and returns on the first scroll up.
+  // On the home page the bar stays clear over the whole flight, which holds the screen while
+  // it plays. Past it, it steps out of the way while reading down and returns on the first
+  // scroll up. With reduced motion the flight is a still that scrolls away like any page, so
+  // the bar turns solid as soon as words start to pass under it.
   useEffect(() => {
-    const hero = pathname === "/" ? document.querySelector('section[aria-labelledby="hero-title"]') : null;
+    const held = pathname === "/" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const hero = held ? document.querySelector('section[aria-labelledby="hero-title"]') : null;
     let last = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
