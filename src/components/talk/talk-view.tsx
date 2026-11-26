@@ -1,7 +1,5 @@
 "use client";
 
-import FlightCanvas from "@/components/flight/flight-canvas";
-import type { FlightHandle } from "@/components/flight/scene";
 import AskBar from "@/components/hero/ask-bar";
 import Captions from "@/components/hero/captions";
 import { useAudience } from "@/components/site/audience";
@@ -10,7 +8,7 @@ import { WHY_QUESTION } from "@/constants/faq";
 import { useConversation } from "@/hooks/use-conversation";
 import { cn } from "@/lib/utils";
 import { Volume2Icon, VolumeXIcon, XIcon } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const TALK_SUGGESTIONS = {
   direct: [WHY_QUESTION, "What have you shipped recently?", "How do you usually start a project?"],
@@ -18,17 +16,12 @@ const TALK_SUGGESTIONS = {
   upwork: ["How do I know the project will get finished?", "What happens if something breaks after launch?", WHY_QUESTION],
 };
 
-/** Where in the flight the page sits: level in the cruise, the airliner ahead. */
-const CRUISE = 0.57;
-
 /**
- * A conversation with his AI, held in the cruise: the same flight as the home page, level
- * above the cloud, with what he says on a plate in front of it.
+ * A conversation with his AI. Nothing is on the page but what he says, set large in his own
+ * voice, and the box to ask the next thing in.
  */
 const TalkView = () => {
   const [showTranscript, setShowTranscript] = useState(false);
-  const [sky, setSky] = useState<"waiting" | "live" | "flat">("waiting");
-  const flight = useRef<FlightHandle | null>(null);
   const asked = useRef(false);
   const audience = useAudience();
   const { caption, spokenWords, speaking, busy, ask, phase, soundOn, setSoundOn, mic, action, transcript, question } =
@@ -43,86 +36,71 @@ const TalkView = () => {
     if (initial) void ask(initial);
   }, [ask]);
 
-  const onReady = useCallback(() => {
-    flight.current?.setProgress(CRUISE);
-    setSky("live");
-  }, []);
-  const onUnavailable = useCallback(() => setSky("flat"), []);
-
   return (
-    <section aria-labelledby="talk-title" className="on-night relative isolate flex min-h-svh flex-col overflow-hidden bg-[#0b27b4]">
+    <section aria-labelledby="talk-title" className="on-emerald relative flex min-h-svh flex-col bg-emerald">
       <h1 id="talk-title" className="sr-only">
         Talk to Zuhayr
       </h1>
-      <div aria-hidden className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,#0b27b4_0%,#3c68ee_42%,#b4cfff_56%,#e9f0ff_70%,#8ea6ee_100%)]" />
-        {sky !== "flat" && (
-          <FlightCanvas
-            handle={flight}
-            onReady={onReady}
-            onUnavailable={onUnavailable}
-            lift={0.043}
-            className={cn("absolute inset-0 transition-opacity duration-1000", sky === "live" ? "opacity-100" : "opacity-0")}
-          />
-        )}
-      </div>
 
-      <div className="relative mt-auto w-full max-w-[calc(40rem+2*clamp(20px,4vw,64px))] px-[clamp(20px,4vw,64px)] pb-8 pt-28 md:pb-12 2xl:ml-[max(0px,calc((100vw-1680px)/2))]">
-        <div className="overflow-hidden rounded-xl bg-night/90 shadow-[0_40px_90px_-40px_rgb(4_11_34/0.9)]">
-          <p className="flex items-center gap-3 bg-sun px-4 py-2.5 text-fine font-bold text-night">
+      <div className="mx-auto my-auto w-full max-w-[1680px] px-[clamp(20px,4vw,64px)] pb-10 pt-28">
+        <div className="max-w-[60rem]">
+          <p className="flex items-center gap-3.5 text-fine font-bold">
             <span
               aria-hidden
               className={cn(
-                "block size-8 shrink-0 overflow-hidden rounded-full bg-cobalt ring-2 transition-[--tw-ring-color] duration-300",
-                speaking ? "ring-night" : "ring-night/25"
+                "block size-12 shrink-0 overflow-hidden rounded-full bg-pine ring-[3px] transition-[--tw-ring-color] duration-300",
+                speaking ? "ring-mint" : "ring-white/30"
               )}
             >
               {/* eslint-disable-next-line @next/next/no-img-element -- already sized and compressed by scripts/build-avatar.mjs */}
-              <img src="/images/avatar.webp" alt="" width={32} height={32} decoding="async" className="size-full max-w-none" />
+              <img src="/images/avatar.webp" alt="" width={48} height={48} decoding="async" className="size-full max-w-none" />
             </span>
             Zuhayr&apos;s AI, answering from his record
           </p>
-          <div className="p-5 sm:p-7">
-            {question && phase !== "waiting" && <p className="mb-3 text-fine text-fog">You asked: {question}</p>}
-            <Captions text={caption} spokenWords={spokenWords} className="min-h-[3lh] text-left md:text-[26px]" />
 
-            {action && phase === "ready" && <HireSign className="mt-5" />}
+          <p className="mt-8 min-h-6 text-fine text-fog">{question && phase !== "waiting" ? `You asked: ${question}` : ""}</p>
+          <Captions
+            text={caption}
+            spokenWords={spokenWords}
+            className="mt-3 min-h-[2lh] text-left font-display text-[clamp(22px,3.4vw,50px)] font-black leading-[1.06] tracking-[-0.03em] md:text-[clamp(22px,3.4vw,50px)]"
+          />
 
-            <AskBar
-              onAsk={ask}
-              busy={busy}
-              onMic={mic.supported ? mic.toggle : undefined}
-              listening={mic.state === "listening"}
-              suggestions={transcript.length ? [] : TALK_SUGGESTIONS[audience]}
-              className="mt-6 max-w-none"
-            />
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 text-fine text-fog">
-              <p className="min-h-5" aria-live="polite">
-                {mic.state === "listening"
-                  ? "Listening. Tap the mic when you're done."
-                  : mic.state === "transcribing"
-                    ? "Got it, one moment."
-                    : ""}
-              </p>
-              <div className="flex gap-6">
-                <button
-                  type="button"
-                  onClick={() => setSoundOn(!soundOn)}
-                  aria-pressed={soundOn}
-                  className="inline-flex items-center gap-2 transition-colors hover:text-caption"
-                >
-                  {soundOn ? <Volume2Icon className="size-4" /> : <VolumeXIcon className="size-4" />}
-                  {soundOn ? "Sound on" : "Sound off"}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowTranscript(true)}
-                  disabled={!transcript.length}
-                  className="transition-colors hover:text-caption disabled:opacity-40"
-                >
-                  Transcript
-                </button>
-              </div>
+          {action && phase === "ready" && <HireSign className="mt-7" />}
+
+          <AskBar
+            onAsk={ask}
+            busy={busy}
+            onMic={mic.supported ? mic.toggle : undefined}
+            listening={mic.state === "listening"}
+            suggestions={transcript.length ? [] : TALK_SUGGESTIONS[audience]}
+            className="mt-9 max-w-2xl"
+          />
+          <div className="mt-3 flex max-w-2xl flex-wrap items-center justify-between gap-x-6 gap-y-2 text-fine text-fog">
+            <p className="min-h-5" aria-live="polite">
+              {mic.state === "listening"
+                ? "Listening. Tap the mic when you're done."
+                : mic.state === "transcribing"
+                  ? "Got it, one moment."
+                  : ""}
+            </p>
+            <div className="flex gap-6">
+              <button
+                type="button"
+                onClick={() => setSoundOn(!soundOn)}
+                aria-pressed={soundOn}
+                className="inline-flex items-center gap-2 transition-colors hover:text-caption"
+              >
+                {soundOn ? <Volume2Icon className="size-4" /> : <VolumeXIcon className="size-4" />}
+                {soundOn ? "Sound on" : "Sound off"}
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowTranscript(true)}
+                disabled={!transcript.length}
+                className="transition-colors hover:text-caption disabled:opacity-40"
+              >
+                Transcript
+              </button>
             </div>
           </div>
         </div>
@@ -131,7 +109,7 @@ const TalkView = () => {
       <aside
         aria-label="Transcript"
         className={cn(
-          "fixed inset-y-0 right-0 z-[60] w-full max-w-md overflow-y-auto bg-night px-8 pb-12 pt-24 transition-transform duration-300 ease-[var(--ease-lights)]",
+          "on-pine fixed inset-y-0 right-0 z-[60] w-full max-w-md overflow-y-auto bg-pine px-8 pb-12 pt-24 transition-transform duration-300 ease-[var(--ease-lights)]",
           showTranscript ? "translate-x-0" : "translate-x-full"
         )}
         data-lenis-prevent

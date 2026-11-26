@@ -18,6 +18,13 @@ interface ScreenFrameProps {
 }
 
 /**
+ * Until the frame has been measured, it is scaled to its box by the stylesheet alone: the
+ * box's width over the screen's, as a plain number. That is what the server sends, so a
+ * screen that is already written is on the page before any script has run.
+ */
+const FIT = `scale(tan(atan2(100cqw, ${SCREEN_WIDTH}px)))`;
+
+/**
  * Draws a drafted screen while it is being written. The markup comes from a
  * model, so it lives in a frame that runs no scripts and can load nothing.
  * Two frames take turns: each new version loads behind the one on show and is
@@ -26,9 +33,11 @@ interface ScreenFrameProps {
 const ScreenFrame = ({ screen, done, label, className }: ScreenFrameProps) => {
   const host = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0);
-  const [slots, setSlots] = useState<[string, string]>(["", ""]);
+  /** A screen that is whole when the page is made goes straight into the first frame. */
+  const [first] = useState(() => (screenIsDrawable(screen) ? screenDocument(screen) : ""));
+  const [slots, setSlots] = useState<[string, string]>([first, ""]);
   const [front, setFront] = useState<0 | 1>(0);
-  const state = useRef({ latest: "", shown: "", loading: false, wroteAt: 0, timer: 0, front: 0 as 0 | 1 });
+  const state = useRef({ latest: first, shown: first, loading: false, wroteAt: 0, timer: 0, front: 0 as 0 | 1 });
 
   useEffect(() => {
     const el = host.current;
@@ -91,7 +100,7 @@ const ScreenFrame = ({ screen, done, label, className }: ScreenFrameProps) => {
       ref={host}
       role="img"
       aria-label={label}
-      className={cn("relative overflow-hidden bg-night", className)}
+      className={cn("@container relative overflow-hidden bg-pine", className)}
       style={{ aspectRatio: `${SCREEN_WIDTH} / ${SCREEN_HEIGHT}` }}
     >
       {([0, 1] as const).map((slot) => (
@@ -107,7 +116,7 @@ const ScreenFrame = ({ screen, done, label, className }: ScreenFrameProps) => {
           width={SCREEN_WIDTH}
           height={SCREEN_HEIGHT}
           className={cn("pointer-events-none absolute left-0 top-0 origin-top-left border-0", slot === front && slots[slot] ? "visible" : "invisible")}
-          style={{ transform: `scale(${scale})` }}
+          style={{ transform: scale ? `scale(${scale})` : FIT }}
         />
       ))}
     </div>

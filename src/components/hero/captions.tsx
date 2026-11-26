@@ -7,8 +7,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 const MAX_CHARS = 42;
 const MIN_CHARS = 24;
 const MAX_LINES = 2;
-/** Average B612 glyph width, in ems. */
-const CHAR_EM = 0.56;
+/** Average glyph width of the site's typeface, in ems. */
+const CHAR_EM = 0.58;
 
 interface CaptionPage {
   lines: string[];

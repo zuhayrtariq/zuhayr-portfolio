@@ -40,7 +40,7 @@ export const FAQ = [
   {
     question: "How does a project run?",
     answer:
-      "We start with a call, then a written scope: what's in, what's out, and when each piece lands. You get something to click through early and new pieces as they're finished. Then I ship to production and hand over the code and the docs. For 30 days after launch, bugs in what I built are fixed free, and after that I can stay on through a monthly retainer.",
+      "We start with a call, then a written scope: what's in, what's out, and when each piece is due. You get something to click through early and new pieces as they're finished. Then I ship to production and hand over the code and the docs. For 30 days after launch, bugs in what I built are fixed free, and after that I can stay on through a monthly retainer.",
   },
   {
     question: "How do I know the project will get finished?",

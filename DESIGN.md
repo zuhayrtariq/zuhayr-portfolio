@@ -1,76 +1,81 @@
-# Design: "I land the plane"
+# Design: "A prompt gets you a demo. I ship the product."
 
 ## Brief
 - **Subject:** Zuhayr Tariq is a full-stack web and AI developer. In 2026 anyone can get a demo out of a prompt, so the page has to answer one question: why hire him? His answer is delivery. He finishes, on the date agreed.
 - **Audience:** founders and product teams who opened a shared link, deciding in under a minute whether to write to him. Most of them now arrive from one of his Upwork proposals, with his Upwork profile open in the next tab.
 - **Primary job:** make the delivery claim impossible to miss, prove it with shipped work and a checkable record, and get a project brief into the contact form. For a client from Upwork the last step is different: send them back to Upwork to message him (see "Two audiences").
-- **Pinned by the client:** real 3D, a wow in the first second, nothing that reads as a generated template. Earlier directions were rejected for that reason (see the end of this file).
+- **Pinned by the client:** the page should look like where and how he builds: a coder's environment. A wow in the first second, and nothing that reads as a generated template. Earlier directions were rejected (see the end of this file).
 
 ## Concept
-Everyone in software says "ship" and "launch". This page uses the older metaphor underneath them: **anyone can take off now; landing is the job.**
+The page is his workspace, and the visitor watches one product go through it.
 
-The first six screens are one flight, drawn live and flown by the scroll:
+The first section is five windows on one screen: a browser, a brief, a test file, a thread of updates and a terminal. The page arrives with a first draft of a product already on them, because that is the part a prompt can do. A visitor can describe their own product in the box under the headline and have it drafted in front of them. Scrolling then takes that same product through the four steps of a real project, on the same windows:
 
-1. Dawn. A paper plane (the prompt, the demo) floats over a sea of cloud. It leans toward the pointer.
-2. It dips into the cloud, the frame goes white, and what comes out the top is an airliner in the page's own livery.
-3. Cruise in full daylight.
-4. Descent through the cloud into dusk. Under it, an airport: approach lights running in, a town beyond.
-5. Wheels down, touchdown, roll out.
+1. **Brief.** The written scope, as the Markdown file it would be, read from top to bottom.
+2. **Build.** Version one, written as tests. Each line of the scope goes green in turn.
+3. **Updates.** What he sends each week, and the one question that needs an answer from the client.
+4. **Launch.** The terminal on the day: tests passing, built, deployed, monitoring on, live. The browser's address changes from localhost to the product's own, with a Live badge.
 
-The four steps of a project (Brief, Build, Updates, Launch) arrive on plates as their part of the flight goes by. Everything after the flight borrows one object each from an airport, and each object was chosen because it already does the job the section needs:
+The headline sets up the two voices the whole site uses. "A prompt gets you a demo." is in the monospaced voice of a tool, with a cursor after it. "I ship the product." is in his own.
+
+Every section after that borrows one object from a developer's tools, and each was chosen because it already does the job the section needs:
 
 | Section | Object | Why that object |
 | --- | --- | --- |
-| Work | Arrivals board (split-flap) | A list of things that have landed, each with a status. |
-| Why hire me | Before-landing checklist | The parts of a product a prompt skips are literally a checklist. |
-| Record | Six cockpit instruments | Numbers you read at a glance, not claims. |
-| Describe it | Flight plan | The AI drafts a plan before anything flies. |
-| The rest of the site | Wayfinding sign | One yellow panel over the concourse, an arrow for each way on. |
-| Contact | Boarding pass | A form with a destination, and a stub with the other ways in. |
-| Experience (own page) | Route with stops | Six employers in order; this content really is a sequence. |
-| When something breaks (How I work) | Technical log | Every aircraft carries one: a defect is written down, acted on and signed for by a named person. That is the promise the section makes. |
-| His hours against yours (How I work) | The same split-flap board, as a pair of clocks | A board of places and times is what a terminal already has. |
+| Work | A browser with a tab for each product | A client sees the real site, at its real address, marked Live. |
+| Why hire me | A review of a change | The line a prompt writes is taken out in red; the line he ships is put in, in green. |
+| Record | A run of checks in a terminal | Six facts, each a line that passes. Numbers you can check, not claims. |
+| The rest of the site | A list of routes | Each page with its address beside it. |
+| Contact | None | A form on paper. On the Upwork copy, three steps back to Upwork. |
+| Experience (own page) | A history of commits | One line down the page, a point for each role, and a second line where two roles run at once, as his two do now. |
+| When something breaks (How I work) | The life of an issue | Opened, fixed, closed with a note. The colours are the ones every tracker uses. |
+| His hours against yours (How I work) | Two clocks | Large figures, and the client's working day read from Islamabad. |
+| Talk | None | What his AI says, set large in his voice, and a box to ask the next thing. |
 
-Only the flight is spectacle. The sections under it are flat colour and type.
+Only the first section moves with the scroll. The sections under it are flat colour and type.
 
 ## Pages
 The home page makes the case in one scroll. Everything a client might want to check afterwards has its own page, so the home page stays short.
 
 | Page | What it is for |
 | --- | --- |
-| `/` | The flight, the five live products, why hire a developer at all, the record, a plan drafted for the visitor, the sign to the other pages, and the way in. |
+| `/` | The workspace and the build, the five live products, why hire a developer at all, the record, the way to the other pages, and the way in. |
 | `/work`, `/work/[slug]` | Everything he has built: the live products in browser windows, then the archive as a list. One page for each case study. |
 | `/how-i-work` | What a client hiring someone remote cannot see from a profile: how he decides a thing is done, what he does when it breaks, what AI does and what stays with him, his clock against theirs, and the questions asked before a first call. Its hero is waiting for a photograph of his desk. |
-| `/experience` | The route, where he trained, and the stack. |
+| `/experience` | The history, where he trained, and the stack. |
 | `/talk` | His AI, answering out loud. |
 
 ## Two audiences
 Upwork does not allow a client and a freelancer to reach each other anywhere else before a contract starts, and counts a link to a page that shows an email address as sharing one. So the site exists twice:
 
 - **The direct copy** is everything outside `/upwork`. It has the contact form, his email, WhatsApp, GitHub, LinkedIn and the résumé.
-- **The Upwork copy** is the same pages under `/upwork`. It is what goes in a proposal. It shows no email, phone number, form, social profile or résumé; every internal link stays inside it; its calls to action say "Message me on Upwork"; the boarding pass becomes three steps back to Upwork Messages; a drafted brief is copied to the clipboard instead of sent; and its AI is given a profile with no contact details in it. As a last check, every sentence that AI writes is read on the server before it is sent, and one that names a way to reach someone is replaced by a line saying to message him on Upwork (`src/lib/ai/contact-guard.ts`). Search engines are kept out of it.
-- `/upwork/ai-agents`, `/upwork/web-apps` and `/upwork/prototype-to-production` are the Upwork home page with the work closest to that job first (`src/constants/focus.ts`).
+- **The Upwork copy** is the same pages under `/upwork`. It is what goes in a proposal. It shows no email, phone number, form, social profile or résumé; every internal link stays inside it; its calls to action say "Message me on Upwork"; the contact form becomes three steps back to Upwork Messages; a drafted brief is copied to the clipboard instead of sent; and its AI is given a profile with no contact details in it. As a last check, every sentence that AI writes is read on the server before it is sent, and one that names a way to reach someone is replaced by a line saying to message him on Upwork (`src/lib/ai/contact-guard.ts`). Search engines are kept out of it.
+- `/upwork/ai-agents`, `/upwork/web-apps` and `/upwork/prototype-to-production` are the Upwork home page with the work closest to that job first, and for AI jobs an AI product drafted on the screens (`src/constants/focus.ts`).
 
 How it is built: `src/app/upwork/layout.tsx` sets the audience once. Client components read it with `useAudience()`; internal links are `SiteLink`, which keeps a visitor in the copy they are in; server components that show contact details take an `audience` prop and leave them out. `npm run check` loads every page and fails if anything under `/upwork` shows a way to reach him outside Upwork, or links out of the copy. `npm run check:ai` runs the AI route against a stand-in model that leaks contact details, and fails if any of them get through.
 
 ## Colour
-Four colours, used as whole grounds. No dark-mode-with-one-accent, no gradients as decoration.
+Green is what every tool a developer uses shows when a thing is done, so here it is the ground, not an accent. Four colours are used as whole grounds; two more are states.
 
 | Name | Hex | Role |
 | --- | --- | --- |
-| Cobalt | `#1838DC` | The sky at altitude. Ground for the checklist and contact sections, links and focus on light grounds. |
-| Cloud | `#F1F5FA` | The light ground: record, route, FAQ, the paper of the checklist and the boarding pass. |
-| Night | `#071233` | The dark ground: arrivals board, flight plan, footer, plates over the flight. Text on Cloud. |
-| Sun | `#FFCE1F` | Airport wayfinding yellow. Only for things that say "this way": the Sign buttons, plate headers, instrument needles, LIVE. |
+| Emerald | `#0C7450` | The main ground: the workspace, the review, contact, Talk. |
+| Paper | `#F2F6EF` | The light ground: the record, the history, the FAQ, anything a client reads like a document. |
+| Pine | `#0C3A2A` | The dark ground: the work, the routes, the footer. Text on Paper. |
+| Mint | `#45EBA1` | Done, and go: buttons, passing checks, Live. Nothing else. |
+| Fail | `#E4553C` | Broken, or taken out. Only as a state. |
+| Wait | `#F5B83D` | In progress, or needs an answer. Only as a state. |
+| Screen | `#07251A` | The inside of an editor or terminal window. |
 
-A section sets `.on-cloud`, `.on-cobalt` or `.on-night`, which rebinds `--color-caption`, `--color-fog`, `--color-backdrop` and `--color-signal`, so components never ask which ground they are on. Product screenshots and brand logos keep their own colours.
-
-The 3D scene uses the same palette: cloud shadows are cobalt-tinted at every time of day, the livery is white, cobalt and sun.
+A section sets `.on-emerald`, `.on-paper`, `.on-pine` or `.on-screen`, which rebinds `--color-caption`, `--color-fog`, `--color-backdrop` and `--color-signal`, so components never ask which ground they are on. Product screenshots and brand logos keep their own colours.
 
 ## Type
-- **Anybody** (variable width axis) for headlines, set wide and heavy (`font-stretch: 135%`, 800) like a name painted along a fuselage. Sentence case, tight tracking.
-- **B612** for body and interface. It was drawn for Airbus cockpit displays, which is why it is here; it also happens to be very legible small.
-- **B612 Mono** only where characters sit in cells or columns: the split-flap board, instrument scales, dates on the route.
+One family for everything: **Recursive**, a variable font drawn for code and interfaces. It has an axis from proportional to monospaced (`MONO`) and an axis from ruled to hand-drawn (`CASL`), and the site uses them as voices (`src/styles/globals.css`, "The voices"):
+
+- **What a tool writes** is monospaced and ruled (`.font-mono`): code, logs, file names, addresses.
+- **What he says** is proportional, heavy and a little hand-drawn: headlines (`h1` to `h3`, `.font-display`), weight 900, sentence case, tight tracking.
+- **Text** is proportional and ruled.
+- **His notes** inside a window are slanted and cursive (`.voice-note`), the way many developers set their comments.
 
 No all-caps labels, no eyebrow above every heading, no single coloured word in a headline.
 
@@ -78,48 +83,54 @@ No all-caps labels, no eyebrow above every heading, no single coloured word in a
 Left-aligned throughout, on a 1680px maximum with fluid side padding.
 
 ```
-FLIGHT (sticky, 6.4 screens of scroll)
+THE BUILD (sticky, 5.6 screens of scroll)
 +--------------------------------------------------------------+
-| Zuhayr Tariq                Work Record Experience [Start ↗] |
+| Zuhayr Tariq            Work How Experience Talk [Start]     |
 |                                                              |
-| Anyone can                                                   |
-| take off now.                         ___                    |
-| I land the plane.                 ___/__/  <- aircraft,      |
-| I'm Zuhayr Tariq, ...                         right of centre |
-| [Start a project ↗]  See what has landed                     |
-|                                                              |
-| proof line                          [ avatar: captions     ] |
-|                                     [ Ask the captain  Ask ] |
+| A prompt gets                     +----------------------+   |
+| you a demo.█                      | browser: first draft |   |
+| I ship                       +------------+              |   |
+| the product.                 | brief.md   |--------------+   |
+| I'm Zuhayr Tariq, ...        | # Chairside|                  |
+| [Start a project]  See ...   | ## Version |                  |
+| [ describe a product  Draft ]| - ...      |                  |
+| [example] [example] [example]+------------+                  |
 +--------------------------------------------------------------+
-  after the hero: one plate bottom-left, route strip bottom-right
+  after the opening: one step's words bottom-left, its window in
+  front on the right, the browser behind; four steps along the bottom
 
 SECTIONS: heading left, one object, nothing else
 +--------------------------------------------------------------+
-| Landed, and live.                         short paragraph    |
-| [ S T A R L I N G   M X | ENTERPRISE AI PLATFORM | L I V E ] |
-| [ Y I P                 | PET ADOPTION PLATFORM  | L I V E ] |
-| chosen product: text left, live site in a browser, right     |
+| Shipped, and live.                        short paragraph    |
+| [ Starling MX | Yip | Runes | Hypecaster | Analytra ]        |
+| [ starlingmx.com                                    ● Live ] |
+| the live site, scrolling itself     | what he did on it      |
 +--------------------------------------------------------------+
 ```
 
-On a phone the aircraft moves to the lower half of the frame, plates sit under the header, and the board keeps two columns (product, status).
+The first section is composed on a 1440 by 900 sheet. One unit of the sheet is `--u`, and the headline and every window are sized in it, so the composition keeps its proportions from a small laptop to a large monitor. The words on the left are held clear of the windows by a rule of their own (`beside-windows`). On a short laptop screen the introduction gives up its second sentence, so the prompt box always fits.
+
+Under 1280px wide there is no room for words and windows side by side. The draft's screen sits under the prompt, and each step holds the screen in turn with its window under its words.
 
 ## Motion
-- **One orchestrated moment:** the flight. It is scroll-linked, so it never plays at anyone.
-- **Three small arrivals**, each once: the board's flaps turn to their text, the instrument needles swing up, the footer's approach lights run.
+- **One orchestrated moment:** the build. It is scroll-linked, so it never plays at anyone. Where each window is at each point of the scroll is one table at the top of `src/components/build/stage.tsx`.
+- **Small arrivals**, each once: a draft is written line by line, the record's checks pass in turn, the page inside the work browser scrolls itself.
 - Everything else is still. No fade-and-rise on sections, no hover effects on cards.
-- `prefers-reduced-motion`: the flight is not pinned, the plates are an ordinary list under a still of the first frame, flaps and needles are simply in place.
+- `prefers-reduced-motion`: the first section is not pinned. The four steps are an ordinary list, each with its finished window beside it.
 
-## The scene (`src/components/flight/scene.ts`)
-Plain three.js, one canvas, four passes through one camera: a ray-marched sky, ground and cloud layer at about half resolution; the airport's lamps as points; the aircraft; a veil of cloud while the camera is inside the layer. Distances are kilometres. The flight plan (altitude, pitch, heading, sun, time of day) is a set of keyframe tables at the top of the file.
+## The workspace (`src/components/build/`)
+The depth is CSS: one container with perspective, and five windows moved and turned inside it. There is no WebGL and no 3D library, so there is nothing to download before the first screen and nothing that depends on a graphics card.
 
-- It loads in its own chunk after the page is interactive, only on a real GPU (`src/lib/gpu.ts`), and stops drawing off screen or in a background tab.
-- It measures its own frame time for the first moments and lowers the cloud's resolution and step count if the machine is struggling.
-- Without WebGL the stage is a painted gradient and a flat paper plane; the words are identical.
+- `stage.tsx` is the section: the opening words, the prompt, the scroll, and where the windows go.
+- `windows.tsx` is what is in each window. Every one is drawn from the same draft, so a visitor who describes their own product sees their own scope tested, their own weeks in the updates and their own name go live.
+- A draft is plain text, one field to a line (`src/lib/draft.ts`), so it can be shown while it is still being written. The drafted screen is markup from a model; it is drawn in a frame that runs no scripts and can load nothing (`src/components/draft/screen-frame.tsx`).
+- The page is served with a finished example already on the screens (`src/lib/draft-example.ts`), so it is never empty and works without JavaScript.
 
 ## Rules for adding to this site
-- A new section gets one airport object, and only if that object does the section's job. Otherwise it is plain type on a ground.
-- Sun yellow means "this way". Do not use it for emphasis.
+- A new section gets one object from a developer's tools, and only if that object does the section's job. Otherwise it is plain type on a ground.
+- Mint means done, or go. Do not use it for emphasis. Red and amber are states, never decoration.
+- Monospaced type is for what a tool writes. His own words are never set in it.
+- Windows show what a client would understand: a scope, tests named after features, updates, a deploy. No walls of code.
 - Every number on the page has to be checkable (Upwork profile, the live products).
 - Anything that names a way to reach him goes behind `audience === "direct"`, and internal links are `SiteLink`, never `next/link`. Run `npm run check` before shipping.
 - "How I work" makes promises in his name. Change them only to what he has said he does.
@@ -128,5 +139,4 @@ Plain three.js, one canvas, four passes through one camera: a ray-marched sky, g
 1. **"The Interview":** a quiet editorial layout with an AI avatar. Read as basic.
 2. **"Made of light":** near-black ground, one ember-orange accent, condensed serif, his name lit from behind by a WebGL lamp, bento tiles for the record. Read as AI-generic: it is the most common generated look there is.
 3. Variations on 2 (3D bust, globe, spotlight cards, lanyard badge). More effects on the same template did not change the verdict.
-
-What changed this time is the idea, not the effects: the page is about one sentence, and the 3D is that sentence.
+4. **"I land the plane":** the page as a flight, drawn in WebGL, with an arrivals board, cockpit instruments and a boarding pass. He did not like the aeroplane theme and asked for a coder's environment, or how he builds, instead. The lesson: the picture has to be his own work, not a metaphor for it.

@@ -1,4 +1,4 @@
-import Route from "@/components/flight/route";
+import History from "@/components/experience/history";
 import JsonLd from "@/components/site/json-ld";
 import { PAGES, pageMetadata } from "@/lib/metadata";
 import { experienceSchema } from "@/lib/structured-data";
@@ -9,7 +9,7 @@ export default function ExperiencePage() {
   return (
     <main id="main">
       <JsonLd data={experienceSchema} />
-      <Route />
+      <History />
     </main>
   );
 }

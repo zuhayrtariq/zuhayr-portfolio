@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 export const OPEN_GRAPH = { type: "website", locale: "en_US", siteName: SITE.name } as const;
 
 export const HOME_TITLE = `${SITE.name} | ${SITE.role}`;
-const OG_ALT = `${SITE.name}, ${lowerFirst(SITE.role)}. Anyone can take off now. I land the plane.`;
+const OG_ALT = `${SITE.name}, ${lowerFirst(SITE.role)}. A prompt gets you a demo. I ship the product.`;
 
 interface PageMetadata {
   title: string;

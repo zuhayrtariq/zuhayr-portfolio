@@ -40,14 +40,14 @@ const AskBar = ({
           e.preventDefault();
           submit(question);
         }}
-        className="flex h-14 items-center gap-1.5 rounded-lg border border-input bg-umbra/70 pl-4 pr-1.5 outline-offset-3 transition-colors focus-within:border-caption/70 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-signal"
+        className="flex h-14 items-center gap-1.5 rounded-lg bg-pine/70 pl-4 pr-1.5 outline-offset-3 ring-1 ring-white/20 transition-shadow focus-within:ring-white/60 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-signal"
       >
         <input
           name="question"
           aria-label="Ask Zuhayr a question"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
-          placeholder="Ask the captain"
+          placeholder="Ask me anything"
           autoComplete="off"
           enterKeyHint="send"
           className="h-full min-w-0 flex-1 text-ellipsis bg-transparent text-body text-caption outline-none placeholder:text-fog focus-visible:outline-none"
@@ -60,7 +60,7 @@ const AskBar = ({
             aria-label={listening ? "Stop listening" : "Ask out loud"}
             className={cn(
               "inline-flex size-11 shrink-0 items-center justify-center rounded-md transition-colors",
-              listening ? "bg-signal text-night" : "text-fog hover:text-caption"
+              listening ? "bg-mint text-pine" : "text-fog hover:text-caption"
             )}
           >
             <MicIcon className="size-5" />
@@ -69,7 +69,7 @@ const AskBar = ({
         <button
           type="submit"
           disabled={!question.trim() || busy}
-          className="inline-flex h-11 shrink-0 items-center rounded-md bg-sun px-5 text-ui font-bold text-night transition-opacity disabled:opacity-40"
+          className="inline-flex h-11 shrink-0 items-center rounded-md bg-mint px-5 text-ui font-bold text-pine transition-opacity disabled:opacity-40"
         >
           Ask
         </button>

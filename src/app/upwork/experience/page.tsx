@@ -1,4 +1,4 @@
-import Route from "@/components/flight/route";
+import History from "@/components/experience/history";
 import { PAGES, pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata(PAGES.experience);
@@ -6,7 +6,7 @@ export const metadata = pageMetadata(PAGES.experience);
 export default function UpworkExperiencePage() {
   return (
     <main id="main">
-      <Route audience="upwork" />
+      <History audience="upwork" />
     </main>
   );
 }

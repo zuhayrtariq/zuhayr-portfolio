@@ -4,11 +4,11 @@ import type { Audience } from "@/lib/audience";
 /** The questions clients ask before writing, answered in plain text that people and crawlers can both read. */
 const Faq = ({ audience = "direct" }: { audience?: Audience }) => {
   return (
-    <section id="faq" aria-labelledby="faq-title" className="on-cloud relative bg-cloud">
+    <section id="faq" aria-labelledby="faq-title" className="on-paper relative bg-paper">
       <div className="mx-auto grid max-w-[1680px] gap-x-12 gap-y-10 border-t px-[clamp(20px,4vw,64px)] py-24 md:py-36 lg:grid-cols-12">
         <div className="lg:sticky lg:top-28 lg:col-span-4 lg:self-start">
           <h2 id="faq-title" className="text-[clamp(34px,4.3vw,72px)]">
-            Before you board.
+            Before you hire.
           </h2>
           <p className="mt-6 max-w-[32ch] text-body text-fog">
             What clients usually ask before the first call. Anything else, ask me directly.

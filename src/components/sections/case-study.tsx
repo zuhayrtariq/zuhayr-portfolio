@@ -88,7 +88,7 @@ const CaseStudy = ({ project, audience = "direct" }: { project: Project; audienc
           className="group mx-auto block max-w-[1440px] px-[clamp(20px,4vw,64px)] py-20 md:py-28"
         >
           <span className="text-ui text-fog">Next case study</span>
-          <span className="mt-3 block font-display text-[clamp(34px,5vw,84px)] font-extrabold leading-[0.96] tracking-[-0.025em] font-stretch-[135%] transition-colors group-hover:text-signal">
+          <span className="mt-3 block font-display text-[clamp(34px,5vw,84px)] font-extrabold leading-[0.96] tracking-[-0.025em] transition-colors group-hover:text-signal">
             {next.title}
           </span>
         </SiteLink>

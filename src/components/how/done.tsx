@@ -1,10 +1,10 @@
 /**
  * How he decides a thing is finished. Plain type on purpose: this section is a promise, and
- * the object that backs it up is the log in the section below.
+ * what backs it up is the section below.
  */
-const GoAround = () => {
+const Done = () => {
   return (
-    <section aria-labelledby="done-title" className="on-cloud relative bg-cloud">
+    <section aria-labelledby="done-title" className="on-paper relative bg-paper">
       <div className="mx-auto grid max-w-[1680px] gap-x-12 gap-y-10 px-[clamp(20px,4vw,64px)] py-24 md:py-36 lg:grid-cols-12">
         <h2 id="done-title" className="text-[clamp(34px,4.3vw,72px)] lg:col-span-5">
           Done means done.
@@ -19,9 +19,8 @@ const GoAround = () => {
             will: on a phone, on a slow connection, with the wrong input, with an empty account.
           </p>
           <p>
-            When a pilot doesn&apos;t like an approach, they go around and set it up again, and nobody calls that
-            failing. I do the same with a feature that isn&apos;t right. I say so, I fix it, and then it lands. You
-            hear about a problem from me before the date, not on it.
+            When a feature isn&apos;t right, I don&apos;t ship it and hope. I say so, I fix it, and then it goes out.
+            You hear about a problem from me before the date, not on it.
           </p>
         </div>
       </div>
@@ -29,4 +28,4 @@ const GoAround = () => {
   );
 };
 
-export default GoAround;
+export default Done;

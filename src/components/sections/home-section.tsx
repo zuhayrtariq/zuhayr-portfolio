@@ -1,13 +1,13 @@
 import type { Focus } from "@/constants/focus";
 import type { Audience } from "@/lib/audience";
-import Draft from "../contents/draft";
-import Arrivals from "../flight/arrivals";
-import Boarding from "../flight/boarding";
-import Captain from "../flight/captain";
-import Flight from "../flight/flight";
-import Instruments from "../flight/instruments";
-import NextStep from "../flight/next-step";
-import Wayfinding from "../flight/wayfinding";
+import { loadDraftExample } from "@/lib/draft-example";
+import Stage from "../build/stage";
+import Contact from "../home/contact";
+import Next from "../home/next";
+import NextStep from "../home/next-step";
+import Record from "../home/record";
+import Review from "../home/review";
+import Shipped from "../home/shipped";
 
 interface HomeSectionProps {
   audience?: Audience;
@@ -16,22 +16,23 @@ interface HomeSectionProps {
 }
 
 /**
- * The home page is one flight. It takes off and lands in the first section; what follows is
- * what has landed before, who is flying, the record, a plan drafted for the visitor, the way
- * to the rest of the site, and how to board.
+ * The home page is one build. It opens on his workspace with a product drafted on it, and
+ * scrolling takes that product from brief to launch. What follows is what he has shipped
+ * before, why a developer still matters, the record, the way to the rest of the site, and how
+ * to start.
  */
-const HomeSection = ({ audience = "direct", focus }: HomeSectionProps) => {
-  const work = <Arrivals lead={focus?.lead} order={focus?.order} />;
-  const why = <Captain note={focus?.note} />;
+const HomeSection = async ({ audience = "direct", focus }: HomeSectionProps) => {
+  const initial = await loadDraftExample(focus?.example);
+  const work = <Shipped lead={focus?.lead} order={focus?.order} />;
+  const why = <Review note={focus?.note} />;
   return (
     <>
-      <Flight />
+      <Stage initial={initial} />
       {focus?.checklistFirst ? why : work}
       {focus?.checklistFirst ? work : why}
-      <Instruments />
-      <Draft />
-      <Wayfinding />
-      {audience === "upwork" ? <NextStep /> : <Boarding />}
+      <Record />
+      <Next audience={audience} />
+      {audience === "upwork" ? <NextStep /> : <Contact />}
     </>
   );
 };

@@ -2,19 +2,25 @@
 @import "lenis/dist/lenis.css";
 
 @theme {
-  /* The four colours of the page. Everything else is a tint of one of them. */
-  --color-cloud: #f1f5fa;
-  --color-night: #071233;
-  --color-cobalt: #1838dc;
-  --color-sun: #ffce1f;
+  /* The page's colours. Green is what every tool a developer uses shows when a thing is done,
+     so here it is the ground, not an accent. */
+  --color-paper: #f2f6ef;
+  --color-pine: #0c3a2a;
+  --color-emerald: #0c7450;
+  --color-mint: #45eba1;
+  /* The other two states those tools show: broken, and in progress. */
+  --color-fail: #e4553c;
+  --color-wait: #f5b83d;
+  /* The surface of an editor or a terminal window. */
+  --color-screen: #07251a;
 
   /* What a component asks for. Each ground below rebinds these, so a component
      never needs to know which ground it is standing on. */
-  --color-backdrop: #f1f5fa;
-  --color-umbra: #e2e9f3;
-  --color-caption: #071233;
-  --color-fog: #55658a;
-  --color-signal: #1838dc;
+  --color-backdrop: #f2f6ef;
+  --color-umbra: #e2eadd;
+  --color-caption: #0a2a1f;
+  --color-fog: #4c695d;
+  --color-signal: #0c7450;
   --color-error: #b3261e;
 
   --text-fine: 14px;
@@ -30,9 +36,10 @@
 }
 
 @theme inline {
-  --font-display: var(--font-anybody), "Arial Black", sans-serif;
-  --font-text: var(--font-b612), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-b612-mono), ui-monospace, monospace;
+  /* One family, Recursive, in three voices. See the voices further down. */
+  --font-display: var(--font-recursive), "Arial Black", sans-serif;
+  --font-text: var(--font-recursive), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-recursive), ui-monospace, "SF Mono", Menlo, monospace;
 
   --color-background: var(--color-backdrop);
   --color-foreground: var(--color-caption);
@@ -66,7 +73,7 @@
 
   html {
     color-scheme: light;
-    background-color: var(--color-cloud);
+    background-color: var(--color-paper);
     scroll-padding-top: 5rem;
     -webkit-tap-highlight-color: transparent;
     -webkit-font-smoothing: antialiased;
@@ -82,15 +89,16 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Headlines are set wide and heavy, the way a name is painted along a fuselage. */
+  /* Headlines are his voice: heavy, and a little hand-drawn. */
   h1,
   h2,
   h3 {
+    --mono: 0;
+    --casl: 0.5;
     font-family: var(--font-display);
-    font-weight: 800;
-    font-stretch: 135%;
-    letter-spacing: -0.025em;
-    line-height: 0.96;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 0.98;
     text-wrap: balance;
   }
 
@@ -107,48 +115,61 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--focus, var(--color-cobalt));
+    outline: 2px solid var(--focus, var(--color-emerald));
     outline-offset: 3px;
   }
 
   ::selection {
-    background-color: var(--color-sun);
-    color: var(--color-night);
+    background-color: var(--color-mint);
+    color: var(--color-pine);
   }
 
   /* The grounds. A section takes one of these classes and everything inside follows. */
-  .on-cloud {
-    --color-backdrop: #f1f5fa;
-    --color-umbra: #e2e9f3;
-    --color-caption: #071233;
-    --color-fog: #55658a;
-    --color-signal: #1838dc;
+  .on-paper {
+    --color-backdrop: #f2f6ef;
+    --color-umbra: #e2eadd;
+    --color-caption: #0a2a1f;
+    --color-fog: #4c695d;
+    --color-signal: #0c7450;
     --color-error: #b3261e;
-    --focus: #1838dc;
+    --focus: #0c7450;
     color-scheme: light;
     color: var(--color-caption);
   }
 
-  .on-cobalt {
-    --color-backdrop: #1838dc;
-    --color-umbra: #1230bf;
+  .on-emerald {
+    --color-backdrop: #0c7450;
+    --color-umbra: #0a6344;
     --color-caption: #ffffff;
-    --color-fog: #c9d3f5;
-    --color-signal: #ffce1f;
+    --color-fog: #d2eee0;
+    --color-signal: #45eba1;
     --color-error: #ffd9d4;
-    --focus: #ffce1f;
+    --focus: #45eba1;
     color-scheme: dark;
     color: var(--color-caption);
   }
 
-  .on-night {
-    --color-backdrop: #071233;
-    --color-umbra: #040b22;
-    --color-caption: #f1f5fa;
-    --color-fog: #a3b1d4;
-    --color-signal: #ffce1f;
+  .on-pine {
+    --color-backdrop: #0c3a2a;
+    --color-umbra: #092e21;
+    --color-caption: #f2f6ef;
+    --color-fog: #a9c8ba;
+    --color-signal: #45eba1;
     --color-error: #ffb4a8;
-    --focus: #ffce1f;
+    --focus: #45eba1;
+    color-scheme: dark;
+    color: var(--color-caption);
+  }
+
+  /* Inside an editor or terminal window. */
+  .on-screen {
+    --color-backdrop: #07251a;
+    --color-umbra: #051c14;
+    --color-caption: #e9f4ed;
+    --color-fog: #86ab9a;
+    --color-signal: #45eba1;
+    --color-error: #ff9d8c;
+    --focus: #45eba1;
     color-scheme: dark;
     color: var(--color-caption);
   }
@@ -162,6 +183,43 @@
       transition-duration: 0.01ms !important;
     }
   }
+}
+
+/* The voices. Recursive is one typeface with an axis from proportional to monospaced and an
+   axis from drawn-with-a-ruler to drawn-by-hand. What a tool writes is set in the first; what
+   he says is set in the second. Each element reads the axes from custom properties, so a
+   voice set on a container carries to everything inside it. */
+*,
+::before,
+::after {
+  font-variation-settings:
+    "MONO" var(--mono, 0),
+    "CASL" var(--casl, 0),
+    "slnt" var(--slnt, 0),
+    "CRSV" var(--crsv, 0.5);
+}
+
+.font-display {
+  --mono: 0;
+  --casl: 0.5;
+}
+
+.font-text {
+  --mono: 0;
+  --casl: 0;
+}
+
+/* The tool's voice: code, logs, addresses. */
+.font-mono {
+  --mono: 1;
+  --casl: 0;
+}
+
+/* His own notes, the way many developers set their comments: slanted and cursive. */
+.voice-note {
+  --casl: 1;
+  --slnt: -15;
+  --crsv: 1;
 }
 
 @utility link-underline {
@@ -197,22 +255,54 @@
   }
 }
 
-/* The dot leaders of a cockpit checklist: the gap between a call and its answer. */
-@utility leaders {
-  flex: 1 1 0;
-  min-width: 1.5rem;
-  height: 0;
-  margin: 0 0.6em;
-  align-self: center;
-  border-bottom: 2px dotted color-mix(in oklab, currentcolor 45%, transparent);
+/* The first section is composed on a 1440 by 900 sheet. One unit of that sheet is --u, so the
+   headline and every window keep their proportions on any screen without being scaled as a picture. */
+@utility sheet {
+  --u: clamp(0.6px, min(100vw / 1440, 100svh / 900), 1.3px);
 }
 
-/* The punched edge between a boarding pass and its stub. */
-@utility perforation {
-  background-image: radial-gradient(circle, var(--punch, var(--color-backdrop)) 0 3.5px, transparent 4px);
-  background-size: 2px 14px;
-  background-position: center;
-  background-repeat: repeat-y;
+/* How wide the opening words may run. On a wide screen they keep clear of the windows: from
+   the page's left edge to where the nearest window begins. This utility sets both widths
+   itself, because a second max-width class beside it would decide the matter by the order
+   the two happen to be written out in. */
+@utility beside-windows {
+  max-width: 40rem;
+
+  @media (min-width: 80rem) {
+    max-width: calc(50vw - 160 * var(--u) - clamp(20px, 4vw, 64px) - max(0px, (100vw - 1680px) / 2) - 0.5rem);
+  }
+}
+
+/* The page's left edge, for what is placed against the screen and not inside the page's column. */
+@utility page-left {
+  left: max(clamp(20px, 4vw, 64px), calc((100vw - 1680px) / 2 + 64px));
+}
+
+/* The space the windows hang in, seen from a little right of centre. */
+@utility workspace {
+  perspective: calc(1500 * var(--u));
+  perspective-origin: 62% 46%;
+}
+
+/* A text cursor, as it sits at the end of a prompt. It blinks for a few seconds and then
+   holds still, so it is not flashing beside the words while they are being read. */
+@utility caret {
+  display: inline-block;
+  width: 0.5em;
+  height: 0.92em;
+  margin-left: 0.08em;
+  vertical-align: -0.08em;
+  background-color: currentcolor;
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: caret 1.1s steps(1) 8;
+  }
+}
+
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
 }
 
 /* Footage: a pre-blurred copy over the sharp frame fades out as the frame
@@ -240,100 +330,6 @@
   from {
     opacity: 0;
     transform: translateY(8px);
-  }
-}
-
-/* A flap falling: the top half of the old character, then the bottom half of the new one. */
-@keyframes flap-down {
-  to {
-    transform: rotateX(-90deg);
-  }
-}
-
-@keyframes flap-up {
-  from {
-    transform: rotateX(90deg);
-  }
-}
-
-/* Approach lights run toward the threshold one after another. */
-@keyframes approach {
-  0%,
-  100% {
-    opacity: 0.25;
-  }
-  12% {
-    opacity: 1;
-  }
-  40% {
-    opacity: 0.25;
-  }
-}
-
-/* One cell of the arrivals board: two fixed halves, and a leaf that falls between them. */
-@layer components {
-  .flap {
-    position: relative;
-    display: inline-block;
-    width: 1.14em;
-    height: 1.72em;
-    font-family: var(--font-mono);
-    font-weight: 700;
-    line-height: 1.72em;
-    text-align: center;
-    perspective: 12em;
-    color: var(--flap-ink, #f1f5fa);
-  }
-
-  .flap > span {
-    position: absolute;
-    inset-inline: 0;
-    height: 50%;
-    overflow: hidden;
-    backface-visibility: hidden;
-  }
-
-  .flap > span > i {
-    display: block;
-    height: 200%;
-    font-style: normal;
-  }
-
-  .flap-top,
-  .flap-leaf[data-half="top"] {
-    top: 0;
-    background: #14235f;
-    border-radius: 0.14em 0.14em 0 0;
-  }
-
-  .flap-bottom,
-  .flap-leaf[data-half="bottom"] {
-    bottom: 0;
-    background: #101c50;
-    border-radius: 0 0 0.14em 0.14em;
-    box-shadow: inset 0 1.5px 0 rgb(3 8 28 / 0.9);
-  }
-
-  .flap-bottom > i,
-  .flap-leaf[data-half="bottom"] > i {
-    transform: translateY(-50%);
-  }
-
-  .flap-leaf {
-    display: none;
-    z-index: 1;
-  }
-
-  .flap-leaf[data-half] {
-    display: block;
-  }
-
-  .flap-leaf[data-half="top"] {
-    transform-origin: 50% 100%;
-  }
-
-  .flap-leaf[data-half="bottom"] {
-    transform-origin: 50% 0;
   }
 }
 

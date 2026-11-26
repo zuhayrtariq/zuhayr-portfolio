@@ -17,11 +17,11 @@ const Tools = ({ names }: { names: string[] }) => (
 
 /**
  * How he uses AI: what it does, what stays with him, and what he builds with it. The same
- * split the home page makes between the copilot and the captain, in detail.
+ * split the home page makes between what AI writes and what he answers for, in detail.
  */
-const Copilots = () => {
+const WithAi = () => {
   return (
-    <section aria-labelledby="ai-title" className="on-cloud relative bg-cloud">
+    <section aria-labelledby="ai-title" className="on-paper relative bg-paper">
       <div className="mx-auto grid max-w-[1680px] gap-x-12 gap-y-12 px-[clamp(20px,4vw,64px)] py-24 md:py-36 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <h2 id="ai-title" className="text-[clamp(34px,4.3vw,72px)]">
@@ -70,4 +70,4 @@ const Copilots = () => {
   );
 };
 
-export default Copilots;
+export default WithAi;

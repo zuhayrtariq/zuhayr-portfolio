@@ -1,25 +1,14 @@
-import { Anybody, B612, B612_Mono } from "next/font/google";
+import { Recursive } from "next/font/google";
 
-/** Headlines. One family with a width axis, so it can be set wide like a livery or narrow like a flap. */
-export const display = Anybody({
+/**
+ * The whole site is set in one family. Recursive was drawn for code and for interfaces, and
+ * it is one variable font with an axis from proportional to monospaced (MONO) and an axis
+ * from ruled to hand-drawn (CASL). The styles use those axes as voices: what a tool writes
+ * is monospaced and ruled, what Zuhayr says is proportional and drawn by hand.
+ */
+export const recursive = Recursive({
   subsets: ["latin"],
-  axes: ["wdth"],
-  variable: "--font-anybody",
-  display: "swap",
-});
-
-/** Body and interface. Drawn for Airbus so cockpit displays stay legible at a glance. */
-export const text = B612({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-b612",
-  display: "swap",
-});
-
-/** The arrivals board and the boarding pass, where every character sits in its own cell. */
-export const mono = B612_Mono({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-b612-mono",
+  axes: ["CASL", "CRSV", "MONO", "slnt"],
+  variable: "--font-recursive",
   display: "swap",
 });

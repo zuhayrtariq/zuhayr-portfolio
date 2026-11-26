@@ -6,16 +6,6 @@ import { SKILLS } from "@/constants/skills";
 import type { Audience } from "@/lib/audience";
 import { cn } from "@/lib/utils";
 
-/** Each employer as the three letters an airport would get. */
-const CODES: Record<string, string> = {
-  "Lucky Cement Ltd.": "LCK",
-  "TFM Digital": "TFM",
-  "EZ Solvers": "EZS",
-  "Prime International Oil And Gas": "PRM",
-  "Upwork — Freelance": "UPW",
-  "Starling MX": "SMX",
-};
-
 const MONTHS = /\b(January|February|March|April|June|July|August|September|October|November|December)\b/g;
 const shortRange = (date: string) => date.replace(MONTHS, (m) => m.slice(0, 3)).replace(" - ", " to ");
 
@@ -39,17 +29,20 @@ const TRAINING = [
 ];
 
 /**
- * The Experience page. Where he has worked, drawn as a route: six stops from an internship
- * to the two roles he holds now. Under it, where he trained and what he flies with.
+ * The Experience page. Where he has worked, newest first, drawn the way a history of commits
+ * is drawn: one line down the page with a point for each role, and a second line beside it
+ * where two roles run at once, as his two do now. Under it, where he trained and what he
+ * builds with.
  */
-const Route = ({ audience = "direct" }: { audience?: Audience }) => {
+const History = ({ audience = "direct" }: { audience?: Audience }) => {
+  const jobs = experiences.toReversed();
   return (
-    <section aria-labelledby="experience-title" className="on-cloud relative bg-cloud">
+    <section aria-labelledby="experience-title" className="on-paper relative bg-paper">
       <div className="mx-auto max-w-[1680px] px-[clamp(20px,4vw,64px)] pb-24 pt-36 md:pb-36 md:pt-48">
         <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
           <div>
             <h1 id="experience-title" className="text-[clamp(36px,5.4vw,92px)]">
-              The route so far.
+              The history so far.
             </h1>
             <p className="mt-6 max-w-[46ch] text-body text-fog lg:text-lead">
               Five years, from an SAP internship to leading engineering on an enterprise AI platform.
@@ -57,41 +50,52 @@ const Route = ({ audience = "direct" }: { audience?: Audience }) => {
           </div>
           {/* The résumé carries his email and phone number, which a client from Upwork is not given. */}
           {audience === "direct" && (
-            <Sign href={SITE.resume} tone="night" download>
+            <Sign href={SITE.resume} tone="pine" download>
               Download my résumé
             </Sign>
           )}
         </div>
 
-        <ol className="relative mt-14 grid gap-y-9 md:mt-20 lg:grid-cols-6 lg:gap-x-6">
-          {/* The line the stops sit on: down the side on a phone, across the top on a wide screen. */}
-          <span
-            aria-hidden
-            className="absolute bottom-3 left-[7px] top-3 border-l-2 border-dashed border-night/30 lg:inset-x-0 lg:bottom-auto lg:top-[7px] lg:border-l-0 lg:border-t-2"
-          />
-          {experiences.map((job) => (
-            <li key={`${job.company_name}-${job.date}`} className="relative pl-9 lg:pl-0 lg:pt-10">
-              <span
-                aria-hidden
-                className={cn(
-                  "absolute left-0 top-2 size-4 rounded-full border-[3px] border-night lg:top-0",
-                  job.active ? "bg-sun" : "bg-cloud"
+        <ol className="mt-14 md:mt-20">
+          {jobs.map((job, i) => {
+            // The newest role runs beside the one under it, so it sits on a line of its own.
+            const beside = i === 0;
+            const last = i === jobs.length - 1;
+            return (
+              <li key={`${job.company_name}-${job.date}`} className="relative grid gap-x-10 gap-y-2 pb-12 pl-[4.25rem] last:pb-0 md:grid-cols-[13rem_minmax(0,1fr)] md:pb-14">
+                {/* The main line, which stops at the first role. */}
+                <span aria-hidden className={cn("absolute left-[7px] top-0 w-0.5 bg-pine/30", last ? "h-3" : "bottom-0")} />
+                {/* The second line: down to its point, then round the corner into the main line. */}
+                {beside && (
+                  <>
+                    <span aria-hidden className="absolute left-[35px] top-0 h-3 w-0.5 bg-pine/30" />
+                    <span aria-hidden className="absolute bottom-0 left-[8px] top-3 w-[28px] rounded-br-[22px] border-b-2 border-r-2 border-pine/30" />
+                  </>
                 )}
-              />
-              <a href={job.link} target="_blank" rel="noopener noreferrer" className="group/stop block">
-                <p className="flex items-center gap-3">
-                  <span className="font-display text-[clamp(34px,3.1vw,50px)] font-extrabold leading-none tracking-[-0.03em] font-stretch-[135%] transition-colors group-hover/stop:text-cobalt">
-                    {CODES[job.company_name]}
-                  </span>
-                  {job.active && <span className="rounded-sm bg-night px-2 py-1 text-[12px] font-bold leading-none text-sun">Now</span>}
+                <span
+                  aria-hidden
+                  className={cn(
+                    "absolute top-2 size-4 rounded-full border-[3px] border-pine",
+                    beside ? "left-[28px]" : "left-0",
+                    job.active ? "bg-mint" : "bg-paper"
+                  )}
+                />
+                <p className="flex flex-wrap content-start items-center gap-x-3 gap-y-2 self-start pt-1 font-mono text-fine text-fog">
+                  {shortRange(job.date)}
+                  {job.active && <span className="rounded-sm bg-mint px-2 py-1 font-text text-[12px] font-bold leading-none text-pine">Now</span>}
                 </p>
-                <p className="mt-3 text-ui font-bold leading-snug">{job.company_name.replace(" — Freelance", "")}</p>
-                <p className="mt-1 text-fine leading-snug">{job.title.split(" — ")[0]}</p>
-                <p className="mt-1 font-mono text-[13px] text-fog">{shortRange(job.date)}</p>
-                <p className="mt-3 max-w-[44ch] text-fine leading-snug text-fog">{job.summary}</p>
-              </a>
-            </li>
-          ))}
+                <div>
+                  <h2 className="text-[clamp(24px,2.4vw,38px)]">{job.title.split(" — ")[0]}</h2>
+                  <p className="mt-2 text-ui font-bold">
+                    <a href={job.link} target="_blank" rel="noopener noreferrer" className="link-underline">
+                      {job.company_name.replace(" — Freelance", "")}
+                    </a>
+                  </p>
+                  <p className="mt-2 max-w-[60ch] text-ui text-fog">{job.summary}</p>
+                </div>
+              </li>
+            );
+          })}
         </ol>
 
         <div className="mt-20 border-t pt-10 md:mt-28">
@@ -130,4 +134,4 @@ const Route = ({ audience = "direct" }: { audience?: Audience }) => {
   );
 };
 
-export default Route;
+export default History;

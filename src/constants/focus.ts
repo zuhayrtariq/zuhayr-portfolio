@@ -11,9 +11,11 @@ export interface Focus {
   lead: string;
   /** Case-study slugs, most relevant first. The rest follow in their usual order. */
   order: string[];
-  /** Open with the "why hire a developer" checklist, before the work. */
+  /** The example draft that is on the screens when the page arrives. One of DRAFT_EXAMPLES; the first by default. */
+  example?: string;
+  /** Open with the "why hire a developer" checks, before the work. */
   checklistFirst?: boolean;
-  /** A line added under that checklist's introduction. */
+  /** A line added under the introduction to those checks. */
   note?: string;
 }
 
@@ -23,6 +25,7 @@ export const FOCUSES: Focus[] = [
     job: "an AI build",
     lead: "You're hiring for an AI build, so the AI products come first: an enterprise AI platform I lead, an agent that makes short videos, and analytics you can question in plain language. Each is live.",
     order: ["starling-mx", "hypecaster", "analytra"],
+    example: "/drafts/support.txt",
   },
   {
     slug: "web-apps",

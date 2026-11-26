@@ -20,10 +20,10 @@ const SiteHeader = () => {
   /** Pages that open on a dark ground, where the bar starts out clear with light type. */
   const overDark = onHome || ["/talk", "/how-i-work"].includes(barePath(pathname));
 
-  // On the home page the bar stays clear over the whole flight, which holds the screen while
-  // it plays. Past it, it steps out of the way while reading down and returns on the first
-  // scroll up. With reduced motion the flight is a still that scrolls away like any page, so
-  // the bar turns solid as soon as words start to pass under it.
+  // On the home page the bar stays clear over the whole first section, which holds the screen
+  // while it plays. Past it, it steps out of the way while reading down and returns on the
+  // first scroll up. With reduced motion that section scrolls away like any page, so the bar
+  // turns solid as soon as words start to pass under it.
   useEffect(() => {
     const held = onHome && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const hero = held ? document.querySelector('section[aria-labelledby="hero-title"]') : null;
@@ -60,27 +60,30 @@ const SiteHeader = () => {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-[background-color,translate,box-shadow] duration-500 ease-[var(--ease-lights)] focus-within:translate-y-0",
         solid
-          ? "on-cloud bg-cloud/92 shadow-[0_1px_0_rgb(7_18_51/0.1)] backdrop-blur-md"
+          ? "on-paper bg-paper/92 shadow-[0_1px_0_rgb(4_26_18/0.1)] backdrop-blur-md"
           : overDark
-            ? "on-night [text-shadow:0_1px_14px_rgb(7_18_51/0.6)]"
-            : "on-cloud",
+            ? "on-pine"
+            : "on-paper",
         // A little further than its own height, so the shadow under the sign leaves with it.
         hidden && !open && "-translate-y-[calc(100%+3rem)]"
       )}
     >
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-md focus:bg-sun focus:px-3 focus:py-2 focus:text-night"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-md focus:bg-mint focus:px-3 focus:py-2 focus:text-pine"
       >
         Skip to content
       </a>
       <div className="mx-auto flex h-16 max-w-[1680px] items-center justify-between px-[clamp(20px,4vw,64px)] md:h-20">
         <SiteLink
           href="/"
-          className="flex items-center gap-3 whitespace-nowrap font-display text-[19px] font-extrabold leading-none tracking-[-0.02em] font-stretch-[130%]"
+          className="flex items-center gap-3 whitespace-nowrap font-display text-[19px] font-extrabold leading-none tracking-[-0.02em]"
         >
-          {/* eslint-disable-next-line @next/next/no-img-element -- the favicon's own drawing, from scripts/build-avatar.mjs */}
-          <img src="/images/avatar-mark.webp" alt="" width={32} height={32} decoding="async" className="size-8" />
+          {/* The drawn avatar on a mint tile, which shows on every ground the bar sits over. */}
+          <span className="flex size-8 items-end justify-center overflow-hidden rounded-md bg-mint">
+            {/* eslint-disable-next-line @next/next/no-img-element -- already sized and compressed by scripts/build-avatar.mjs */}
+            <img src="/images/avatar.webp" alt="" width={36} height={36} decoding="async" className="size-9 max-w-none" />
+          </span>
           Zuhayr Tariq
         </SiteLink>
 
@@ -90,7 +93,7 @@ const SiteHeader = () => {
               {link.name}
             </SiteLink>
           ))}
-          <HireSign className="h-11 [&>span:last-child]:w-11" />
+          <HireSign className="h-11 px-5" />
         </nav>
 
         <button
@@ -112,7 +115,7 @@ const SiteHeader = () => {
               <SiteLink
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="flex h-14 items-center font-display text-[26px] font-extrabold tracking-[-0.02em] font-stretch-[130%]"
+                className="flex h-14 items-center font-display text-[26px] font-extrabold tracking-[-0.02em]"
               >
                 {link.name}
               </SiteLink>

@@ -29,18 +29,7 @@ const linkClass = "link-underline inline-block py-1.5 decoration-transparent";
 const SiteFooter = ({ audience = "direct" }: { audience?: Audience }) => {
   const columns = [site, studies, elsewhere(audience)];
   return (
-    <footer className="on-night overflow-hidden bg-night">
-      {/* Approach lights: a row of lamps that fire in turn toward the page above. */}
-      <div aria-hidden className="mx-auto flex max-w-[1680px] items-center justify-between px-[clamp(20px,4vw,64px)] pt-10">
-        {Array.from({ length: 24 }, (_, i) => (
-          <span
-            key={i}
-            style={{ animationDelay: `${i * 70}ms` }}
-            className="size-1.5 rounded-full bg-sun opacity-25 motion-safe:animate-[approach_1.7s_linear_infinite] max-sm:nth-[2n]:hidden"
-          />
-        ))}
-      </div>
-
+    <footer className="on-pine overflow-hidden bg-pine">
       <div className="mx-auto max-w-[1680px] px-[clamp(20px,4vw,64px)]">
         <div className="grid gap-x-8 gap-y-14 pt-14 md:pt-20 lg:grid-cols-12">
           <div className="lg:col-span-5">
@@ -49,8 +38,8 @@ const SiteFooter = ({ audience = "direct" }: { audience?: Audience }) => {
               <img src="/images/avatar-mark.webp" alt="" width={40} height={40} loading="lazy" decoding="async" className="size-10" />
               Taking on new projects
             </p>
-            <p className="mt-7 max-w-[19ch] font-display text-[clamp(28px,2.9vw,44px)] font-extrabold leading-[1] tracking-[-0.025em] font-stretch-[130%]">
-              Have something to build? Describe it, and I&apos;ll land it.
+            <p className="mt-7 max-w-[19ch] font-display text-[clamp(28px,2.9vw,44px)] font-extrabold leading-[1] tracking-[-0.025em]">
+              Have something to build? Describe it, and I&apos;ll ship it.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
               <HireSign />
@@ -65,7 +54,7 @@ const SiteFooter = ({ audience = "direct" }: { audience?: Audience }) => {
           <nav aria-label="Footer" className="grid grid-cols-2 gap-x-8 gap-y-12 sm:grid-cols-3 lg:col-span-6 lg:col-start-7">
             {columns.map((column) => (
               <div key={column.title}>
-                <h2 className="font-text text-fine font-normal tracking-normal text-fog font-stretch-normal">{column.title}</h2>
+                <h2 className="font-text text-fine font-normal tracking-normal text-fog">{column.title}</h2>
                 <ul className="mt-4 text-ui">
                   {column.links.map((link) => {
                     const external = link.href.startsWith("http") || link.href === SITE.resume;
@@ -105,7 +94,7 @@ const SiteFooter = ({ audience = "direct" }: { audience?: Audience }) => {
           is drawn from CSS and never reaches the accessibility tree. */}
       <div
         aria-hidden
-        className="pointer-events-none mt-10 select-none whitespace-nowrap text-center font-display text-[length:9.2vw] font-black leading-[0.82] tracking-[-0.04em] text-white/8 font-stretch-[150%] before:content-['Zuhayr_Tariq']"
+        className="pointer-events-none mt-10 select-none whitespace-nowrap text-center font-display text-[length:9.2vw] font-black leading-[0.82] tracking-[-0.04em] text-white/8 before:content-['Zuhayr_Tariq']"
       />
     </footer>
   );

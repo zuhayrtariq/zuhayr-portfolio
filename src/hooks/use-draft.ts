@@ -33,20 +33,21 @@ const wait = (ms: number, signal: AbortSignal) =>
 /**
  * A draft of a visitor's product: a brief and a first screen, read from a
  * stream of text as it arrives. Examples are finished drafts played back at a
- * watchable pace; anything typed goes to the model.
+ * watchable pace; anything typed goes to the model. `initial` is a finished
+ * example to start with, so the page is never empty.
  */
-export const useDraft = () => {
-  const [text, setText] = useState("");
-  const [status, setStatus] = useState<DraftStatus>("idle");
+export const useDraft = (initial?: { text: string; idea: string }) => {
+  const [text, setText] = useState(initial?.text ?? "");
+  const [status, setStatus] = useState<DraftStatus>(initial ? "done" : "idle");
   /** The idea the draft on show was written for, and where that draft came from. */
-  const [shown, setShown] = useState<{ idea: string; source: "example" | "live" }>({ idea: "", source: "example" });
+  const [shown, setShown] = useState<{ idea: string; source: "example" | "live" }>({ idea: initial?.idea ?? "", source: "example" });
   /** True while a new draft has been asked for and the one on show is still the last one. */
   const [waiting, setWaiting] = useState(false);
   const [error, setError] = useState("");
   const [seconds, setSeconds] = useState(0);
   const run = useRef<AbortController | null>(null);
   /** The last draft that finished, to go back to if the next one fails part-way. */
-  const kept = useRef({ text: "", shown });
+  const kept = useRef({ text: initial?.text ?? "", shown });
 
   const begin = () => {
     run.current?.abort();

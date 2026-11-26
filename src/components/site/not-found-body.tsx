@@ -12,13 +12,13 @@ const NotFoundBody = () => {
       <div className="mt-9 flex flex-col gap-3 sm:flex-row">
         <SiteLink
           href="/"
-          className="inline-flex h-12 items-center justify-center rounded-md bg-night px-7 font-bold text-cloud"
+          className="inline-flex h-12 items-center justify-center rounded-md bg-pine px-7 font-bold text-paper"
         >
           Go to homepage
         </SiteLink>
         <SiteLink
           href="/talk"
-          className="inline-flex h-12 items-center justify-center rounded-md border border-night/30 px-7 font-bold transition-colors hover:border-night"
+          className="inline-flex h-12 items-center justify-center rounded-md border border-pine/30 px-7 font-bold transition-colors hover:border-pine"
         >
           Ask my AI
         </SiteLink>

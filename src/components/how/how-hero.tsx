@@ -11,7 +11,7 @@ const DESK = [
  */
 const HowHero = () => {
   return (
-    <section aria-labelledby="how-title" className="on-night relative bg-night">
+    <section aria-labelledby="how-title" className="on-pine relative bg-pine">
       <div className="mx-auto max-w-[1680px] px-[clamp(20px,4vw,64px)] pb-24 pt-36 md:pb-32 md:pt-48">
         <h1 id="how-title" className="max-w-[17ch] text-[clamp(38px,6.2vw,108px)]">
           I finish what I start. If it breaks, it&apos;s mine.

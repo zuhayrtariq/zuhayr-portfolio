@@ -1,11 +1,8 @@
 "use client";
 
 import { HOME_ZONE } from "@/components/site/local-time";
-import SplitFlap from "@/components/ui/split-flap";
 import { useEffect, useState } from "react";
 
-/** Cells in each column of the board. */
-const COLUMNS = { place: 12, time: 5, day: 3 };
 /** The start of a working morning, lunch, and the end of the day, in the visitor's own time. */
 const ANCHORS = [9, 13, 17];
 
@@ -46,17 +43,9 @@ const span = (minutes: number) => {
   return parts.join(" and ");
 };
 
-const Row = ({ place, time, day, play }: { place: string; time: string; day: string; play: boolean }) => (
-  <div aria-hidden className="flex items-center gap-[0.55em] px-[0.3em] py-[0.26em]">
-    <SplitFlap text={place} width={COLUMNS.place} play={play} />
-    <SplitFlap text={time} width={COLUMNS.time} play={play} delay={140} />
-    <SplitFlap text={day} width={COLUMNS.day} play={play} delay={260} className="max-sm:hidden" />
-  </div>
-);
-
 /**
- * His clock next to the visitor's, on the same kind of board as the arrivals, and what the
- * visitor's working day looks like from Islamabad. Everything is worked out from the
+ * His clock next to the visitor's, and what the visitor's working day looks like from
+ * Islamabad. Everything is worked out from the
  * visitor's own device, so it says nothing it cannot know.
  */
 const Clocks = () => {
@@ -75,12 +64,11 @@ const Clocks = () => {
   const yours = now && zone ? clockOf(zone, now) : null;
   /** How far ahead of the visitor he is, in minutes. Negative when he is behind. */
   const ahead = now && zone ? offsetOf(HOME_ZONE, now) - offsetOf(zone, now) : 0;
-  // The city a time zone is named after, when it fits the board whole. A name cut short reads as a mistake.
-  const city = zone ? (zone.split("/").pop() ?? "").replace(/_/g, " ") : "";
-  const place = city.length <= COLUMNS.place ? city : "";
+  // The city the visitor's time zone is named after.
+  const place = zone ? (zone.split("/").pop() ?? "").replace(/_/g, " ") : "";
 
   return (
-    <section aria-labelledby="clocks-title" className="on-night relative bg-night">
+    <section aria-labelledby="clocks-title" className="on-pine relative bg-pine">
       <div className="mx-auto grid max-w-[1680px] gap-x-12 gap-y-12 px-[clamp(20px,4vw,64px)] py-24 md:py-36 lg:grid-cols-12 lg:items-center">
         <div className="lg:col-span-5">
           <h2 id="clocks-title" className="text-[clamp(34px,4.3vw,72px)]">
@@ -96,26 +84,23 @@ const Clocks = () => {
         </div>
 
         <div className="lg:col-span-7">
-          <div className="rounded-xl bg-[#0a1640] p-3 text-[clamp(11px,3.5vw,26px)] shadow-[inset_0_1px_0_rgb(255_255_255/0.07),0_50px_100px_-50px_rgb(0_0_0/0.9)] sm:p-5 lg:text-[clamp(13px,1.9vw,26px)]">
-            <div aria-hidden className="flex gap-[0.55em] px-[0.3em] pb-[0.5em] text-fog [&>span>span]:text-[max(11px,0.52em)]">
-              <span className="w-[15.11em] shrink-0">
-                <span>Where</span>
-              </span>
-              <span className="w-[6.22em] shrink-0">
-                <span>Time</span>
-              </span>
-              <span className="shrink-0 max-sm:hidden">
-                <span>Day</span>
-              </span>
-            </div>
-            <div className="space-y-[0.32em]">
-              <Row place="Islamabad" time={home?.time ?? "--:--"} day={home?.day ?? ""} play />
-              <Row place={place || "Your time"} time={yours?.time ?? "--:--"} day={yours?.day ?? ""} play />
-            </div>
-            <p className="sr-only" aria-live="off">
-              {home && yours ? `It is ${home.long} in Islamabad, and ${yours.long} where you are.` : ""}
-            </p>
-          </div>
+          <dl className="border-t">
+            {[
+              { name: "Islamabad", clock: home },
+              { name: place || "Where you are", clock: yours },
+            ].map((row) => (
+              <div key={row.name} className="flex flex-wrap items-baseline justify-between gap-x-8 border-b py-5">
+                <dt className="text-lead">{row.name}</dt>
+                <dd className="flex items-baseline gap-4 font-mono tabular-nums">
+                  <span className="text-[clamp(44px,6.4vw,104px)] font-bold leading-none tracking-[-0.04em]">{row.clock?.time ?? "--:--"}</span>
+                  <span className="w-[3ch] text-lead text-fog">{row.clock?.day ?? ""}</span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <p className="sr-only" aria-live="off">
+            {home && yours ? `It is ${home.long} in Islamabad, and ${yours.long} where you are.` : ""}
+          </p>
 
           {/* The visitor's day, read from Islamabad. Empty until the browser has said where they are. */}
           <div className="mt-8 min-h-[9.5rem] text-body sm:mt-10 lg:text-lead">

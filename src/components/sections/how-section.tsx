@@ -1,12 +1,12 @@
 import type { Audience } from "@/lib/audience";
 import Faq from "../contents/faq";
-import Boarding from "../flight/boarding";
-import NextStep from "../flight/next-step";
+import Contact from "../home/contact";
+import NextStep from "../home/next-step";
 import Clocks from "../how/clocks";
-import Copilots from "../how/copilots";
-import GoAround from "../how/go-around";
+import Done from "../how/done";
 import HowHero from "../how/how-hero";
-import TechLog from "../how/tech-log";
+import Issue from "../how/issue";
+import WithAi from "../how/with-ai";
 
 /**
  * "How I work": what a client hiring someone remote wants to know and cannot see from a
@@ -17,12 +17,12 @@ const HowSection = ({ audience = "direct" }: { audience?: Audience }) => {
   return (
     <>
       <HowHero />
-      <GoAround />
-      <TechLog />
-      <Copilots />
+      <Done />
+      <Issue />
+      <WithAi />
       <Clocks />
       <Faq audience={audience} />
-      {audience === "upwork" ? <NextStep /> : <Boarding />}
+      {audience === "upwork" ? <NextStep /> : <Contact />}
     </>
   );
 };

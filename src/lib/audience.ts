@@ -23,7 +23,7 @@ export const hrefFor = (audience: Audience, href: string) => {
 export const barePath = (pathname: string) =>
   pathname === UPWORK_ROOT ? "/" : pathname.startsWith(`${UPWORK_ROOT}/`) ? pathname.slice(UPWORK_ROOT.length) : pathname;
 
-/** The pages that open on the flight: the home page, and the home pages tailored to one kind of job. */
+/** The pages that open on the workspace: the home page, and the home pages tailored to one kind of job. */
 export const isHomePath = (pathname: string) => {
   const path = barePath(pathname);
   return path === "/" || (pathname.startsWith(UPWORK_ROOT) && FOCUSES.some((focus) => path === `/${focus.slug}`));

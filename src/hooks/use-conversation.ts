@@ -10,7 +10,7 @@ import { streamTalk, TalkError, type TalkMessage } from "@/lib/voice/talk-stream
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRecorder } from "./use-recorder";
 
-export const GREETING = "This is your captain speaking. Ask me what I've built, or how I'd build yours.";
+export const GREETING = "Ask me what I've built, or how I'd build yours.";
 
 const WORDS_PER_SECOND = 2.7;
 const SETTLE_MS = 900;
@@ -60,7 +60,7 @@ const speakSilently = (words: number, onWord: (spoken: number) => void, signal: 
   });
 
 interface UseConversationOptions {
-  /** Delay before the greeting starts, so it lands after the lights come up. */
+  /** Delay before the greeting starts, so it comes after the page has settled. */
   greetingDelayMs?: number;
   /** Set false to start the greeting yourself with `startGreeting`. */
   autoGreet?: boolean;
