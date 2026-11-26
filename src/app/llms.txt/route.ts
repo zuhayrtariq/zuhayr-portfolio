@@ -15,7 +15,7 @@ export function GET() {
     "",
     `> ${SITE.description}`,
     "",
-    "He builds web and mobile apps, APIs and databases, payments and auth, and AI features: agents, retrieval-augmented generation (RAG), chatbots and voice agents. He is Lead Developer at Starling MX, built the pet adoption platform Yip (getyip.app) on his own from front end to back end, built the web home of Runes (runepage.app), a card game companion app with more than 60,000 players, and is based in Islamabad, Pakistan, working with clients worldwide.",
+    "He builds web and mobile apps, APIs and databases, payments and auth, and AI features: agents, retrieval-augmented generation (RAG), chatbots and voice agents. He is Lead Developer at Starling MX, built the pet adoption platform Yip (getyip.app) on his own from front end to back end, built the website for Runes (runepage.app), a card game companion app with more than 60,000 players, also on his own, and is based in Islamabad, Pakistan, working with clients worldwide.",
     "",
     "He works with Claude, Gemini and GPT models every day, inside Cursor, and builds the same models into client products. His case for hiring a developer when AI can write code: a prompt produces a demo, and he ships the product, which means payments, access rules, AI guardrails, monitoring and a launch date he answers for.",
     "",

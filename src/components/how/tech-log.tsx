@@ -40,6 +40,16 @@ const TechLog = () => {
               don&apos;t have to chase me to do it.
             </p>
           </div>
+          <dl className="mt-9 max-w-[44ch] space-y-5 border-t border-white/25 pt-7 text-ui">
+            <div>
+              <dt className="text-fine text-fog">The first 30 days after launch</dt>
+              <dd className="mt-1.5 font-bold">Bugs in what I built are fixed free.</dd>
+            </div>
+            <div>
+              <dt className="text-fine text-fog">After that</dt>
+              <dd className="mt-1.5 font-bold">A monthly retainer, if you want me to stay on.</dd>
+            </div>
+          </dl>
         </div>
 
         <div className="lg:col-span-7">

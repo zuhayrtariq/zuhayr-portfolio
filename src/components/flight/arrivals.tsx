@@ -15,7 +15,7 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react"
 const COLUMNS = { product: 12, what: 22, address: 14, status: 4 };
 
 const LEAD =
-  "Five products I built or led, one of them alone from the first line of code. Each is live, so open it and click around, or read how it was made.";
+  "Five live products I built or led. I built all of Yip on my own, and the Runes website too. Open one and click around, or read how it was made.";
 
 interface ArrivalsProps {
   /** What the section says first, when the page is tailored to one kind of job. */
@@ -132,11 +132,7 @@ const Arrivals = ({ lead = LEAD, order }: ArrivalsProps) => {
             <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-fine text-fog">
               <span aria-hidden className="size-2.5 rounded-full bg-(--accent)" />
               {project.kind}
-              {project.role && (
-                <span>
-                  {project.role}, {project.year}
-                </span>
-              )}
+              {project.role && <span>{[project.role, project.year].filter(Boolean).join(", ")}</span>}
             </p>
             <h3 id="work-chosen" className="mt-4 text-[clamp(34px,4.4vw,72px)]">
               {project.title}

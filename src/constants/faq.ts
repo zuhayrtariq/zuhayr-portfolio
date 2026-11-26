@@ -40,7 +40,7 @@ export const FAQ = [
   {
     question: "How does a project run?",
     answer:
-      "We start with a call, then a written scope: what's in, what's out, and when each piece lands. You get something to click through early and new pieces as they're finished. Then I ship to production, hand over the code and the docs, and stay on to fix what real users turn up.",
+      "We start with a call, then a written scope: what's in, what's out, and when each piece lands. You get something to click through early and new pieces as they're finished. Then I ship to production and hand over the code and the docs. For 30 days after launch, bugs in what I built are fixed free, and after that I can stay on through a monthly retainer.",
   },
   {
     question: "How do I know the project will get finished?",
@@ -50,12 +50,12 @@ export const FAQ = [
   {
     question: "What happens if something breaks after launch?",
     answer:
-      "It's mine to fix. I pick it up as soon as I see it, whether you report it or the error monitoring does, and I fix it and tell you what happened and what I changed. I don't hand a problem back to you.",
+      "It's mine to fix. For 30 days after launch, bugs in what I built are fixed free. I pick one up as soon as I see it, whether you report it or the error monitoring does, and I tell you what happened and what I changed. After the 30 days, I stay on through a monthly retainer if you want me to.",
   },
   {
     question: "What have you shipped?",
     answer:
-      "More than 30 projects for over 10 clients since 2022. Among them are Starling MX, the enterprise AI platform where I lead engineering; Yip, a pet adoption platform with more than 48,000 listings that I built on my own, front end to back end; the web home of Runes, a card game companion app with more than 60,000 players; Analytra, an AI analytics product; and Hypecaster, an AI agent that produces short videos. Each has a case study on this site.",
+      "More than 30 projects for over 10 clients since 2022. Among them are Starling MX, the enterprise AI platform where I lead engineering; Yip, a pet adoption platform with more than 48,000 listings that I built on my own, front end to back end; the website for Runes, a card game companion app with more than 60,000 players, which I also built alone; Analytra, an AI analytics product; and Hypecaster, an AI agent that produces short videos. Each has a case study on this site.",
   },
   {
     question: "How can I check your track record?",

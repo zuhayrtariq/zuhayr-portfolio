@@ -27,7 +27,7 @@ export const FOCUSES: Focus[] = [
   {
     slug: "web-apps",
     job: "a web product",
-    lead: "You're hiring for a web product, so these come first: a pet adoption platform I built alone, and the web home of an app with more than 60,000 players. Each is live, so open it and click around.",
+    lead: "You're hiring for a web product, so these come first: a pet adoption platform, and the web home of an app with more than 60,000 players. I built both alone, and both are live.",
     order: ["yip", "runes", "starling-mx"],
   },
   {

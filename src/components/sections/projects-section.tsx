@@ -36,11 +36,7 @@ const ProjectsSection = ({ audience = "direct" }: { audience?: Audience }) => {
                 <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-fine text-fog">
                   <span aria-hidden className="size-2.5 rounded-full bg-(--accent)" />
                   {project.kind}
-                  {project.role && (
-                    <span>
-                      {project.role}, {project.year}
-                    </span>
-                  )}
+                  {project.role && <span>{[project.role, project.year].filter(Boolean).join(", ")}</span>}
                 </p>
                 <h2 className="mt-4 text-[clamp(32px,4vw,66px)]">
                   <SiteLink href={`/work/${project.slug}`} className="transition-colors hover:text-signal">

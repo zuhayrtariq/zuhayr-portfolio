@@ -41,7 +41,7 @@ const LEGS = [
   {
     label: "Launch",
     title: "It goes live on the date we set.",
-    body: "I ship to production, hand over the code and the docs, and stay on to fix what real users turn up.",
+    body: "I ship to production and hand over the code and the docs. For 30 days after launch, bugs in what I built are fixed free.",
     from: 0.81,
     to: 1.1,
   },
