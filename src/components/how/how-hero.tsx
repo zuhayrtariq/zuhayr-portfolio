@@ -1,6 +1,6 @@
 /** The facts of where the work happens. */
 const DESK = [
-  { label: "The desk", value: "A Mac mini and three laptops, on two monitors." },
+  { label: "The desk", value: "A Mac mini, three laptops and two monitors." },
   { label: "If a machine fails", value: "I carry on from the next one. Your code lives in the repository, not on one disk." },
   { label: "Where", value: "Islamabad, Pakistan. UTC+5, all year." },
 ];

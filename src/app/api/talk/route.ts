@@ -1,3 +1,4 @@
+import { keepOnUpwork } from "@/lib/ai/contact-guard";
 import { siteModel } from "@/lib/ai/model";
 import { instructionsFor } from "@/lib/ai/persona";
 import { retrieveNotes } from "@/lib/ai/retrieve";
@@ -83,7 +84,9 @@ export async function POST(request: Request) {
     },
   });
 
+  const stream = toUIMessageStream({ stream: result.stream });
   return createUIMessageStreamResponse({
-    stream: toUIMessageStream({ stream: result.stream }),
+    // For a client from Upwork, every sentence is checked before it leaves. See contact-guard.
+    stream: parsed.data.audience === "upwork" ? stream.pipeThrough(keepOnUpwork()) : stream,
   });
 }
