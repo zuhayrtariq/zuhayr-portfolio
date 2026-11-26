@@ -1,31 +1,33 @@
-import Sign from "@/components/ui/sign";
+import { SiteLink } from "@/components/site/audience";
+import HireSign from "@/components/site/hire-sign";
 import { caseStudies } from "@/constants/projects";
 import { NAV_LINKS, SITE } from "@/constants/site";
-import Link from "next/link";
+import type { Audience } from "@/lib/audience";
 
-const columns = [
-  {
-    title: "Site",
-    links: [...NAV_LINKS, { name: "All projects", href: "/projects" }],
-  },
-  {
-    title: "Case studies",
-    links: caseStudies.map((project) => ({ name: project.title, href: `/work/${project.slug}` })),
-  },
-  {
-    title: "Elsewhere",
-    links: [
-      { name: "GitHub", href: SITE.github },
-      { name: "LinkedIn", href: SITE.linkedin },
-      { name: "Upwork", href: SITE.upwork },
-      { name: "Résumé (PDF)", href: SITE.resume },
-    ],
-  },
-];
+const site = { title: "Site", links: NAV_LINKS };
+const studies = {
+  title: "Case studies",
+  links: caseStudies.map((project) => ({ name: project.title, href: `/work/${project.slug}` })),
+};
+
+/** The other places he can be found. A client from Upwork is only ever sent back to Upwork. */
+const elsewhere = (audience: Audience) => ({
+  title: "Elsewhere",
+  links:
+    audience === "upwork"
+      ? [{ name: "My Upwork profile", href: SITE.upwork }]
+      : [
+          { name: "GitHub", href: SITE.github },
+          { name: "LinkedIn", href: SITE.linkedin },
+          { name: "Upwork", href: SITE.upwork },
+          { name: "Résumé (PDF)", href: SITE.resume },
+        ],
+});
 
 const linkClass = "link-underline inline-block py-1.5 decoration-transparent";
 
-const SiteFooter = () => {
+const SiteFooter = ({ audience = "direct" }: { audience?: Audience }) => {
+  const columns = [site, studies, elsewhere(audience)];
   return (
     <footer className="on-night overflow-hidden bg-night">
       {/* Approach lights: a row of lamps that fire in turn toward the page above. */}
@@ -51,10 +53,12 @@ const SiteFooter = () => {
               Have something to build? Describe it, and I&apos;ll land it.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
-              <Sign href="/#contact">Start a project</Sign>
-              <a href={`mailto:${SITE.email}`} className="link-underline text-ui">
-                {SITE.email}
-              </a>
+              <HireSign />
+              {audience === "direct" && (
+                <a href={`mailto:${SITE.email}`} className="link-underline text-ui">
+                  {SITE.email}
+                </a>
+              )}
             </div>
           </div>
 
@@ -72,9 +76,9 @@ const SiteFooter = () => {
                             {link.name}
                           </a>
                         ) : (
-                          <Link href={link.href} className={linkClass}>
+                          <SiteLink href={link.href} className={linkClass}>
                             {link.name}
-                          </Link>
+                          </SiteLink>
                         )}
                       </li>
                     );
@@ -85,9 +89,13 @@ const SiteFooter = () => {
           </nav>
         </div>
 
-        <div className="mt-16 flex flex-col gap-4 border-t pt-6 text-fine text-fog sm:flex-row sm:items-center sm:justify-between md:mt-24">
-          <p>&copy; {new Date().getFullYear()} Zuhayr Tariq. Islamabad, Pakistan, working worldwide.</p>
-          <a href="#main" className="link-underline decoration-transparent">
+        <div className="mt-16 flex flex-col gap-4 border-t pt-6 text-fine text-fog sm:flex-row sm:items-start sm:justify-between md:mt-24">
+          <p className="max-w-[72ch]">
+            &copy; {new Date().getFullYear()} Zuhayr Tariq. Islamabad, Pakistan, working worldwide.
+            {audience === "upwork" &&
+              " This is the copy of my site for Upwork clients. It has no email, phone number or contact form, because Upwork asks us to talk there until a contract starts."}
+          </p>
+          <a href="#main" className="link-underline shrink-0 decoration-transparent">
             Back to the top
           </a>
         </div>

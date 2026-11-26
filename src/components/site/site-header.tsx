@@ -1,10 +1,11 @@
 "use client";
 
-import Sign from "@/components/ui/sign";
+import { SiteLink } from "@/components/site/audience";
+import HireSign from "@/components/site/hire-sign";
 import { NAV_LINKS } from "@/constants/site";
+import { barePath, isHomePath } from "@/lib/audience";
 import { cn } from "@/lib/utils";
 import { MenuIcon, XIcon } from "lucide-react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -15,15 +16,16 @@ const SiteHeader = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
-  /** Pages that open on a dark picture, where the bar starts out clear with light type. */
-  const overDark = pathname === "/" || pathname.startsWith("/talk");
+  const onHome = isHomePath(pathname);
+  /** Pages that open on a dark ground, where the bar starts out clear with light type. */
+  const overDark = onHome || ["/talk", "/how-i-work"].includes(barePath(pathname));
 
   // On the home page the bar stays clear over the whole flight, which holds the screen while
   // it plays. Past it, it steps out of the way while reading down and returns on the first
   // scroll up. With reduced motion the flight is a still that scrolls away like any page, so
   // the bar turns solid as soon as words start to pass under it.
   useEffect(() => {
-    const held = pathname === "/" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const held = onHome && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const hero = held ? document.querySelector('section[aria-labelledby="hero-title"]') : null;
     let last = window.scrollY;
     const onScroll = () => {
@@ -42,7 +44,7 @@ const SiteHeader = () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [pathname]);
+  }, [pathname, onHome]);
 
   useEffect(() => {
     if (!open) return;
@@ -62,7 +64,8 @@ const SiteHeader = () => {
           : overDark
             ? "on-night [text-shadow:0_1px_14px_rgb(7_18_51/0.6)]"
             : "on-cloud",
-        hidden && !open && "-translate-y-full"
+        // A little further than its own height, so the shadow under the sign leaves with it.
+        hidden && !open && "-translate-y-[calc(100%+3rem)]"
       )}
     >
       <a
@@ -72,24 +75,22 @@ const SiteHeader = () => {
         Skip to content
       </a>
       <div className="mx-auto flex h-16 max-w-[1680px] items-center justify-between px-[clamp(20px,4vw,64px)] md:h-20">
-        <Link
+        <SiteLink
           href="/"
           className="flex items-center gap-3 whitespace-nowrap font-display text-[19px] font-extrabold leading-none tracking-[-0.02em] font-stretch-[130%]"
         >
           {/* eslint-disable-next-line @next/next/no-img-element -- the favicon's own drawing, from scripts/build-avatar.mjs */}
           <img src="/images/avatar-mark.webp" alt="" width={32} height={32} decoding="async" className="size-8" />
           Zuhayr Tariq
-        </Link>
+        </SiteLink>
 
         <nav aria-label="Main" className="hidden items-center gap-8 whitespace-nowrap lg:flex">
           {NAV_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} className="link-underline text-ui decoration-transparent">
+            <SiteLink key={link.href} href={link.href} className="link-underline text-ui decoration-transparent">
               {link.name}
-            </Link>
+            </SiteLink>
           ))}
-          <Sign href="/#contact" className="h-11 [&>span:last-child]:w-11">
-            Start a project
-          </Sign>
+          <HireSign className="h-11 [&>span:last-child]:w-11" />
         </nav>
 
         <button
@@ -108,18 +109,18 @@ const SiteHeader = () => {
         <ul className="flex flex-col">
           {NAV_LINKS.map((link) => (
             <li key={link.href} className="border-t">
-              <Link
+              <SiteLink
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className="flex h-14 items-center font-display text-[26px] font-extrabold tracking-[-0.02em] font-stretch-[130%]"
               >
                 {link.name}
-              </Link>
+              </SiteLink>
             </li>
           ))}
         </ul>
         <span onClick={() => setOpen(false)} className="mt-5 block">
-          <Sign href="/#contact">Start a project</Sign>
+          <HireSign />
         </span>
       </nav>
     </header>

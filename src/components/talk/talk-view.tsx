@@ -4,14 +4,19 @@ import FlightCanvas from "@/components/flight/flight-canvas";
 import type { FlightHandle } from "@/components/flight/scene";
 import AskBar from "@/components/hero/ask-bar";
 import Captions from "@/components/hero/captions";
-import Sign from "@/components/ui/sign";
+import { useAudience } from "@/components/site/audience";
+import HireSign from "@/components/site/hire-sign";
 import { WHY_QUESTION } from "@/constants/faq";
 import { useConversation } from "@/hooks/use-conversation";
 import { cn } from "@/lib/utils";
 import { Volume2Icon, VolumeXIcon, XIcon } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const TALK_SUGGESTIONS = [WHY_QUESTION, "What have you shipped recently?", "How do you usually start a project?"];
+const TALK_SUGGESTIONS = {
+  direct: [WHY_QUESTION, "What have you shipped recently?", "How do you usually start a project?"],
+  // A client reading proposals is about to interview him, so these are the questions an interview opens with.
+  upwork: ["How do I know the project will get finished?", "What happens if something breaks after launch?", WHY_QUESTION],
+};
 
 /** Where in the flight the page sits: level in the cruise, the airliner ahead. */
 const CRUISE = 0.57;
@@ -25,6 +30,7 @@ const TalkView = () => {
   const [sky, setSky] = useState<"waiting" | "live" | "flat">("waiting");
   const flight = useRef<FlightHandle | null>(null);
   const asked = useRef(false);
+  const audience = useAudience();
   const { caption, spokenWords, speaking, busy, ask, phase, soundOn, setSoundOn, mic, action, transcript, question } =
     useConversation({ greetingDelayMs: 600 });
 
@@ -80,18 +86,14 @@ const TalkView = () => {
             {question && phase !== "waiting" && <p className="mb-3 text-fine text-fog">You asked: {question}</p>}
             <Captions text={caption} spokenWords={spokenWords} className="min-h-[3lh] text-left md:text-[26px]" />
 
-            {action && phase === "ready" && (
-              <Sign href="/#contact" className="mt-5">
-                Start a project
-              </Sign>
-            )}
+            {action && phase === "ready" && <HireSign className="mt-5" />}
 
             <AskBar
               onAsk={ask}
               busy={busy}
               onMic={mic.supported ? mic.toggle : undefined}
               listening={mic.state === "listening"}
-              suggestions={transcript.length ? [] : TALK_SUGGESTIONS}
+              suggestions={transcript.length ? [] : TALK_SUGGESTIONS[audience]}
               className="mt-6 max-w-none"
             />
             <div className="mt-3 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 text-fine text-fog">

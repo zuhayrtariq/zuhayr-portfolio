@@ -36,6 +36,21 @@ export const projects: Project[] = [
     year: "2026",
   },
   {
+    title: "Runes",
+    slug: "runes",
+    kind: "Card game companion",
+    accent: "#4C7DFF",
+    scroll: { src: "/work/runes-long.webp", width: 1280, height: 2568 },
+    image: "/work/runes.jpg",
+    summary:
+      "The web home of Runes, a companion app for the Riftbound card game that more than 60,000 players use. I built runepage.app: a searchable database of every card, the decks the community shares, and the site players land on.",
+    description:
+      "Runes is a companion app for Riftbound, the League of Legends trading card game. More than 60,000 players use it to track their collection, build decks and keep score at the table, and it is rated 4.8 out of 5 from over 1,000 reviews on the App Store and Google Play. I built its home on the web, runepage.app. That is a database of every Riftbound card, more than 1,100 of them, which you can search by name and filter by domain, type, set, rarity, cost and keyword; the decks the community shares, including lists that placed at regional and national tournaments; and the pages that explain the app and send players to the App Store and Google Play. It is built with Next.js and Tailwind CSS, reads its cards from the app's own API, and runs on Vercel.",
+    stack: ["NextJS", "TailwindCSS", "Vercel"],
+    link: "https://www.runepage.app",
+    featured: true,
+  },
+  {
     title: "Hypecaster",
     slug: "hypecaster",
     kind: "AI video agent",

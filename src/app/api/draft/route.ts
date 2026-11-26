@@ -19,7 +19,7 @@ export async function POST(request: Request) {
   const limit = rateLimit(clientKey(request, "draft"), 5, 10 * 60_000);
   if (!limit.ok) {
     return Response.json(
-      { error: "That's a lot of drafts. Try again in a few minutes, or send me the idea directly." },
+      { error: "That's a lot of drafts. Try again in a few minutes, or tell me the idea yourself." },
       { status: 429, headers: { "Retry-After": String(limit.retryAfter) } }
     );
   }

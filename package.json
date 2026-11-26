@@ -7,6 +7,7 @@
     "build": "NODE_OPTIONS='--disable-warning=DEP0040' next build",
     "start": "NODE_OPTIONS='--disable-warning=DEP0040' next start",
     "lint": "NODE_OPTIONS='--disable-warning=DEP0040' next lint",
+    "check": "node scripts/check-site.mjs",
     "cv": "node scripts/build-cv.mjs",
     "indexnow": "node scripts/indexnow.mjs"
   },

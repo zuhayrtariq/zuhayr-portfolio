@@ -6,6 +6,7 @@ import sharp from "sharp";
 const SITES = {
   "starling-mx": "https://www.starlingmx.com",
   yip: "https://www.getyip.app",
+  runes: "https://www.runepage.app",
   "zfit-ai": "https://zfit-ai.vercel.app",
   hypecaster: "https://hypecaster.ai",
   analytra: "https://analytra.io",

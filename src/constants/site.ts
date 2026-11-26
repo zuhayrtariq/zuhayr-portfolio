@@ -15,10 +15,13 @@ export const SITE = {
 };
 
 export const NAV_LINKS = [
-  { name: "Work", href: "/#work" },
-  { name: "Record", href: "/#record" },
-  { name: "Experience", href: "/#experience" },
+  { name: "Work", href: "/work" },
+  { name: "How I work", href: "/how-i-work" },
+  { name: "Experience", href: "/experience" },
   { name: "Talk to me", href: "/talk" },
 ];
+
+/** What the main call to action says, for each audience. It keeps one name everywhere it appears. */
+export const HIRE_LABEL = { direct: "Start a project", upwork: "Message me on Upwork" } as const;
 
 export const askAiHref = (question: string) => `/talk?q=${encodeURIComponent(question)}`;

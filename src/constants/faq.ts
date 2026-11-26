@@ -1,13 +1,16 @@
 import { SITE } from "@/constants/site";
+import type { Audience } from "@/lib/audience";
 
 /** The question the hero, the record tile and the "why hire me" section all hand to his AI. */
 export const WHY_QUESTION = "Why hire you when AI can write code?";
 
+const HIRE_QUESTION = "How do I hire you?";
+
 /**
  * The questions a client asks before getting in touch, answered once. The
- * home page shows them, its structured data repeats them, llms.txt carries
- * them for AI assistants and his own AI answers from them, so all four
- * always say the same thing.
+ * "How I work" page shows them, its structured data repeats them, llms.txt
+ * carries them for AI assistants and his own AI answers from them, so all
+ * four always say the same thing.
  */
 export const FAQ = [
   {
@@ -31,8 +34,8 @@ export const FAQ = [
       "Yes. Send me the repository or a link. I'll tell you what's solid, what will break under real users, and what it takes to launch: usually sign-in and access rules, payments, error handling, tests and deployment. I keep what works and rebuild only what won't hold.",
   },
   {
-    question: "How do I hire you?",
-    answer: `Send a few lines about the project through the contact form on this page, or email me at ${SITE.email}. If you would rather contract through Upwork, you can hire me from my Upwork profile, where I'm Top Rated Plus with a 100% job success score.`,
+    question: HIRE_QUESTION,
+    answer: `Send a few lines about the project through the contact form on this site, or email me at ${SITE.email}. If you would rather contract through Upwork, you can hire me from my Upwork profile, where I'm Top Rated Plus with a 100% job success score.`,
   },
   {
     question: "How does a project run?",
@@ -40,9 +43,19 @@ export const FAQ = [
       "We start with a call, then a written scope: what's in, what's out, and when each piece lands. You get something to click through early and new pieces as they're finished. Then I ship to production, hand over the code and the docs, and stay on to fix what real users turn up.",
   },
   {
+    question: "How do I know the project will get finished?",
+    answer:
+      "Finishing is the part I'm best at. We agree a written scope and a date before I start, and you get working pieces as they're done, so you can see the progress for yourself. I don't call something done until I've used it the way your users will. My Upwork record shows the result: 100% job success across 18 jobs.",
+  },
+  {
+    question: "What happens if something breaks after launch?",
+    answer:
+      "It's mine to fix. I pick it up as soon as I see it, whether you report it or the error monitoring does, and I fix it and tell you what happened and what I changed. I don't hand a problem back to you.",
+  },
+  {
     question: "What have you shipped?",
     answer:
-      "More than 30 projects for over 10 clients since 2022. Among them are Starling MX, the enterprise AI platform where I lead engineering; Yip, a pet adoption platform with more than 48,000 listings that I built on my own, front end to back end; Analytra, an AI analytics product; and Hypecaster, an AI agent that produces short videos. Each has a case study on this site.",
+      "More than 30 projects for over 10 clients since 2022. Among them are Starling MX, the enterprise AI platform where I lead engineering; Yip, a pet adoption platform with more than 48,000 listings that I built on my own, front end to back end; the web home of Runes, a card game companion app with more than 60,000 players; Analytra, an AI analytics product; and Hypecaster, an AI agent that produces short videos. Each has a case study on this site.",
   },
   {
     question: "How can I check your track record?",
@@ -54,3 +67,20 @@ export const FAQ = [
     answer: "I'm in Islamabad, Pakistan (UTC+5), and I work remotely with clients worldwide.",
   },
 ];
+
+/**
+ * The same answers for one audience. A client who came from Upwork is told to hire him
+ * there, and is given no other way to reach him.
+ */
+export const faqFor = (audience: Audience) =>
+  audience === "direct"
+    ? FAQ
+    : FAQ.map((item) =>
+        item.question === HIRE_QUESTION
+          ? {
+              ...item,
+              answer:
+                "Reply to my proposal, or message me from my Upwork profile, where I'm Top Rated Plus with a 100% job success score. Upwork asks clients and freelancers to keep the conversation there until a contract starts, so that is where we talk, and where we book a call with Upwork's meeting scheduler.",
+            }
+          : item
+      );

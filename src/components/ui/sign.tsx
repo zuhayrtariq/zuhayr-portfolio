@@ -1,8 +1,8 @@
+import { SiteLink } from "@/components/site/audience";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import type { ReactNode } from "react";
 
-interface SignProps {
+export interface SignProps {
   href: string;
   children: ReactNode;
   className?: string;
@@ -49,9 +49,9 @@ const Sign = ({ href, children, className, tone = "sun", download = false }: Sig
       {content}
     </a>
   ) : (
-    <Link href={href} className={classes}>
+    <SiteLink href={href} className={classes}>
       {content}
-    </Link>
+    </SiteLink>
   );
 };
 

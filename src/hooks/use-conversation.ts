@@ -1,6 +1,8 @@
 "use client";
 
+import { useAudience } from "@/components/site/audience";
 import { SITE } from "@/constants/site";
+import type { Audience } from "@/lib/audience";
 import { CONTACT_TOPIC_EVENT, CONTACT_TOPIC_KEY } from "@/lib/contact-topic";
 import { getPlayer, type Utterance } from "@/lib/voice/player";
 import { countWords, splitSentences } from "@/lib/voice/sentences";
@@ -32,9 +34,11 @@ interface Segment {
   speech: Promise<Utterance | null>;
 }
 
-const friendlyError = (error: unknown) => {
+const friendlyError = (error: unknown, audience: Audience) => {
   if (error instanceof TalkError && error.status === 429) return error.message;
-  return `I can't answer right now. Email me at ${SITE.email} and I'll get back to you.`;
+  return audience === "upwork"
+    ? "I can't answer right now. Ask me in a message on Upwork and I'll get back to you."
+    : `I can't answer right now. Email me at ${SITE.email} and I'll get back to you.`;
 };
 
 /** Waits as long as it would take to say `words` words, reporting progress. */
@@ -63,6 +67,7 @@ interface UseConversationOptions {
 }
 
 export const useConversation = ({ greetingDelayMs = 1600, autoGreet = true }: UseConversationOptions = {}) => {
+  const audience = useAudience();
   const [messages, setMessages] = useState<TalkMessage[]>([]);
   const [phase, setPhase] = useState<ConversationPhase>("waiting");
   const [caption, setCaption] = useState("");
@@ -252,6 +257,7 @@ export const useConversation = ({ greetingDelayMs = 1600, autoGreet = true }: Us
       let answer = "";
       try {
         await streamTalk(history, {
+          audience,
           signal: controller.signal,
           onText: (delta) => {
             answer += delta;
@@ -262,6 +268,8 @@ export const useConversation = ({ greetingDelayMs = 1600, autoGreet = true }: Us
             if (toolName !== "start_project") return;
             const topic = (output as { topic?: string } | null)?.topic ?? "";
             setAction({ kind: "start-project", topic });
+            // There is a contact form to fill in only on the direct copy of the site.
+            if (audience === "upwork") return;
             sessionStorage.setItem(CONTACT_TOPIC_KEY, topic);
             window.dispatchEvent(new CustomEvent(CONTACT_TOPIC_EVENT, { detail: topic }));
           },
@@ -273,10 +281,10 @@ export const useConversation = ({ greetingDelayMs = 1600, autoGreet = true }: Us
         }
       } catch (error) {
         if (controller.signal.aborted) return;
-        say(friendlyError(error), "answering");
+        say(friendlyError(error, audience), "answering");
       }
     },
-    [unlockAudio, reset, feed, say]
+    [unlockAudio, reset, feed, say, audience]
   );
 
   const recorder = useRecorder({

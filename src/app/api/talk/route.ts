@@ -19,6 +19,7 @@ const MAX_MESSAGES = 12;
 const MAX_CHARS = 1200;
 
 const bodySchema = z.object({
+  audience: z.enum(["direct", "upwork"]).default("direct"),
   messages: z.array(z.custom<UIMessage>((m) => typeof m === "object" && m !== null)).min(1).max(40),
 });
 
@@ -54,11 +55,13 @@ export async function POST(request: Request) {
     }));
 
   const question = textOf(messages.findLast((m) => m.role === "user") ?? messages[0]);
-  const notes = await retrieveNotes(question);
+  // Notes are passages of his CV, which carries his email and phone number. A client from
+  // Upwork must not be given either, so their answers come from the built-in profile alone.
+  const notes = parsed.data.audience === "upwork" ? [] : await retrieveNotes(question);
 
   const result = streamText({
     model: selected,
-    instructions: instructionsFor(notes),
+    instructions: instructionsFor(notes, parsed.data.audience),
     messages: await convertToModelMessages(messages),
     maxOutputTokens: 320,
     stopWhen: isStepCount(2),
@@ -68,7 +71,7 @@ export async function POST(request: Request) {
     tools: {
       start_project: tool({
         description:
-          "Take the visitor to the contact form so they can start a project or book a call with Zuhayr.",
+          "Show the visitor how to start a project or book a call with Zuhayr: the contact form, or for a client from Upwork a button back to Upwork.",
         inputSchema: z.object({
           topic: z
             .string()

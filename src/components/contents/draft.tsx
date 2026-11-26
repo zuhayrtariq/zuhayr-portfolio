@@ -1,6 +1,7 @@
 "use client";
 
 import ScreenFrame from "@/components/draft/screen-frame";
+import { SiteLink, useAudience } from "@/components/site/audience";
 import BrandIcon, { bareName } from "@/components/ui/brand-icon";
 import BrowserFrame from "@/components/ui/browser-frame";
 import { getProject } from "@/constants/projects";
@@ -9,7 +10,6 @@ import { handToContact } from "@/lib/contact-topic";
 import { briefMessage, screenIsDrawable } from "@/lib/draft";
 import { cn } from "@/lib/utils";
 import { CheckIcon } from "lucide-react";
-import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 const EXAMPLES: (DraftExample & { label: string })[] = [
@@ -52,6 +52,9 @@ const Draft = () => {
   const { draft, status, shown, waiting, error, seconds, play, start } = useDraft();
   const [idea, setIdea] = useState("");
   const [hint, setHint] = useState("");
+  /** Whether the brief reached the clipboard, for a client who is taking it back to Upwork. */
+  const [copied, setCopied] = useState<"" | "done" | "failed">("");
+  const viaUpwork = useAudience() === "upwork";
   const section = useRef<HTMLElement>(null);
   // Fixed names: there is one of these on a page, and a generated id can differ between the
   // server and the browser when this component's code arrives after hydration has started.
@@ -81,7 +84,20 @@ const Draft = () => {
       return;
     }
     setHint("");
+    setCopied("");
     void start(text);
+  };
+
+  /**
+   * Hands a brief to Zuhayr: into the contact form, or for a client from Upwork onto the
+   * clipboard, to paste into a message there, since that copy of the site has no form.
+   */
+  const handOver = (text: string) => {
+    if (!viaUpwork) return handToContact(text);
+    navigator.clipboard.writeText(text).then(
+      () => setCopied("done"),
+      () => setCopied("failed")
+    );
   };
 
   const writing = status === "writing";
@@ -102,18 +118,23 @@ const Draft = () => {
           ? "Drawing the main screen"
           : "Setting up the main screen";
 
+  const where = viaUpwork ? " on Upwork" : "";
   const note =
-    status === "offline"
-      ? "Live drafts aren't switched on right now. Send me the idea and I'll reply with the scope myself."
-      : status === "error"
-        ? error || "That draft didn't come through. Try again, or send me the idea and I'll scope it myself."
-        : finished && draft.decline
-          ? ""
-          : finished && live
-            ? `Drafted in ${seconds === 1 ? "a second" : `${seconds} seconds`}. It's a starting point for a conversation, not a quote.`
-            : finished
-              ? "This one is an example. Describe your own product above and it's drafted while you watch."
-              : "";
+    copied === "done"
+      ? "Copied. Paste it into your message to me on Upwork."
+      : copied === "failed"
+        ? "It couldn't be copied from here. Select the brief on the right and copy it by hand."
+        : status === "offline"
+          ? `Live drafts aren't switched on right now. Send me the idea${where} and I'll reply with the scope myself.`
+          : status === "error"
+            ? error || `That draft didn't come through. Try again, or send me the idea${where} and I'll scope it myself.`
+            : finished && draft.decline
+              ? ""
+              : finished && live
+                ? `Drafted in ${seconds === 1 ? "a second" : `${seconds} seconds`}. It's a starting point for a conversation, not a quote.`
+                : finished
+                  ? "This one is an example. Describe your own product above and it's drafted while you watch."
+                  : "";
 
   return (
     <section ref={section} id="draft" aria-labelledby="draft-title" className="on-night relative bg-night">
@@ -181,7 +202,10 @@ const Draft = () => {
                   key={example.file}
                   type="button"
                   aria-pressed={current}
-                  onClick={() => void play(example, window.matchMedia("(prefers-reduced-motion: reduce)").matches)}
+                  onClick={() => {
+                    setCopied("");
+                    void play(example, window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+                  }}
                   className={cn(
                     "h-10 rounded-md border px-4 text-fine transition-colors",
                     current ? "border-sun bg-sun font-bold text-night" : "border-input text-caption hover:border-caption/70"
@@ -247,26 +271,26 @@ const Draft = () => {
 
               <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
                 {finished && like?.slug && (
-                  <Link href={`/work/${like.slug}`} className="link-underline text-ui font-bold">
+                  <SiteLink href={`/work/${like.slug}`} className="link-underline text-ui font-bold">
                     The closest thing I&apos;ve shipped: {like.title}
-                  </Link>
+                  </SiteLink>
                 )}
                 {status === "done" && live && !draft.decline && (
                   <button
                     type="button"
-                    onClick={() => handToContact(briefMessage(shown.idea, draft))}
+                    onClick={() => handOver(briefMessage(shown.idea, draft))}
                     className="inline-flex h-13 items-center rounded-md bg-sun px-7 text-ui font-bold text-night"
                   >
-                    Send me this brief
+                    {viaUpwork ? "Copy this brief for Upwork" : "Send me this brief"}
                   </button>
                 )}
                 {(status === "offline" || status === "error") && idea.trim().length >= MIN_IDEA && (
                   <button
                     type="button"
-                    onClick={() => handToContact(`I'd like to build: ${idea.trim()}\n`)}
+                    onClick={() => handOver(`I'd like to build: ${idea.trim()}\n`)}
                     className="inline-flex h-13 items-center rounded-md bg-sun px-7 text-ui font-bold text-night"
                   >
-                    Send me the idea
+                    {viaUpwork ? "Copy the idea for Upwork" : "Send me the idea"}
                   </button>
                 )}
               </div>

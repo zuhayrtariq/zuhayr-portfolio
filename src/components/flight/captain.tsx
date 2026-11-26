@@ -1,8 +1,8 @@
+import { SiteLink } from "@/components/site/audience";
 import BrandIcon from "@/components/ui/brand-icon";
 import { WHY_QUESTION } from "@/constants/faq";
 import { askAiHref, SITE } from "@/constants/site";
 import { AI_WORKFLOW } from "@/constants/skills";
-import Link from "next/link";
 
 /**
  * The lines of the checklist: one part of a product each, as a prompt hands it back and as
@@ -50,7 +50,7 @@ const ITEMS: { call: string; prompt: string; landed: string; proof: string; href
  * Why hire a developer when AI can write code: AI is the copilot, and landing the thing is
  * still a checklist somebody has to answer for. Set as the laminated card from a cockpit.
  */
-const Captain = () => {
+const Captain = ({ note }: { /** A line for a visitor with one kind of job in mind. */ note?: string }) => {
   return (
     <section id="why" aria-labelledby="why-title" className="on-cobalt relative bg-cobalt">
       <div className="mx-auto max-w-[1680px] px-[clamp(20px,4vw,64px)] pt-24 md:pt-36">
@@ -65,6 +65,7 @@ const Captain = () => {
             I fly with AI every day, and it&apos;s a big part of why I&apos;m fast. But a prompt only gets a demo off
             the ground. Getting it down safely is a checklist, and these are the lines a prompt skips.
           </p>
+          {note && <p className="mt-5 max-w-[44ch] text-body font-bold">{note}</p>}
 
           <dl className="mt-10 space-y-6 border-t border-white/25 pt-8 text-ui">
             <div>
@@ -86,9 +87,9 @@ const Captain = () => {
               </dd>
             </div>
           </dl>
-          <Link href={askAiHref(WHY_QUESTION)} className="link-underline mt-8 inline-block text-ui font-bold">
+          <SiteLink href={askAiHref(WHY_QUESTION)} className="link-underline mt-8 inline-block text-ui font-bold">
             Put the question to my AI: “{WHY_QUESTION}”
-          </Link>
+          </SiteLink>
         </div>
 
         <div className="lg:col-span-7">
@@ -118,9 +119,9 @@ const Captain = () => {
                     <dt className="text-fog max-sm:mt-1">Where I&apos;ve done it</dt>
                     <dd>
                       {item.href.startsWith("/") ? (
-                        <Link href={item.href} className="link-underline">
+                        <SiteLink href={item.href} className="link-underline">
                           {item.proof}
-                        </Link>
+                        </SiteLink>
                       ) : (
                         <a href={item.href} target="_blank" rel="noopener noreferrer" className="link-underline">
                           {item.proof}

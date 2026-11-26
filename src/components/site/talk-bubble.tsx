@@ -1,7 +1,8 @@
 "use client";
 
+import { SiteLink } from "@/components/site/audience";
+import { barePath, isHomePath } from "@/lib/audience";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -10,7 +11,7 @@ const TalkBubble = () => {
   const [pastHero, setPastHero] = useState(false);
   const [atContact, setAtContact] = useState(false);
   const [atFooter, setAtFooter] = useState(false);
-  const onHome = pathname === "/";
+  const onHome = isHomePath(pathname);
 
   // The footer carries its own way in, and the bubble would sit on its links.
   useEffect(() => {
@@ -40,11 +41,11 @@ const TalkBubble = () => {
     };
   }, [onHome]);
 
-  if (pathname.startsWith("/talk")) return null;
+  if (barePath(pathname).startsWith("/talk")) return null;
   const visible = !atFooter && (!onHome || (pastHero && !atContact));
 
   return (
-    <Link
+    <SiteLink
       href="/talk"
       aria-hidden={!visible}
       tabIndex={visible ? undefined : -1}
@@ -65,7 +66,7 @@ const TalkBubble = () => {
         />
       </span>
       Talk to me
-    </Link>
+    </SiteLink>
   );
 };
 

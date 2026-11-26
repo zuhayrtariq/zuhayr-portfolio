@@ -2,7 +2,9 @@
 
 import AskBar from "@/components/hero/ask-bar";
 import Captions from "@/components/hero/captions";
-import Sign from "@/components/ui/sign";
+import { useAudience } from "@/components/site/audience";
+import HireSign from "@/components/site/hire-sign";
+import { SITE } from "@/constants/site";
 import { useConversation } from "@/hooks/use-conversation";
 import { cn } from "@/lib/utils";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -87,6 +89,7 @@ const Flight = () => {
   /** "live" once the scene has drawn, "flat" where there is no GPU to draw it. */
   const [sky, setSky] = useState<"waiting" | "live" | "flat">("waiting");
   const [leg, setLeg] = useState(-1);
+  const audience = useAudience();
   const { caption, spokenWords, speaking, busy, ask, phase, mic, action, startGreeting } = useConversation({
     autoGreet: false,
   });
@@ -219,7 +222,7 @@ const Flight = () => {
             carries real users, and it goes live on the date we set.
           </p>
           <div className="mt-[clamp(18px,3.2svh,34px)] flex flex-wrap items-center gap-x-7 gap-y-4">
-            <Sign href="/#contact">Start a project</Sign>
+            <HireSign />
             <a href="#work" className="link-underline text-ui font-bold text-white">
               See what has landed
             </a>
@@ -245,11 +248,22 @@ const Flight = () => {
                   className="min-h-[2lh] flex-1 text-left text-[15px] leading-snug md:text-[16px]"
                 />
               </div>
-              {action && phase === "ready" && (
-                <a href="#contact" className="link-underline mb-2.5 ml-1 inline-block text-ui font-bold text-sun">
-                  Start a project with what you just told me
-                </a>
-              )}
+              {action &&
+                phase === "ready" &&
+                (audience === "upwork" ? (
+                  <a
+                    href={SITE.upwork}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link-underline mb-2.5 ml-1 inline-block text-ui font-bold text-sun"
+                  >
+                    Tell me about it in a message on Upwork
+                  </a>
+                ) : (
+                  <a href="#contact" className="link-underline mb-2.5 ml-1 inline-block text-ui font-bold text-sun">
+                    Start a project with what you just told me
+                  </a>
+                ))}
               <AskBar
                 onAsk={ask}
                 busy={busy}

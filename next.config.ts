@@ -41,7 +41,11 @@ const nextConfig: NextConfig = {
     ];
   },
   async redirects() {
-    return [{ source: "/chat", destination: "/talk", permanent: true }];
+    return [
+      { source: "/chat", destination: "/talk", permanent: true },
+      // The list of every project moved in with the case studies it links to.
+      { source: "/projects", destination: "/work", permanent: true },
+    ];
   },
 };
 

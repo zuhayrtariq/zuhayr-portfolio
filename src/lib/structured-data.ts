@@ -1,4 +1,5 @@
 import { FAQ } from "@/constants/faq";
+import { PAGES } from "@/lib/metadata";
 import { caseStudies, projects } from "@/constants/projects";
 import { SITE } from "@/constants/site";
 import { stackName } from "@/lib/stack";
@@ -110,18 +111,6 @@ export const profileSchema = {
       },
     },
     {
-      "@type": "FAQPage",
-      "@id": `${SITE.url}/#faq`,
-      inLanguage: "en",
-      isPartOf: { "@id": WEBSITE_ID },
-      about: { "@id": PERSON_ID },
-      mainEntity: FAQ.map((item) => ({
-        "@type": "Question",
-        name: item.question,
-        acceptedAnswer: { "@type": "Answer", text: item.answer },
-      })),
-    },
-    {
       "@type": "ItemList",
       name: "Selected work",
       itemListElement: caseStudies.map((project, index) => ({
@@ -155,7 +144,7 @@ export const caseStudySchema = (project: Project) => {
         // The product the case study is about, which lives on its own domain.
         about: { "@type": "WebSite", name: project.title, url: project.link, description: project.kind },
       },
-      breadcrumbs({ name: "Projects", path: "/projects" }, { name: project.title, path: `/work/${project.slug}` }),
+      breadcrumbs({ name: "Work", path: "/work" }, { name: project.title, path: `/work/${project.slug}` }),
     ],
   };
 };
@@ -182,8 +171,8 @@ export const projectsSchema = {
   "@graph": [
     {
       "@type": "CollectionPage",
-      "@id": `${SITE.url}/projects/#collection`,
-      url: `${SITE.url}/projects`,
+      "@id": `${SITE.url}/work/#collection`,
+      url: `${SITE.url}/work`,
       name: `Projects by ${SITE.name}`,
       inLanguage: "en",
       isPartOf: { "@id": WEBSITE_ID },
@@ -201,6 +190,44 @@ export const projectsSchema = {
         })),
       },
     },
-    breadcrumbs({ name: "Projects", path: "/projects" }),
+    breadcrumbs({ name: "Work", path: "/work" }),
+  ],
+};
+
+/** A plain page about him: its address, what it covers, and where it sits in the site. */
+const aboutPage = (page: { title: string; description: string; path: string }) => ({
+  "@type": "WebPage",
+  "@id": `${SITE.url}${page.path}/#page`,
+  url: `${SITE.url}${page.path}`,
+  name: `${page.title} | ${SITE.name}`,
+  description: page.description,
+  inLanguage: "en",
+  isPartOf: { "@id": WEBSITE_ID },
+  about: personRef,
+});
+
+export const experienceSchema = {
+  "@context": "https://schema.org",
+  "@graph": [aboutPage(PAGES.experience), breadcrumbs({ name: "Experience", path: PAGES.experience.path })],
+};
+
+/** "How I work" carries the questions clients ask first, so their markup lives with it. */
+export const howSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    aboutPage(PAGES.how),
+    {
+      "@type": "FAQPage",
+      "@id": `${SITE.url}${PAGES.how.path}/#faq`,
+      inLanguage: "en",
+      isPartOf: { "@id": WEBSITE_ID },
+      about: { "@id": PERSON_ID },
+      mainEntity: FAQ.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: { "@type": "Answer", text: item.answer },
+      })),
+    },
+    breadcrumbs({ name: "How I work", path: PAGES.how.path }),
   ],
 };

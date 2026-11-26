@@ -1,3 +1,5 @@
+import type { Audience } from "@/lib/audience";
+
 export interface TalkMessage {
   id: string;
   role: "user" | "assistant";
@@ -8,6 +10,8 @@ interface StreamHandlers {
   onText: (delta: string) => void;
   onToolOutput: (toolName: string, output: unknown) => void;
   signal: AbortSignal;
+  /** Which copy of the site is asking. The Upwork copy's answers never carry contact details. */
+  audience?: Audience;
 }
 
 export class TalkError extends Error {
@@ -20,11 +24,12 @@ export class TalkError extends Error {
  * Sends the conversation to /api/talk and reads the AI SDK UI message stream
  * (server-sent events with JSON chunks) without shipping the SDK to the browser.
  */
-export async function streamTalk(messages: TalkMessage[], { onText, onToolOutput, signal }: StreamHandlers) {
+export async function streamTalk(messages: TalkMessage[], { onText, onToolOutput, signal, audience = "direct" }: StreamHandlers) {
   const res = await fetch("/api/talk", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
+      audience,
       messages: messages.map((m) => ({ id: m.id, role: m.role, parts: [{ type: "text", text: m.text }] })),
     }),
     signal,
@@ -36,6 +41,7 @@ export async function streamTalk(messages: TalkMessage[], { onText, onToolOutput
   }
 
   const toolNames = new Map<string, string>();
+  let spoke = false;
   const reader = res.body.pipeThrough(new TextDecoderStream()).getReader();
   let buffer = "";
 
@@ -62,7 +68,12 @@ export async function streamTalk(messages: TalkMessage[], { onText, onToolOutput
         output?: unknown;
         errorText?: string;
       };
-      if (chunk.type === "text-delta" && chunk.delta) onText(chunk.delta);
+      if (chunk.type === "text-delta" && chunk.delta) {
+        spoke = true;
+        onText(chunk.delta);
+      }
+      // What he says after using a tool is a new piece of text, and would otherwise run straight on from the last.
+      else if (chunk.type === "text-start" && spoke) onText(" ");
       else if ((chunk.type === "tool-input-start" || chunk.type === "tool-input-available") && chunk.toolCallId) {
         toolNames.set(chunk.toolCallId, chunk.toolName ?? "");
       } else if (chunk.type === "tool-output-available" && chunk.toolCallId) {

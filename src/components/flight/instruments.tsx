@@ -1,5 +1,6 @@
 "use client";
 
+import LocalTime from "@/components/site/local-time";
 import Sign from "@/components/ui/sign";
 import { SITE } from "@/constants/site";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -96,19 +97,6 @@ const Gauge = ({ dial, live, delay }: { dial: Dial; live: boolean; delay: number
       <circle cx="100" cy="100" r="9" fill="#16266a" stroke="#ffce1f" strokeWidth="2.5" />
     </svg>
   );
-};
-
-/** The time where Zuhayr is, so a client can tell at a glance whether he is likely awake. */
-const LocalTime = () => {
-  const [now, setNow] = useState("");
-  useEffect(() => {
-    const format = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Karachi", hour: "numeric", minute: "2-digit" });
-    const tick = () => setNow(format.format(new Date()));
-    tick();
-    const timer = window.setInterval(tick, 15_000);
-    return () => window.clearInterval(timer);
-  }, []);
-  return <span className="tabular-nums">{now || "\u2007\u2007:\u2007\u2007"}</span>;
 };
 
 /**

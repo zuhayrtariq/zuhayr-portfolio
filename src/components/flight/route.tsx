@@ -3,6 +3,7 @@ import Sign from "@/components/ui/sign";
 import { experiences } from "@/constants/experiences";
 import { SITE } from "@/constants/site";
 import { SKILLS } from "@/constants/skills";
+import type { Audience } from "@/lib/audience";
 import { cn } from "@/lib/utils";
 
 /** Each employer as the three letters an airport would get. */
@@ -18,26 +19,48 @@ const CODES: Record<string, string> = {
 const MONTHS = /\b(January|February|March|April|June|July|August|September|October|November|December)\b/g;
 const shortRange = (date: string) => date.replace(MONTHS, (m) => m.slice(0, 3)).replace(" - ", " to ");
 
+/** Where he studied, most recent first. */
+const TRAINING = [
+  {
+    course: "MS in Computer Science",
+    school: "FAST NUCES, Karachi",
+    note: "GPA 3.89 of 4, with advanced algorithms, machine learning and artificial intelligence.",
+  },
+  {
+    course: "BS in Computer Science",
+    school: "Institute of Business Management, Karachi",
+    note: "Graduated in 2023 as gold medalist, CGPA 3.8 of 4, on the Dean's List and a Presidential Merit Scholarship.",
+  },
+  {
+    course: "Exchange semester",
+    school: "Istanbul Aydin University",
+    note: "One semester abroad, in 2022.",
+  },
+];
+
 /**
- * Where he has worked, drawn as a route: six stops from an internship to the two roles he
- * holds now. Under it, what he flies with.
+ * The Experience page. Where he has worked, drawn as a route: six stops from an internship
+ * to the two roles he holds now. Under it, where he trained and what he flies with.
  */
-const Route = () => {
+const Route = ({ audience = "direct" }: { audience?: Audience }) => {
   return (
-    <section id="experience" aria-labelledby="experience-title" className="on-cloud relative bg-cloud">
-      <div className="mx-auto max-w-[1680px] px-[clamp(20px,4vw,64px)] py-24 md:py-36">
+    <section aria-labelledby="experience-title" className="on-cloud relative bg-cloud">
+      <div className="mx-auto max-w-[1680px] px-[clamp(20px,4vw,64px)] pb-24 pt-36 md:pb-36 md:pt-48">
         <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
           <div>
-            <h2 id="experience-title" className="text-[clamp(34px,4.3vw,72px)]">
+            <h1 id="experience-title" className="text-[clamp(36px,5.4vw,92px)]">
               The route so far.
-            </h2>
-            <p className="mt-5 max-w-[46ch] text-body text-fog lg:text-lead">
+            </h1>
+            <p className="mt-6 max-w-[46ch] text-body text-fog lg:text-lead">
               Five years, from an SAP internship to leading engineering on an enterprise AI platform.
             </p>
           </div>
-          <Sign href={SITE.resume} tone="night" download>
-            Download my résumé
-          </Sign>
+          {/* The résumé carries his email and phone number, which a client from Upwork is not given. */}
+          {audience === "direct" && (
+            <Sign href={SITE.resume} tone="night" download>
+              Download my résumé
+            </Sign>
+          )}
         </div>
 
         <ol className="relative mt-14 grid gap-y-9 md:mt-20 lg:grid-cols-6 lg:gap-x-6">
@@ -72,7 +95,20 @@ const Route = () => {
         </ol>
 
         <div className="mt-20 border-t pt-10 md:mt-28">
-          <h3 className="text-[clamp(26px,2.6vw,42px)]">Whatever your product needs.</h3>
+          <h2 className="text-[clamp(26px,2.6vw,42px)]">Where I trained.</h2>
+          <dl className="mt-8 grid gap-x-12 gap-y-8 md:grid-cols-3">
+            {TRAINING.map((item) => (
+              <div key={item.course} className="border-t pt-5">
+                <dt className="text-lead font-bold leading-snug">{item.course}</dt>
+                <dd className="mt-1 text-ui">{item.school}</dd>
+                <dd className="mt-3 max-w-[40ch] text-ui text-fog">{item.note}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <div className="mt-20 border-t pt-10 md:mt-28">
+          <h2 className="text-[clamp(26px,2.6vw,42px)]">Whatever your product needs.</h2>
           <dl className="mt-8 grid gap-x-12 md:grid-cols-2">
             {SKILLS.map((group) => (
               <div key={group.title} className="grid gap-x-6 gap-y-2 border-t py-5 sm:grid-cols-[11rem_minmax(0,1fr)]">

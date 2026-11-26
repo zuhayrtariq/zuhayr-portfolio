@@ -1,13 +1,9 @@
-import Footage from "@/components/site/footage";
+import CaseStudy from "@/components/sections/case-study";
 import JsonLd from "@/components/site/json-ld";
-import { askAiHref } from "@/constants/site";
 import { caseStudies, getProject } from "@/constants/projects";
-import { pageMetadata } from "@/lib/metadata";
-import { stackName } from "@/lib/stack";
+import { caseStudyMetadata } from "@/lib/metadata";
 import { caseStudySchema } from "@/lib/structured-data";
-import { hostOf } from "@/lib/utils";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export const dynamicParams = false;
@@ -19,110 +15,17 @@ export function generateStaticParams() {
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-  const project = getProject(slug);
-  if (!project) return {};
-  return pageMetadata({
-    // "Yip: Pet adoption platform" says what the page is about; a bare product name does not.
-    title: project.kind ? `${project.title}: ${project.kind}` : `${project.title} case study`,
-    description: project.summary,
-    path: `/work/${slug}`,
-    type: "article",
-    hasOwnImage: true,
-  });
+  return caseStudyMetadata((await params).slug, true);
 }
 
-const listFormat = new Intl.ListFormat("en", { style: "long", type: "conjunction" });
-
 export default async function CaseStudyPage({ params }: Props) {
-  const { slug } = await params;
-  const project = getProject(slug);
+  const project = getProject((await params).slug);
   if (!project) notFound();
-
-  const index = caseStudies.findIndex((p) => p.slug === slug);
-  const next = caseStudies[(index + 1) % caseStudies.length];
-  const meta = [project.role, project.year].filter(Boolean).join(", ");
-  const description = project.description.replace(/\s+/g, " ").trim();
-  const stack = listFormat.format([...new Set((project.stack ?? []).map(stackName))]);
 
   return (
     <main id="main" className="animate-[page-in_300ms_var(--ease-lights)]">
       <JsonLd data={caseStudySchema(project)} />
-      <article className="mx-auto max-w-[1440px] px-[clamp(20px,4vw,64px)] pb-24 pt-36 md:pb-40 md:pt-48">
-        <header className="grid gap-8 md:grid-cols-12 md:gap-x-8">
-          <div className="md:col-span-8">
-            <p className="text-ui text-fog">
-              <Link href="/#work" className="link-underline">
-                Work
-              </Link>
-            </p>
-            <h1 className="mt-4 text-[clamp(36px,5.6vw,96px)]">
-              {project.title}
-            </h1>
-          </div>
-          <div className="self-end md:col-span-4">
-            <p className="text-lead leading-snug">{project.summary}</p>
-            {meta && <p className="mt-4 text-ui text-fog">{meta}</p>}
-          </div>
-        </header>
-
-        {project.image && (
-          <Footage
-            src={project.image}
-            alt={`The ${project.title} website`}
-            priority
-            sizes="(min-width: 1440px) 1312px, 100vw"
-            className="mt-16 md:mt-24"
-          />
-        )}
-
-        <div className="mt-20 grid gap-16 md:mt-32 md:grid-cols-12 md:gap-x-8">
-          <section aria-labelledby="what" className="md:col-span-7">
-            <h2 id="what" className="text-q-sm md:text-q">
-              What is it?
-            </h2>
-            <p className="mt-6 max-w-[60ch] text-body text-fog">{description}</p>
-          </section>
-
-          <section aria-labelledby="built-with" className="md:col-span-4 md:col-start-9">
-            <h2 id="built-with" className="text-q-sm md:text-q">
-              Built with
-            </h2>
-            <p className="mt-6 text-body text-fog">{stack}.</p>
-            <ul className="mt-10 space-y-3 text-ui font-bold">
-              <li>
-                <a href={project.link} target="_blank" rel="noopener noreferrer" className="link-underline">
-                  Visit {hostOf(project.link)}
-                </a>
-              </li>
-              {project.github && (
-                <li>
-                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="link-underline">
-                    Read the source on GitHub
-                  </a>
-                </li>
-              )}
-              <li>
-                <Link href={askAiHref(`Tell me about the ${project.title} project.`)} className="link-underline">
-                  Ask my AI about {project.title}
-                </Link>
-              </li>
-            </ul>
-          </section>
-        </div>
-      </article>
-
-      <nav aria-label="Next case study" className="bg-umbra">
-        <Link
-          href={`/work/${next.slug}`}
-          className="group mx-auto block max-w-[1440px] px-[clamp(20px,4vw,64px)] py-20 md:py-28"
-        >
-          <span className="text-ui text-fog">Next case study</span>
-          <span className="mt-3 block font-display text-[clamp(34px,5vw,84px)] font-extrabold leading-[0.96] tracking-[-0.025em] font-stretch-[135%] transition-colors group-hover:text-signal">
-            {next.title}
-          </span>
-        </Link>
-      </nav>
+      <CaseStudy project={project} />
     </main>
   );
 }

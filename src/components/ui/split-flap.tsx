@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { useEffect, useLayoutEffect, useRef } from "react";
 
 /** The order the characters sit on the drum; a cell turns forward through it to reach the next one. */
-const DRUM = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-/+";
+const DRUM = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-/+:";
 const FLIP_MS = 64;
 
 const useIsoLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;

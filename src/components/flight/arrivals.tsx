@@ -1,5 +1,6 @@
 "use client";
 
+import { SiteLink } from "@/components/site/audience";
 import BrandIcon from "@/components/ui/brand-icon";
 import BrowserFrame from "@/components/ui/browser-frame";
 import Sign from "@/components/ui/sign";
@@ -8,21 +9,34 @@ import { featuredProjects, projects } from "@/constants/projects";
 import { stackName } from "@/lib/stack";
 import { cn, hostOf, lowerFirst } from "@/lib/utils";
 import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 
 /** Cells in each column of the board. */
 const COLUMNS = { product: 12, what: 22, address: 14, status: 4 };
+
+const LEAD =
+  "Five products I built or led, one of them alone from the first line of code. Each is live, so open it and click around, or read how it was made.";
+
+interface ArrivalsProps {
+  /** What the section says first, when the page is tailored to one kind of job. */
+  lead?: string;
+  /** Case-study slugs to put at the top of the board, most relevant first. */
+  order?: string[];
+}
 
 /**
  * The work, as an arrivals board: each product that has landed, what it is, where it lives,
  * and that it is live. Choosing a row brings that product up underneath, in a browser window.
  */
-const Arrivals = () => {
+const Arrivals = ({ lead = LEAD, order }: ArrivalsProps) => {
   const board = useRef<HTMLDivElement>(null);
   const [arrived, setArrived] = useState(false);
   const [chosen, setChosen] = useState(0);
-  const project = featuredProjects[chosen];
+  const listed = useMemo(() => {
+    const first = (order ?? []).flatMap((slug) => featuredProjects.filter((p) => p.slug === slug));
+    return [...first, ...featuredProjects.filter((p) => !first.includes(p))];
+  }, [order]);
+  const project = listed[chosen];
   const archived = projects.length - featuredProjects.length;
 
   useEffect(() => {
@@ -47,10 +61,7 @@ const Arrivals = () => {
           <h2 id="work-title" className="text-[clamp(38px,5.6vw,96px)]">
             Landed, and live.
           </h2>
-          <p className="max-w-[40ch] pb-1 text-body text-fog">
-            Four products I built or led, one of them alone from the first line of code. Each is live, so open it and
-            click around, or read how it was made.
-          </p>
+          <p className="max-w-[40ch] pb-1 text-body text-fog">{lead}</p>
         </div>
 
         <div
@@ -73,7 +84,7 @@ const Arrivals = () => {
             </span>
           </div>
           <ul className="space-y-[0.32em]">
-            {featuredProjects.map((item, i) => (
+            {listed.map((item, i) => (
               <li key={item.slug}>
                 <button
                   type="button"
@@ -147,10 +158,10 @@ const Arrivals = () => {
             </div>
           </div>
 
-          <Link href={`/work/${project.slug}`} tabIndex={-1} aria-hidden className="block">
+          <SiteLink href={`/work/${project.slug}`} tabIndex={-1} aria-hidden className="block">
             <BrowserFrame host={hostOf(project.link)}>
               <div className="@container relative aspect-[16/10] overflow-hidden bg-night">
-                {featuredProjects.map((item, i) =>
+                {listed.map((item, i) =>
                   item.scroll ? (
                     <Image
                       key={item.slug}
@@ -172,14 +183,14 @@ const Arrivals = () => {
                 )}
               </div>
             </BrowserFrame>
-          </Link>
+          </SiteLink>
         </article>
 
         <div className="mt-14 flex flex-wrap items-center justify-between gap-x-10 gap-y-5 border-t pt-8 md:mt-20">
           <p className="text-lead">{archived} more in the archive, back to my first React apps.</p>
-          <Link href="/projects" className="link-underline text-ui font-bold">
+          <SiteLink href="/work" className="link-underline text-ui font-bold">
             See every project
-          </Link>
+          </SiteLink>
         </div>
       </div>
     </section>
