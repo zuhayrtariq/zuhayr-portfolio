@@ -75,7 +75,9 @@ const Clocks = () => {
   const yours = now && zone ? clockOf(zone, now) : null;
   /** How far ahead of the visitor he is, in minutes. Negative when he is behind. */
   const ahead = now && zone ? offsetOf(HOME_ZONE, now) - offsetOf(zone, now) : 0;
-  const place = zone ? (zone.split("/").pop() ?? "").replace(/_/g, " ") : "";
+  // The city a time zone is named after, when it fits the board whole. A name cut short reads as a mistake.
+  const city = zone ? (zone.split("/").pop() ?? "").replace(/_/g, " ") : "";
+  const place = city.length <= COLUMNS.place ? city : "";
 
   return (
     <section aria-labelledby="clocks-title" className="on-night relative bg-night">

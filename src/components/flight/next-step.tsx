@@ -35,7 +35,7 @@ const NextStep = () => {
           <div className="p-6 sm:p-9 lg:p-12">
             <p className="flex items-center justify-between gap-6 border-b-2 border-night pb-4 text-fine">
               <span className="font-bold">Boarding pass</span>
-              <span className="font-mono text-fog">Gate: Upwork Messages</span>
+              <span className="whitespace-nowrap font-mono text-fog">Gate: Upwork</span>
             </p>
             <ol className="mt-2">
               {STEPS.map((step, i) => (

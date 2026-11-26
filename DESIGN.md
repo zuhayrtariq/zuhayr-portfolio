@@ -2,8 +2,8 @@
 
 ## Brief
 - **Subject:** Zuhayr Tariq is a full-stack web and AI developer. In 2026 anyone can get a demo out of a prompt, so the page has to answer one question: why hire him? His answer is delivery. He finishes, on the date agreed.
-- **Audience:** founders and product teams who opened a shared link from a proposal, a DM or WhatsApp, deciding in under a minute whether to write to him.
-- **Primary job:** make the delivery claim impossible to miss, prove it with shipped work and a checkable record, and get a project brief into the contact form.
+- **Audience:** founders and product teams who opened a shared link, deciding in under a minute whether to write to him. Most of them now arrive from one of his Upwork proposals, with his Upwork profile open in the next tab.
+- **Primary job:** make the delivery claim impossible to miss, prove it with shipped work and a checkable record, and get a project brief into the contact form. For a client from Upwork the last step is different: send them back to Upwork to message him (see "Two audiences").
 - **Pinned by the client:** real 3D, a wow in the first second, nothing that reads as a generated template. Earlier directions were rejected for that reason (see the end of this file).
 
 ## Concept
@@ -25,10 +25,33 @@ The four steps of a project (Brief, Build, Updates, Launch) arrive on plates as 
 | Why hire me | Before-landing checklist | The parts of a product a prompt skips are literally a checklist. |
 | Record | Six cockpit instruments | Numbers you read at a glance, not claims. |
 | Describe it | Flight plan | The AI drafts a plan before anything flies. |
-| Experience | Route with stops | Six employers in order; this content really is a sequence. |
+| The rest of the site | Wayfinding sign | One yellow panel over the concourse, an arrow for each way on. |
 | Contact | Boarding pass | A form with a destination, and a stub with the other ways in. |
+| Experience (own page) | Route with stops | Six employers in order; this content really is a sequence. |
+| When something breaks (How I work) | Technical log | Every aircraft carries one: a defect is written down, acted on and signed for by a named person. That is the promise the section makes. |
+| His hours against yours (How I work) | The same split-flap board, as a pair of clocks | A board of places and times is what a terminal already has. |
 
 Only the flight is spectacle. The sections under it are flat colour and type.
+
+## Pages
+The home page makes the case in one scroll. Everything a client might want to check afterwards has its own page, so the home page stays short.
+
+| Page | What it is for |
+| --- | --- |
+| `/` | The flight, the five live products, why hire a developer at all, the record, a plan drafted for the visitor, the sign to the other pages, and the way in. |
+| `/work`, `/work/[slug]` | Everything he has built: the live products in browser windows, then the archive as a list. One page for each case study. |
+| `/how-i-work` | What a client hiring someone remote cannot see from a profile: how he decides a thing is done, what he does when it breaks, what AI does and what stays with him, his clock against theirs, and the questions asked before a first call. Its hero is waiting for a photograph of his desk. |
+| `/experience` | The route, where he trained, and the stack. |
+| `/talk` | His AI, answering out loud. |
+
+## Two audiences
+Upwork does not allow a client and a freelancer to reach each other anywhere else before a contract starts, and counts a link to a page that shows an email address as sharing one. So the site exists twice:
+
+- **The direct copy** is everything outside `/upwork`. It has the contact form, his email, WhatsApp, GitHub, LinkedIn and the résumé.
+- **The Upwork copy** is the same pages under `/upwork`. It is what goes in a proposal. It shows no email, phone number, form, social profile or résumé; every internal link stays inside it; its calls to action say "Message me on Upwork"; the boarding pass becomes three steps back to Upwork Messages; a drafted brief is copied to the clipboard instead of sent; and its AI is given a profile with no contact details in it. Search engines are kept out of it.
+- `/upwork/ai-agents`, `/upwork/web-apps` and `/upwork/prototype-to-production` are the Upwork home page with the work closest to that job first (`src/constants/focus.ts`).
+
+How it is built: `src/app/upwork/layout.tsx` sets the audience once. Client components read it with `useAudience()`; internal links are `SiteLink`, which keeps a visitor in the copy they are in; server components that show contact details take an `audience` prop and leave them out. `npm run check` loads every page and fails if anything under `/upwork` shows a way to reach him outside Upwork, or links out of the copy.
 
 ## Colour
 Four colours, used as whole grounds. No dark-mode-with-one-accent, no gradients as decoration.
@@ -94,10 +117,12 @@ Plain three.js, one canvas, four passes through one camera: a ray-marched sky, g
 - It measures its own frame time for the first moments and lowers the cloud's resolution and step count if the machine is struggling.
 - Without WebGL the stage is a painted gradient and a flat paper plane; the words are identical.
 
-## Rules for adding to this page
+## Rules for adding to this site
 - A new section gets one airport object, and only if that object does the section's job. Otherwise it is plain type on a ground.
 - Sun yellow means "this way". Do not use it for emphasis.
 - Every number on the page has to be checkable (Upwork profile, the live products).
+- Anything that names a way to reach him goes behind `audience === "direct"`, and internal links are `SiteLink`, never `next/link`. Run `npm run check` before shipping.
+- "How I work" makes promises in his name. Change them only to what he has said he does.
 
 ## Directions already tried and rejected by the client
 1. **"The Interview":** a quiet editorial layout with an AI avatar. Read as basic.
