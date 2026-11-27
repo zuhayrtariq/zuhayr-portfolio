@@ -50,7 +50,7 @@ const History = ({ audience = "direct" }: { audience?: Audience }) => {
           </div>
           {/* The résumé carries his email and phone number, which a client from Upwork is not given. */}
           {audience === "direct" && (
-            <Sign href={SITE.resume} tone="pine" download>
+            <Sign href={SITE.resume} tone="brand" download>
               Download my résumé
             </Sign>
           )}
@@ -64,25 +64,25 @@ const History = ({ audience = "direct" }: { audience?: Audience }) => {
             return (
               <li key={`${job.company_name}-${job.date}`} className="relative grid gap-x-10 gap-y-2 pb-12 pl-[4.25rem] last:pb-0 md:grid-cols-[13rem_minmax(0,1fr)] md:pb-14">
                 {/* The main line, which stops at the first role. */}
-                <span aria-hidden className={cn("absolute left-[7px] top-0 w-0.5 bg-pine/30", last ? "h-3" : "bottom-0")} />
+                <span aria-hidden className={cn("absolute left-[7px] top-0 w-0.5 bg-ink/30", last ? "h-3" : "bottom-0")} />
                 {/* The second line: down to its point, then round the corner into the main line. */}
                 {beside && (
                   <>
-                    <span aria-hidden className="absolute left-[35px] top-0 h-3 w-0.5 bg-pine/30" />
-                    <span aria-hidden className="absolute bottom-0 left-[8px] top-3 w-[28px] rounded-br-[22px] border-b-2 border-r-2 border-pine/30" />
+                    <span aria-hidden className="absolute left-[35px] top-0 h-3 w-0.5 bg-ink/30" />
+                    <span aria-hidden className="absolute bottom-0 left-[8px] top-3 w-[28px] rounded-br-[22px] border-b-2 border-r-2 border-ink/30" />
                   </>
                 )}
                 <span
                   aria-hidden
                   className={cn(
-                    "absolute top-2 size-4 rounded-full border-[3px] border-pine",
+                    "absolute top-2 size-4 rounded-full border-[3px] border-ink",
                     beside ? "left-[28px]" : "left-0",
                     job.active ? "bg-mint" : "bg-paper"
                   )}
                 />
                 <p className="flex flex-wrap content-start items-center gap-x-3 gap-y-2 self-start pt-1 font-mono text-fine text-fog">
                   {shortRange(job.date)}
-                  {job.active && <span className="rounded-sm bg-mint px-2 py-1 font-text text-[12px] font-bold leading-none text-pine">Now</span>}
+                  {job.active && <span className="rounded-sm bg-mint px-2 py-1 font-text text-[12px] font-bold leading-none text-ink">Now</span>}
                 </p>
                 <div>
                   <h2 className="text-[clamp(24px,2.4vw,38px)]">{job.title.split(" — ")[0]}</h2>

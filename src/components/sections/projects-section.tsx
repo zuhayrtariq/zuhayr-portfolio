@@ -29,7 +29,7 @@ const ProjectsSection = ({ audience = "direct" }: { audience?: Audience }) => {
         {featuredProjects.map((project, i) => (
           <li key={project.slug}>
             <article
-              style={{ "--accent": project.accent ?? "#0c7450" } as CSSProperties}
+              style={{ "--accent": project.accent ?? "#1145c4" } as CSSProperties}
               className="grid gap-x-12 gap-y-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center"
             >
               <div className="max-lg:order-last">
@@ -45,7 +45,7 @@ const ProjectsSection = ({ audience = "direct" }: { audience?: Audience }) => {
                 </h2>
                 <p className="mt-4 max-w-[48ch] text-body text-fog">{project.summary}</p>
                 <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-4">
-                  <Sign href={`/work/${project.slug}`} tone="pine">
+                  <Sign href={`/work/${project.slug}`} tone="brand">
                     Read the case study
                   </Sign>
                   <a href={project.link} target="_blank" rel="noopener noreferrer" className="link-underline text-ui font-bold">
@@ -57,7 +57,7 @@ const ProjectsSection = ({ audience = "direct" }: { audience?: Audience }) => {
               {project.image && (
                 <SiteLink href={`/work/${project.slug}`} tabIndex={-1} aria-hidden className="block">
                   <BrowserFrame host={hostOf(project.link)}>
-                    <div className="relative aspect-[16/10] overflow-hidden bg-pine">
+                    <div className="relative aspect-[16/10] overflow-hidden bg-ink">
                       <Image
                         src={project.image}
                         alt=""

@@ -53,7 +53,7 @@ const CHECKS: { name: string; prompt: string; shipped: string; proof: string; hr
  */
 const Review = ({ note }: { /** A line for a visitor with one kind of job in mind. */ note?: string }) => {
   return (
-    <section id="why" aria-labelledby="why-title" className="on-emerald relative bg-emerald">
+    <section id="why" aria-labelledby="why-title" className="on-brand relative bg-brand">
       <div className="mx-auto max-w-[1680px] px-[clamp(20px,4vw,64px)] pt-24 md:pt-36">
         <h2 id="why-title" className="text-[clamp(34px,5.2vw,90px)]">
           <span className="block font-mono font-light tracking-[-0.05em]">AI writes the code.</span>
@@ -94,19 +94,19 @@ const Review = ({ note }: { /** A line for a visitor with one kind of job in min
         </div>
 
         <div className="lg:col-span-7">
-          <div className="on-paper overflow-hidden rounded-xl bg-paper shadow-[0_50px_100px_-40px_rgb(3_20_14/0.75)]">
-            <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-b-2 border-pine px-5 py-4 sm:px-8">
+          <div className="on-paper overflow-hidden rounded-xl bg-paper shadow-[0_50px_100px_-40px_rgb(5_11_32/0.75)]">
+            <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-b-2 border-ink px-5 py-4 sm:px-8">
               <p className="text-ui font-bold">Before it ships</p>
               {/* The key to the two kinds of line below. */}
               <p className="flex flex-wrap gap-x-5 gap-y-1 text-fine">
                 <span className="inline-flex items-center gap-2">
-                  <span aria-hidden className="grid size-5 place-items-center rounded-sm bg-fail/20 font-mono font-bold text-fail">
+                  <span aria-hidden className="grid size-5 place-items-center rounded-sm bg-fail/20 font-mono font-bold text-error">
                     −
                   </span>
                   A prompt gives you
                 </span>
                 <span className="inline-flex items-center gap-2">
-                  <span aria-hidden className="grid size-5 place-items-center rounded-sm bg-mint/55 font-mono font-bold text-pine">
+                  <span aria-hidden className="grid size-5 place-items-center rounded-sm bg-mint/55 font-mono font-bold text-ink">
                     +
                   </span>
                   I ship
@@ -117,14 +117,14 @@ const Review = ({ note }: { /** A line for a visitor with one kind of job in min
               {CHECKS.map((item) => (
                 <li key={item.name} className="border-t px-5 py-6 first:border-t-0 sm:px-8 sm:py-7">
                   <h3 className="flex items-center gap-3 text-[24px] sm:text-[28px]">
-                    <svg viewBox="0 0 20 20" aria-hidden className="size-6 shrink-0 rounded-full bg-mint p-1.5 text-pine" fill="none" stroke="currentColor" strokeWidth="3.4">
+                    <svg viewBox="0 0 20 20" aria-hidden className="size-6 shrink-0 rounded-full bg-mint p-1.5 text-ink" fill="none" stroke="currentColor" strokeWidth="3.4">
                       <path d="m4 10.5 4 4 8-9" />
                     </svg>
                     {item.name}
                   </h3>
                   <div className="mt-4 overflow-hidden rounded-md text-ui">
                     <p className="flex gap-3.5 bg-fail/14 px-3.5 py-2.5">
-                      <span aria-hidden className="font-mono font-bold text-fail">
+                      <span aria-hidden className="font-mono font-bold text-error">
                         −
                       </span>
                       <span>
@@ -133,7 +133,7 @@ const Review = ({ note }: { /** A line for a visitor with one kind of job in min
                       </span>
                     </p>
                     <p className="flex gap-3.5 bg-mint/40 px-3.5 py-2.5">
-                      <span aria-hidden className="font-mono font-bold text-emerald">
+                      <span aria-hidden className="font-mono font-bold text-ok">
                         +
                       </span>
                       <span>

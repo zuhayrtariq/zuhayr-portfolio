@@ -86,14 +86,37 @@ export const paginateCaptions = (text: string, maxChars = MAX_CHARS): CaptionPag
   return pages;
 };
 
+/** A page's words on two lines of about the same length, so the second is never left with a word or two. */
+const evenLines = (lines: string[], maxChars: number) => {
+  if (lines.length !== 2) return lines;
+  const words = lines.join(" ").split(" ");
+  let best = lines;
+  let bestGap = Math.abs(lines[0].length - lines[1].length);
+  for (let i = 1; i < words.length; i++) {
+    const first = words.slice(0, i).join(" ");
+    const second = words.slice(i).join(" ");
+    const gap = Math.abs(first.length - second.length);
+    if (first.length <= maxChars && second.length <= maxChars && gap < bestGap) {
+      best = [first, second];
+      bestGap = gap;
+    }
+  }
+  return best;
+};
+
 interface CaptionsProps {
   text: string;
   /** How many words have been spoken so far. */
   spokenWords: number;
+  /**
+   * Even out each page's two lines. Only for text that is whole from the start: an answer
+   * arrives a sentence at a time, and evening it out would move words while they are read.
+   */
+  even?: boolean;
   className?: string;
 }
 
-const Captions = ({ text, spokenWords, className }: CaptionsProps) => {
+const Captions = ({ text, spokenWords, even = false, className }: CaptionsProps) => {
   const ref = useRef<HTMLParagraphElement>(null);
   const [maxChars, setMaxChars] = useState(MAX_CHARS);
 
@@ -127,7 +150,7 @@ const Captions = ({ text, spokenWords, className }: CaptionsProps) => {
         className
       )}
     >
-      {page?.lines.map((line, i) => (
+      {page && (even ? evenLines(page.lines, maxChars) : page.lines).map((line, i) => (
         <span key={`${page.firstWord}-${i}`} className="block">
           {line}
         </span>

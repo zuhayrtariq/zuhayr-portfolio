@@ -77,7 +77,7 @@ const Contact = () => {
   });
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="on-emerald relative overflow-hidden bg-emerald">
+    <section id="contact" aria-labelledby="contact-title" className="on-brand relative overflow-hidden bg-brand">
       <div className="mx-auto max-w-[1680px] px-[clamp(20px,4vw,64px)] py-24 md:py-36">
         <div className="grid gap-x-12 gap-y-6 lg:grid-cols-12 lg:items-end">
           <h2 id="contact-title" className="text-[clamp(38px,5.5vw,96px)] lg:col-span-7">
@@ -89,7 +89,7 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="on-paper mt-12 grid overflow-hidden rounded-2xl bg-paper shadow-[0_60px_120px_-50px_rgb(3_20_14/0.85)] md:mt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
+        <div className="on-paper mt-12 grid overflow-hidden rounded-2xl bg-paper shadow-[0_60px_120px_-50px_rgb(5_11_32/0.85)] md:mt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
           <div className="p-6 sm:p-9 lg:p-12">
 
             {isSuccess ? (
@@ -188,7 +188,7 @@ const Contact = () => {
                   <button
                     type="submit"
                     disabled={isPending}
-                    className="inline-flex h-14 w-full items-center justify-center rounded-md bg-pine px-9 text-ui font-bold text-paper shadow-[0_3px_0_#041f15] transition-[translate,box-shadow,opacity] duration-100 active:translate-y-0.5 active:shadow-[0_1px_0_#041f15] disabled:opacity-60 sm:w-auto"
+                    className="inline-flex h-14 w-full items-center justify-center rounded-md bg-brand px-9 text-ui font-bold text-white shadow-[0_3px_0_var(--color-brand-edge)] transition-[translate,box-shadow,opacity] duration-100 active:translate-y-0.5 active:shadow-[0_1px_0_var(--color-brand-edge)] disabled:opacity-60 sm:w-auto"
                   >
                     {isPending ? "Sending…" : "Send message"}
                   </button>
@@ -207,7 +207,7 @@ const Contact = () => {
                     {...(href.startsWith("mailto:") ? {} : { target: "_blank", rel: "noopener noreferrer" })}
                     className="group/channel flex items-center gap-4 py-4"
                   >
-                    <Icon aria-hidden className="size-5 shrink-0 text-emerald" />
+                    <Icon aria-hidden className="size-5 shrink-0 text-brand" />
                     <span className="min-w-0">
                       <span className="block text-fine text-fog">{label}</span>
                       <span className="link-underline block truncate text-ui font-bold decoration-transparent">{value}</span>

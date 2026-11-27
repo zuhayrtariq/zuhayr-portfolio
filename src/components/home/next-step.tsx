@@ -16,7 +16,7 @@ const STEPS = [
  */
 const NextStep = () => {
   return (
-    <section id="contact" aria-labelledby="contact-title" className="on-emerald relative overflow-hidden bg-emerald">
+    <section id="contact" aria-labelledby="contact-title" className="on-brand relative overflow-hidden bg-brand">
       <div className="mx-auto max-w-[1680px] px-[clamp(20px,4vw,64px)] py-24 md:py-36">
         <div className="grid gap-x-12 gap-y-6 lg:grid-cols-12 lg:items-end">
           <h2 id="contact-title" className="text-[clamp(38px,5.5vw,96px)] lg:col-span-7">
@@ -28,20 +28,20 @@ const NextStep = () => {
           </p>
         </div>
 
-        <div className="on-paper mt-12 grid overflow-hidden rounded-2xl bg-paper shadow-[0_60px_120px_-50px_rgb(3_20_14/0.85)] md:mt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)]">
+        <div className="on-paper mt-12 grid overflow-hidden rounded-2xl bg-paper shadow-[0_60px_120px_-50px_rgb(5_11_32/0.85)] md:mt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)]">
           <div className="p-6 sm:p-9 lg:p-12">
-            <p className="border-b-2 border-pine pb-4 text-fine font-bold">Three steps, all on Upwork</p>
+            <p className="border-b-2 border-ink pb-4 text-fine font-bold">Three steps, all on Upwork</p>
             <ol className="mt-2">
               {STEPS.map((step, i) => (
                 <li key={step} className="flex items-baseline gap-5 border-t py-5 first:border-t-0 sm:gap-7 sm:py-6">
-                  <span aria-hidden className="w-6 shrink-0 font-mono text-lead font-bold tabular-nums text-emerald">
+                  <span aria-hidden className="w-6 shrink-0 font-mono text-lead font-bold tabular-nums text-brand">
                     {i + 1}
                   </span>
                   <span className="max-w-[44ch] text-body sm:text-lead sm:leading-snug">{step}</span>
                 </li>
               ))}
             </ol>
-            <Sign href={SITE.upwork} tone="pine" className="mt-6">
+            <Sign href={SITE.upwork} tone="brand" className="mt-6">
               {HIRE_LABEL.upwork}
             </Sign>
           </div>

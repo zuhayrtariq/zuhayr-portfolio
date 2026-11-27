@@ -405,7 +405,7 @@ const Stage = ({ initial }: StageProps) => {
     <button
       type="button"
       onClick={() => handOver(briefMessage(shown.idea, draft))}
-      className="inline-flex h-11 items-center rounded-md bg-mint px-5 text-ui font-bold text-pine shadow-[0_3px_0_#1c9e66] transition-[translate,box-shadow] duration-100 active:translate-y-0.5 active:shadow-[0_1px_0_#1c9e66]"
+      className="inline-flex h-11 items-center rounded-md bg-mint px-5 text-ui font-bold text-ink shadow-[0_3px_0_var(--color-mint-edge)] transition-[translate,box-shadow] duration-100 active:translate-y-0.5 active:shadow-[0_1px_0_var(--color-mint-edge)]"
     >
       {viaUpwork ? "Copy this brief for Upwork" : "Send me this brief"}
     </button>
@@ -416,7 +416,7 @@ const Stage = ({ initial }: StageProps) => {
       ref={root}
       aria-labelledby="hero-title"
       style={{ "--length": `${LENGTH * 100}svh` } as CSSProperties}
-      className="on-emerald group relative bg-emerald data-pinned:h-(--length)"
+      className="on-brand group relative bg-brand data-pinned:h-(--length)"
     >
       <div className="sheet relative isolate overflow-hidden group-data-pinned:sticky group-data-pinned:top-0 group-data-pinned:h-svh">
         {/* The workspace: five windows on one sheet, moved by the scroll. Drawn only on a wide screen. */}
@@ -492,7 +492,7 @@ const Stage = ({ initial }: StageProps) => {
               <label htmlFor="draft-idea" className="block text-fine font-bold">
                 See what a prompt gets you: describe a product, or pick one.
               </label>
-              <div className="mt-2.5 flex items-end gap-2 rounded-xl bg-pine/70 p-2 pl-4 outline-offset-3 ring-1 ring-white/20 transition-shadow focus-within:ring-white/60 has-[textarea:focus-visible]:outline-2 has-[textarea:focus-visible]:outline-signal">
+              <div className="mt-2.5 flex items-end gap-2 rounded-xl bg-ink/70 p-2 pl-4 outline-offset-3 ring-1 ring-white/55 transition-shadow focus-within:ring-white has-[textarea:focus-visible]:outline-2 has-[textarea:focus-visible]:outline-signal">
                 <textarea
                   id="draft-idea"
                   name="idea"
@@ -515,7 +515,7 @@ const Stage = ({ initial }: StageProps) => {
                 <button
                   type="submit"
                   disabled={writing && (waiting || live)}
-                  className="inline-flex h-12 shrink-0 items-center justify-center rounded-md bg-mint px-5 text-ui font-bold text-pine transition-opacity disabled:pointer-events-none disabled:opacity-60"
+                  className="inline-flex h-12 shrink-0 items-center justify-center rounded-md bg-mint px-5 text-ui font-bold text-ink transition-opacity disabled:pointer-events-none disabled:opacity-60"
                 >
                   Draft it
                 </button>
@@ -545,7 +545,7 @@ const Stage = ({ initial }: StageProps) => {
                             type="button"
                             disabled={idea.trim().length < MIN_IDEA}
                             onClick={() => handOver(`I'd like to build: ${idea.trim()}\n`)}
-                            className="inline-flex h-11 items-center rounded-md bg-mint px-5 text-ui font-bold text-pine disabled:opacity-50"
+                            className="inline-flex h-11 items-center rounded-md bg-mint px-5 text-ui font-bold text-ink disabled:opacity-50"
                           >
                             {viaUpwork ? "Copy the idea for Upwork" : "Send me the idea"}
                           </button>
@@ -573,7 +573,7 @@ const Stage = ({ initial }: StageProps) => {
                           }}
                           className={cn(
                             "h-8 rounded-md px-2.5 text-[13px] transition-colors",
-                            current ? "bg-white font-bold text-pine" : "ring-1 ring-inset ring-white/35 hover:ring-white/80"
+                            current ? "bg-white font-bold text-ink" : "ring-1 ring-inset ring-white/35 hover:ring-white/80"
                           )}
                         >
                           {example.label}
@@ -606,7 +606,7 @@ const Stage = ({ initial }: StageProps) => {
             >
               <div>
                 <p className="flex items-center gap-3 text-fine">
-                  <span className="grid size-7 place-items-center rounded-full bg-mint font-mono font-bold text-pine">{i + 1}</span>
+                  <span className="grid size-7 place-items-center rounded-full bg-mint font-mono font-bold text-ink">{i + 1}</span>
                   <span className="font-bold">{item.label}</span>
                   <span className="text-fog">Step {i + 1} of 4</span>
                 </p>
@@ -650,7 +650,7 @@ const Stage = ({ initial }: StageProps) => {
                   <span
                     className={cn(
                       "grid size-5 shrink-0 place-items-center rounded-full border-2 transition-colors duration-300",
-                      done ? "border-mint bg-mint text-pine" : i === scene.leg ? "border-wait" : "border-white/40"
+                      done ? "border-mint bg-mint text-ink" : i === scene.leg ? "border-wait" : "border-white/40"
                     )}
                   >
                     {done && (

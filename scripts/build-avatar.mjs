@@ -22,8 +22,8 @@ const FRAMES = {
   face: { left: 0.212, top: 0.01, size: 0.47 },
 };
 
-// The page's emerald, which the tile behind the avatar is filled with.
-const EMERALD = [12, 116, 80];
+// The page's blue, which the tile behind the avatar is filled with.
+const BRAND = [17, 69, 196];
 const INK = [11, 12, 12];
 
 /** The cartoon: one drawing, cropped to the frame and scaled to whatever size is asked for. */
@@ -199,7 +199,7 @@ const ico = (images) => {
   return Buffer.concat([header, ...images.map((image) => image.data)]);
 };
 
-const emerald = { ground: EMERALD, radius: 0.22 };
+const brand = { ground: BRAND, radius: 0.22 };
 
 // The largest square of the photo that sits on his face, with some room above the hair.
 const photo = await sharp(SRC).metadata();
@@ -211,7 +211,7 @@ const square = {
   width: side,
   height: side,
 };
-const tiny = Object.fromEntries(await Promise.all([16, 32, 48].map(async (size) => [size, await tile("face", size, emerald)])));
+const tiny = Object.fromEntries(await Promise.all([16, 32, 48].map(async (size) => [size, await tile("face", size, brand)])));
 
 const files = {
   // The avatar itself, on nothing, for use in the page: four times its 88 pixels in the footer.
@@ -219,22 +219,22 @@ const files = {
   // The same drawing at the size it was drawn, for the badge, where it is the picture on the card.
   "public/images/avatar-large.webp": await webp(await tile("bust", 512)),
   // The mark beside the name in the header.
-  "public/images/avatar-mark.webp": await webp(await style.mark((frame, size) => tile(frame, size, emerald))),
+  "public/images/avatar-mark.webp": await webp(await style.mark((frame, size) => tile(frame, size, brand))),
   // The photo itself at a size a link preview or a search result can use.
   // It is never enlarged: a small photo stays its own size (and src/lib/structured-data.ts says which).
   "public/images/zuhayr-tariq.jpg": await sharp(SRC)
     .extract(square)
     .resize(1200, 1200, { withoutEnlargement: true })
-    .flatten({ background: "#0c3a2a" })
+    .flatten({ background: "#0b183d" })
     .jpeg({ quality: 82, mozjpeg: true })
     .toBuffer(),
   "src/app/favicon.ico": ico([16, 32, 48].map((size) => ({ size, data: tiny[size] }))),
-  "src/app/icon.png": await palette(await tile("bust", 192, emerald)),
+  "src/app/icon.png": await palette(await tile("bust", 192, brand)),
   // iOS and Android cut their own corners, so these two are full squares.
-  "src/app/apple-icon.png": await palette(await tile("bust", 180, { ground: EMERALD })),
-  "public/icons/icon-192.png": await palette(await tile("bust", 192, emerald)),
-  "public/icons/icon-512.png": await palette(await tile("bust", 512, emerald)),
-  "public/icons/icon-maskable-512.png": await palette(await tile("bust", 512, { ground: EMERALD, inset: 0.1 })),
+  "src/app/apple-icon.png": await palette(await tile("bust", 180, { ground: BRAND })),
+  "public/icons/icon-192.png": await palette(await tile("bust", 192, brand)),
+  "public/icons/icon-512.png": await palette(await tile("bust", 512, brand)),
+  "public/icons/icon-maskable-512.png": await palette(await tile("bust", 512, { ground: BRAND, inset: 0.1 })),
 };
 
 if (process.argv.includes("--preview")) {

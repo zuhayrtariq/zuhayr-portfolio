@@ -68,7 +68,7 @@ const Clocks = () => {
   const place = zone ? (zone.split("/").pop() ?? "").replace(/_/g, " ") : "";
 
   return (
-    <section aria-labelledby="clocks-title" className="on-pine relative bg-pine">
+    <section aria-labelledby="clocks-title" className="on-ink relative bg-ink">
       <div className="mx-auto grid max-w-[1680px] gap-x-12 gap-y-12 px-[clamp(20px,4vw,64px)] py-24 md:py-36 lg:grid-cols-12 lg:items-center">
         <div className="lg:col-span-5">
           <h2 id="clocks-title" className="text-[clamp(34px,4.3vw,72px)]">

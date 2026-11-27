@@ -29,7 +29,7 @@ const EVENTS = [
 /** What he does when something breaks, and what he promises about it. */
 const Issue = () => {
   return (
-    <section aria-labelledby="breaks-title" className="on-emerald relative bg-emerald">
+    <section aria-labelledby="breaks-title" className="on-brand relative bg-brand">
       <div className="mx-auto grid max-w-[1680px] gap-x-12 gap-y-12 px-[clamp(20px,4vw,64px)] py-24 md:py-36 lg:grid-cols-12 lg:items-start">
         <div className="lg:sticky lg:top-28 lg:col-span-5">
           <h2 id="breaks-title" className="text-[clamp(34px,4.3vw,72px)]">
@@ -55,10 +55,10 @@ const Issue = () => {
         </div>
 
         <div className="lg:col-span-7">
-          <div className="on-paper overflow-hidden rounded-xl bg-paper shadow-[0_50px_100px_-40px_rgb(3_20_14/0.75)]">
-            <p className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b-2 border-pine px-5 py-4 text-ui font-bold sm:px-8">
+          <div className="on-paper overflow-hidden rounded-xl bg-paper shadow-[0_50px_100px_-40px_rgb(5_11_32/0.75)]">
+            <p className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b-2 border-ink px-5 py-4 text-ui font-bold sm:px-8">
               <span>A bug, from report to closed</span>
-              <span className="inline-flex items-center gap-2 rounded-md bg-mint px-3 py-1.5 text-fine text-pine">
+              <span className="inline-flex items-center gap-2 rounded-md bg-mint px-3 py-1.5 text-fine text-ink">
                 <svg viewBox="0 0 20 20" aria-hidden className="size-3.5" fill="none" stroke="currentColor" strokeWidth="3.4">
                   <path d="m4 10.5 4 4 8-9" />
                 </svg>
@@ -69,8 +69,8 @@ const Issue = () => {
               {EVENTS.map((event, i) => (
                 <li key={event.state} className="relative grid gap-x-8 gap-y-2 py-5 pl-10 sm:grid-cols-[12rem_minmax(0,1fr)] sm:py-7">
                   {/* The line that joins one event to the next. */}
-                  {i < EVENTS.length - 1 && <span aria-hidden className="absolute bottom-[-1.6rem] left-[8px] top-9 w-0.5 bg-pine/25 sm:top-11" />}
-                  <span aria-hidden className={cn("absolute left-0 top-6 size-[18px] rounded-full border-[3px] border-pine sm:top-8", event.dot)} />
+                  {i < EVENTS.length - 1 && <span aria-hidden className="absolute bottom-[-1.6rem] left-[8px] top-9 w-0.5 bg-ink/25 sm:top-11" />}
+                  <span aria-hidden className={cn("absolute left-0 top-6 size-[18px] rounded-full border-[3px] border-ink sm:top-8", event.dot)} />
                   <div>
                     <h3 className="text-[24px] sm:text-[28px]">{event.state}</h3>
                     <p className="mt-1.5 text-fine leading-snug text-fog">{event.by}</p>

@@ -29,7 +29,7 @@ const linkClass = "link-underline inline-block py-1.5 decoration-transparent";
 const SiteFooter = ({ audience = "direct" }: { audience?: Audience }) => {
   const columns = [site, studies, elsewhere(audience)];
   return (
-    <footer className="on-pine overflow-hidden bg-pine">
+    <footer className="on-ink overflow-hidden bg-ink">
       <div className="mx-auto max-w-[1680px] px-[clamp(20px,4vw,64px)]">
         <div className="grid gap-x-8 gap-y-14 pt-14 md:pt-20 lg:grid-cols-12">
           <div className="lg:col-span-5">

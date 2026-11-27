@@ -2,25 +2,35 @@
 @import "lenis/dist/lenis.css";
 
 @theme {
-  /* The page's colours. Green is what every tool a developer uses shows when a thing is done,
-     so here it is the ground, not an accent. */
-  --color-paper: #f2f6ef;
-  --color-pine: #0c3a2a;
-  --color-emerald: #0c7450;
+  /* The page's colours. Blue is the ground: in tests of the same site in different colours
+     it is the one people rate most trustworthy, and it sets the site apart from Upwork's
+     green in the next tab. It is kept saturated and fairly dark, which reads as competent.
+     DESIGN.md has the sources. */
+  --color-brand: #1145c4;
+  --color-ink: #0b183d;
+  --color-paper: #f3f6fb;
+  /* The surface of an editor or a terminal window. */
+  --color-screen: #09112a;
+
+  /* The three states every tool a developer uses shows: done, broken, in progress. They keep
+     the colours those tools give them. Mint is also the one button that says go. */
   --color-mint: #45eba1;
-  /* The other two states those tools show: broken, and in progress. */
   --color-fail: #e4553c;
   --color-wait: #f5b83d;
-  /* The surface of an editor or a terminal window. */
-  --color-screen: #07251a;
+  /* Done, deep enough to read as a mark on paper. */
+  --color-ok: #087046;
+
+  /* The edge under a key, which the key sinks onto when it is pressed. */
+  --color-mint-edge: #1c9e66;
+  --color-brand-edge: #0a2c82;
 
   /* What a component asks for. Each ground below rebinds these, so a component
      never needs to know which ground it is standing on. */
-  --color-backdrop: #f2f6ef;
-  --color-umbra: #e2eadd;
-  --color-caption: #0a2a1f;
-  --color-fog: #4c695d;
-  --color-signal: #0c7450;
+  --color-backdrop: #f3f6fb;
+  --color-umbra: #e3e9f3;
+  --color-caption: #0b183d;
+  --color-fog: #4b5b7a;
+  --color-signal: #1145c4;
   --color-error: #b3261e;
 
   --text-fine: 14px;
@@ -115,33 +125,33 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--focus, var(--color-emerald));
+    outline: 2px solid var(--focus, var(--color-brand));
     outline-offset: 3px;
   }
 
   ::selection {
     background-color: var(--color-mint);
-    color: var(--color-pine);
+    color: var(--color-ink);
   }
 
   /* The grounds. A section takes one of these classes and everything inside follows. */
   .on-paper {
-    --color-backdrop: #f2f6ef;
-    --color-umbra: #e2eadd;
-    --color-caption: #0a2a1f;
-    --color-fog: #4c695d;
-    --color-signal: #0c7450;
+    --color-backdrop: #f3f6fb;
+    --color-umbra: #e3e9f3;
+    --color-caption: #0b183d;
+    --color-fog: #4b5b7a;
+    --color-signal: #1145c4;
     --color-error: #b3261e;
-    --focus: #0c7450;
+    --focus: #1145c4;
     color-scheme: light;
     color: var(--color-caption);
   }
 
-  .on-emerald {
-    --color-backdrop: #0c7450;
-    --color-umbra: #0a6344;
+  .on-brand {
+    --color-backdrop: #1145c4;
+    --color-umbra: #0d389f;
     --color-caption: #ffffff;
-    --color-fog: #d2eee0;
+    --color-fog: #d5e1ff;
     --color-signal: #45eba1;
     --color-error: #ffd9d4;
     --focus: #45eba1;
@@ -149,11 +159,11 @@
     color: var(--color-caption);
   }
 
-  .on-pine {
-    --color-backdrop: #0c3a2a;
-    --color-umbra: #092e21;
-    --color-caption: #f2f6ef;
-    --color-fog: #a9c8ba;
+  .on-ink {
+    --color-backdrop: #0b183d;
+    --color-umbra: #08122f;
+    --color-caption: #f3f6fb;
+    --color-fog: #a9b7d9;
     --color-signal: #45eba1;
     --color-error: #ffb4a8;
     --focus: #45eba1;
@@ -163,10 +173,10 @@
 
   /* Inside an editor or terminal window. */
   .on-screen {
-    --color-backdrop: #07251a;
-    --color-umbra: #051c14;
-    --color-caption: #e9f4ed;
-    --color-fog: #86ab9a;
+    --color-backdrop: #09112a;
+    --color-umbra: #060c20;
+    --color-caption: #e8eefb;
+    --color-fog: #8fa0c8;
     --color-signal: #45eba1;
     --color-error: #ff9d8c;
     --focus: #45eba1;
@@ -302,6 +312,31 @@
 @keyframes caret {
   50% {
     opacity: 0;
+  }
+}
+
+/* The bars beside a speaker's name on a call, moving while he speaks. */
+@keyframes voice {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+  }
+
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* A ring that grows off the speaker's picture and fades. */
+@keyframes halo {
+  from {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.2);
   }
 }
 

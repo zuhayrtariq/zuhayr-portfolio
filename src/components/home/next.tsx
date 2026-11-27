@@ -13,7 +13,7 @@ const WAYS = [
 /** The way on from the home page: the four other pages, each with its address. */
 const Next = ({ audience = "direct" }: { audience?: Audience }) => {
   return (
-    <section aria-labelledby="ways-title" className="on-pine relative bg-pine">
+    <section aria-labelledby="ways-title" className="on-ink relative bg-ink">
       <div className="mx-auto max-w-[1680px] px-[clamp(20px,4vw,64px)] py-24 md:py-32">
         <h2 id="ways-title" className="text-[clamp(34px,4.3vw,72px)]">
           Where to next.

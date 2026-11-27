@@ -13,7 +13,7 @@ export async function loadGoogleFont(axes: string, text: string) {
   return (await fetch(match[1])).arrayBuffer();
 }
 
-/** The drawn avatar on its emerald tile, as a data URL that next/og can draw. */
+/** The drawn avatar on its blue tile, as a data URL that next/og can draw. */
 export async function loadAvatar() {
   const file = await readFile(path.join(process.cwd(), "public/icons/icon-192.png"));
   return `data:image/png;base64,${file.toString("base64")}`;
@@ -23,11 +23,11 @@ export const OG_SIZE = { width: 1200, height: 630 };
 
 /** The page's colours, and the tint of white a link preview needs for its smaller words. */
 export const OG_COLORS = {
-  emerald: "#0c7450",
-  pine: "#0c3a2a",
+  brand: "#1145c4",
+  ink: "#0b183d",
   mint: "#45eba1",
   white: "#ffffff",
-  mist: "#d2eee0",
+  mist: "#d5e1ff",
 };
 
 /**

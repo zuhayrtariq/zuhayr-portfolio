@@ -62,7 +62,7 @@ const Shipped = ({ lead = LEAD, order }: ShippedProps) => {
   };
 
   return (
-    <section id="work" aria-labelledby="work-title" className="on-pine relative bg-pine">
+    <section id="work" aria-labelledby="work-title" className="on-ink relative bg-ink">
       <div className="mx-auto max-w-[1680px] px-[clamp(20px,4vw,64px)] py-24 md:py-36">
         <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
           <h2 id="work-title" className="text-[clamp(38px,5.6vw,96px)]">
@@ -113,15 +113,15 @@ const Shipped = ({ lead = LEAD, order }: ShippedProps) => {
               <LockIcon aria-hidden className="size-3.5 shrink-0 text-fog" />
               <span className="truncate">{hostOf(project.link)}</span>
             </a>
-            <span className="inline-flex h-10 shrink-0 items-center gap-2 rounded-md bg-mint px-3.5 text-fine font-bold text-pine">
-              <span aria-hidden className="size-2 rounded-full bg-pine" />
+            <span className="inline-flex h-10 shrink-0 items-center gap-2 rounded-md bg-mint px-3.5 text-fine font-bold text-ink">
+              <span aria-hidden className="size-2 rounded-full bg-ink" />
               Live
             </span>
           </div>
 
           <div id="work-panel" role="tabpanel" aria-labelledby={`work-tab-${project.slug}`} className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)]">
             <SiteLink href={`/work/${project.slug}`} tabIndex={-1} aria-hidden className="block">
-              <div className="@container relative aspect-[16/10] overflow-hidden bg-pine">
+              <div className="@container relative aspect-[16/10] overflow-hidden bg-ink">
                 {listed.map((item, i) =>
                   item.scroll ? (
                     <Image
@@ -162,7 +162,7 @@ const Shipped = ({ lead = LEAD, order }: ShippedProps) => {
                 ))}
               </ul>
               <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-4 pt-8">
-                <Sign href={`/work/${project.slug}`} tone="pine">
+                <Sign href={`/work/${project.slug}`} tone="brand">
                   Read the case study
                 </Sign>
                 <a href={project.link} target="_blank" rel="noopener noreferrer" className="link-underline text-ui font-bold">

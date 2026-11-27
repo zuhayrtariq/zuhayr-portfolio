@@ -56,13 +56,13 @@ const Record = () => {
             The rating, the job success score and Top Rated Plus all come from my public Upwork profile, where clients
             review each job after it&apos;s delivered.
           </p>
-          <Sign href={SITE.upwork} tone="pine" className="mt-8">
+          <Sign href={SITE.upwork} tone="brand" className="mt-8">
             Check it on Upwork
           </Sign>
           <p className="mt-10 flex max-w-[42ch] items-start gap-3 border-t pt-6 text-ui">
             <span aria-hidden className="relative mt-1.5 flex size-2.5 shrink-0">
-              <span className="absolute inset-0 animate-ping rounded-full bg-emerald opacity-60 motion-reduce:hidden" />
-              <span className="relative size-2.5 rounded-full bg-emerald" />
+              <span className="absolute inset-0 animate-ping rounded-full bg-ok opacity-60 motion-reduce:hidden" />
+              <span className="relative size-2.5 rounded-full bg-ok" />
             </span>
             <span>
               Taking on new projects. I&apos;m in Islamabad and work with clients worldwide; it&apos;s <LocalTime /> for
@@ -75,7 +75,7 @@ const Record = () => {
           <Window
             title="my record"
             status={<span className="font-mono font-bold text-mint">{CHECKS.length} of {CHECKS.length} passing</span>}
-            className="shadow-[0_50px_100px_-45px_rgb(4_26_18/0.8)]"
+            className="shadow-[0_50px_100px_-45px_rgb(6_14_40/0.8)]"
           >
             <ol ref={list} className="px-5 py-3 sm:px-8 sm:py-5">
               {CHECKS.map((check, i) => (
@@ -92,7 +92,7 @@ const Record = () => {
                     aria-hidden
                     style={{ transitionDelay: ran ? `${i * 150}ms` : "0ms" }}
                     className={cn(
-                      "row-span-2 size-6 rounded-full bg-mint p-1.5 text-pine transition-transform duration-300 ease-[var(--ease-lights)] sm:row-span-1",
+                      "row-span-2 size-6 rounded-full bg-mint p-1.5 text-ink transition-transform duration-300 ease-[var(--ease-lights)] sm:row-span-1",
                       ran ? "scale-100" : "scale-0"
                     )}
                     fill="none"

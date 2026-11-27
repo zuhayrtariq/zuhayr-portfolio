@@ -35,14 +35,14 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "64px 72px",
-          background: OG_COLORS.pine,
+          background: OG_COLORS.ink,
           color: OG_COLORS.white,
           fontFamily: "Text",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ fontSize: 28, color: OG_COLORS.mist }}>{byline}</div>
-          <div style={{ display: "flex", background: OG_COLORS.mint, color: OG_COLORS.pine, fontFamily: "Display", fontSize: 26, padding: "10px 20px", borderRadius: 8 }}>
+          <div style={{ display: "flex", background: OG_COLORS.mint, color: OG_COLORS.ink, fontFamily: "Display", fontSize: 26, padding: "10px 20px", borderRadius: 8 }}>
             {STATUS}
           </div>
         </div>

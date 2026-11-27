@@ -30,7 +30,7 @@ export default async function Image() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "56px 72px 64px",
-          background: OG_COLORS.emerald,
+          background: OG_COLORS.brand,
           color: OG_COLORS.white,
           fontFamily: "Text",
         }}
@@ -49,7 +49,7 @@ export default async function Image() {
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 40 }}>
           <div style={{ fontSize: 26, color: OG_COLORS.mist }}>{ROLE}</div>
-          <div style={{ display: "flex", background: OG_COLORS.mint, color: OG_COLORS.pine, fontSize: 28, padding: "14px 24px", borderRadius: 8 }}>
+          <div style={{ display: "flex", background: OG_COLORS.mint, color: OG_COLORS.ink, fontSize: 28, padding: "14px 24px", borderRadius: 8 }}>
             {ADDRESS}
           </div>
         </div>

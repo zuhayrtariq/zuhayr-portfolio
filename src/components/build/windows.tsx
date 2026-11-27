@@ -213,7 +213,7 @@ export const UpdatesWindow = ({ draft, shown, className }: { draft: Draft; shown
       <div className="flex h-[min(27.5em,var(--fit,27.5em))] flex-col overflow-hidden text-[0.88em] leading-[1.45]">
         <p className="flex items-center gap-[0.7em] border-b px-[1.2em] py-[0.8em]">
           {/* eslint-disable-next-line @next/next/no-img-element -- already sized and compressed by scripts/build-avatar.mjs */}
-          <img src="/images/avatar.webp" alt="" width={32} height={32} decoding="async" className="size-[2em] rounded-full bg-emerald" />
+          <img src="/images/avatar.webp" alt="" width={32} height={32} decoding="async" className="size-[2em] rounded-full bg-brand" />
           <span className="font-bold">Zuhayr</span>
           <span className="text-fog">to you</span>
         </p>
@@ -223,7 +223,7 @@ export const UpdatesWindow = ({ draft, shown, className }: { draft: Draft; shown
             .map((entry) => (
               <li key={entry.label} className={cn("rounded-[0.6em] px-[1em] py-[0.75em]", entry.ask ? "bg-wait/35" : "bg-umbra", ARRIVE)}>
                 <p className="flex items-center gap-[0.5em] font-bold">
-                  {!entry.ask && <Check className="text-emerald" />}
+                  {!entry.ask && <Check className="text-ok" />}
                   {entry.label}
                 </p>
                 <p className="mt-[0.15em]">{entry.text}</p>
@@ -284,7 +284,7 @@ export const BrowserWindow = ({ draft, done, stage = "draft", className }: Brows
     <Window
       tone="paper"
       address={stage === "live" ? `${slug}.example` : stage === "local" ? "localhost:3000" : `first draft / ${slug}`}
-      status={stage === "live" && <span className="rounded-[0.4em] bg-mint px-[0.6em] py-[0.35em] font-bold text-pine">Live</span>}
+      status={stage === "live" && <span className="rounded-[0.4em] bg-mint px-[0.6em] py-[0.35em] font-bold text-ink">Live</span>}
       className={className}
     >
       <div className="relative">

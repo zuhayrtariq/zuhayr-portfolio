@@ -54,15 +54,17 @@ const SiteHeader = () => {
   }, [open]);
 
   const solid = scrolled || open;
+  /** The button takes the colour that shows on the ground the bar is over: blue on paper, mint on blue and navy. */
+  const tone = solid || !overDark ? "brand" : "mint";
 
   return (
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-[background-color,translate,box-shadow] duration-500 ease-[var(--ease-lights)] focus-within:translate-y-0",
         solid
-          ? "on-paper bg-paper/92 shadow-[0_1px_0_rgb(4_26_18/0.1)] backdrop-blur-md"
+          ? "on-paper bg-paper/92 shadow-[0_1px_0_rgb(6_14_40/0.1)] backdrop-blur-md"
           : overDark
-            ? "on-pine"
+            ? "on-ink"
             : "on-paper",
         // A little further than its own height, so the shadow under the sign leaves with it.
         hidden && !open && "-translate-y-[calc(100%+3rem)]"
@@ -70,7 +72,7 @@ const SiteHeader = () => {
     >
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-md focus:bg-mint focus:px-3 focus:py-2 focus:text-pine"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-md focus:bg-mint focus:px-3 focus:py-2 focus:text-ink"
       >
         Skip to content
       </a>
@@ -93,7 +95,7 @@ const SiteHeader = () => {
               {link.name}
             </SiteLink>
           ))}
-          <HireSign className="h-11 px-5" />
+          <HireSign tone={tone} className="h-11 px-5" />
         </nav>
 
         <button
@@ -123,7 +125,7 @@ const SiteHeader = () => {
           ))}
         </ul>
         <span onClick={() => setOpen(false)} className="mt-5 block">
-          <HireSign />
+          <HireSign tone="brand" />
         </span>
       </nav>
     </header>

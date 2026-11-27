@@ -23,8 +23,8 @@ const Window = ({ title, address, status, tone = "screen", className, children }
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-[0.7em] shadow-[0_2.2em_4.5em_-2em_rgb(2_18_12/0.8)]",
-        tone === "screen" ? "on-screen bg-screen ring-1 ring-white/12" : "on-paper bg-paper ring-1 ring-pine/15",
+        "overflow-hidden rounded-[0.7em] shadow-[0_2.2em_4.5em_-2em_rgb(4_9_26/0.8)]",
+        tone === "screen" ? "on-screen bg-screen ring-1 ring-white/12" : "on-paper bg-paper ring-1 ring-ink/15",
         className
       )}
     >
